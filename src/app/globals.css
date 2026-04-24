@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-playfair: "Playfair Display", Georgia, serif;
+  --font-inter:    "Inter", system-ui, sans-serif;
+}
+
+/* Smooth scroll for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Cream background as the site default */
+body {
+  @apply bg-cream-50 text-ink-900 font-sans antialiased;
+}
+
+/* Gold shimmer text utility */
+.text-gold-shimmer {
+  background: linear-gradient(
+    90deg,
+    #C49A5A 0%,
+    #F5DFA0 40%,
+    #C49A5A 60%,
+    #A87C3C 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Section that "sticks" as you scroll — Apple style */
+.sticky-scene {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
