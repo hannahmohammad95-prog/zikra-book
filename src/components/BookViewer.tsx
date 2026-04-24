@@ -3,8 +3,6 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-// 3D book that rotates as the user scrolls into view.
-// Built with CSS 3D transforms — no WebGL needed.
 export default function BookViewer() {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -13,69 +11,124 @@ export default function BookViewer() {
     offset: ["start end", "end start"],
   });
 
-  // Map scroll 0→1 to rotation -20deg → 20deg
-  const rotateY = useTransform(scrollYProgress, [0, 1], [-20, 20]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [8, 0, -8]);
+  // Full 360° feel — rotates from tilted left to tilted right as you scroll
+  const rotateY = useTransform(scrollYProgress, [0, 1], [-35, 35]);
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [10, 0, -10]);
+  const scale   = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.85, 1, 1, 0.85]);
+  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
 
   return (
     <section
       ref={ref}
       id="story"
-      className="py-32 px-6 bg-cream-100 flex flex-col items-center"
+      className="min-h-screen flex flex-col items-center justify-center bg-cream-50 px-6 py-24"
     >
-      <p className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-4">The Object</p>
-      <h2 className="font-serif text-4xl md:text-5xl text-ink-900 text-center mb-16 max-w-xl leading-tight">
-        A book that holds the weight of a place.
-      </h2>
+      {/* Soft gold glow behind the book */}
+      <div
+        aria-hidden
+        className="absolute pointer-events-none"
+        style={{
+          width: "600px",
+          height: "600px",
+          background: "radial-gradient(ellipse, rgba(196,154,90,0.15) 0%, transparent 70%)",
+        }}
+      />
 
-      {/* 3D book container */}
-      <div className="relative" style={{ perspective: "1200px" }}>
+      {/* Eyebrow */}
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-4 font-sans"
+      >
+        Crafted for Keeps
+      </motion.p>
+
+      {/* Headline */}
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: 0.1 }}
+        className="font-serif text-4xl md:text-6xl text-ink-900 text-center mb-16 max-w-xl leading-tight"
+      >
+        A book that holds<br />the weight of a place.
+      </motion.h2>
+
+      {/* 3D Book */}
+      <div className="relative" style={{ perspective: "1400px" }}>
         <motion.div
-          style={{ rotateY, rotateX }}
-          className="relative w-64 h-80 md:w-80 md:h-96"
-          transition={{ type: "spring", stiffness: 60 }}
+          style={{ rotateY, rotateX, scale, opacity }}
+          className="relative"
+          transition={{ type: "spring", stiffness: 40, damping: 20 }}
         >
-          {/* Front cover */}
-          <div
-            className="absolute inset-0 rounded-r-lg shadow-2xl flex items-center justify-center overflow-hidden"
-            style={{
-              background: "linear-gradient(160deg, #D4B483 0%, #8A6225 60%, #3D2D18 100%)",
-              boxShadow: "8px 8px 40px rgba(107,74,16,0.4), -2px 0 8px rgba(0,0,0,0.2)",
-            }}
-          >
-            <div className="text-center px-8">
-              <p className="text-cream-50/60 text-xs tracking-[0.4em] uppercase mb-3">Zikra</p>
-              <p className="font-serif text-cream-50 text-2xl leading-snug">Qatar</p>
-              <p className="font-serif text-cream-50/70 text-sm mt-1 italic">2024</p>
-              {/* Emboss line decoration */}
-              <div className="mt-6 mx-auto w-12 h-px bg-cream-50/40" />
+          {/* Book wrapper — large and dramatic */}
+          <div className="relative w-72 h-96 md:w-96 md:h-[30rem]">
+
+            {/* Front cover */}
+            <div
+              className="absolute inset-0 rounded-r-xl flex items-center justify-center overflow-hidden"
+              style={{
+                background: "linear-gradient(160deg, #D4B483 0%, #8A6225 55%, #2E2010 100%)",
+                boxShadow: "12px 16px 60px rgba(107,74,16,0.5), -4px 0 16px rgba(0,0,0,0.25)",
+              }}
+            >
+              {/* Subtle texture overlay */}
+              <div
+                className="absolute inset-0 opacity-10"
+                style={{
+                  backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)",
+                }}
+              />
+
+              {/* Cover text */}
+              <div className="relative text-center px-10">
+                <div className="mb-6 mx-auto w-10 h-px bg-cream-50/30" />
+                <p className="text-cream-50/50 text-[10px] tracking-[0.5em] uppercase mb-4 font-sans">
+                  Zikra Book
+                </p>
+                <p className="font-serif text-cream-50 text-3xl leading-snug mb-2">
+                  ذكرى
+                </p>
+                <p className="font-serif text-cream-50/60 text-sm italic">
+                  every journey deserves a page
+                </p>
+                <div className="mt-6 mx-auto w-10 h-px bg-cream-50/30" />
+              </div>
             </div>
+
+            {/* Spine */}
+            <div
+              className="absolute left-0 top-2 bottom-2 w-6"
+              style={{
+                background: "linear-gradient(to right, #1A1208, #3D2D18)",
+                transform: "translateX(-22px) rotateY(-90deg)",
+                transformOrigin: "right center",
+                boxShadow: "-6px 0 20px rgba(0,0,0,0.4)",
+              }}
+            />
+
+            {/* Page stack */}
+            <div
+              className="absolute right-0 top-3 bottom-3 w-4 bg-cream-100 rounded-r-sm"
+              style={{ boxShadow: "inset -3px 0 8px rgba(0,0,0,0.08), 2px 0 4px rgba(0,0,0,0.05)" }}
+            />
           </div>
-
-          {/* Book spine (left edge) */}
-          <div
-            className="absolute left-0 top-1 bottom-1 w-5 rounded-l-sm"
-            style={{
-              background: "linear-gradient(to right, #3D2D18, #6B4A10)",
-              transform: "translateX(-18px) rotateY(-90deg)",
-              transformOrigin: "right center",
-              boxShadow: "-4px 0 12px rgba(0,0,0,0.3)",
-            }}
-          />
-
-          {/* Page stack (right edge illusion) */}
-          <div
-            className="absolute right-0 top-2 bottom-2 w-3 bg-cream-200 rounded-r-sm"
-            style={{ boxShadow: "inset -2px 0 6px rgba(0,0,0,0.1)" }}
-          />
         </motion.div>
       </div>
 
-      <p className="mt-16 text-ink-700 text-center max-w-lg leading-relaxed font-sans">
-        Each Zikra book is printed on 250gsm art paper, smyth-sewn, and finished
-        with a cloth-wrapped cover embossed in 22k foil. It is not a photobook.
-        It is an artifact.
-      </p>
+      {/* Caption */}
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, delay: 0.4 }}
+        className="mt-16 text-ink-700 text-center max-w-md leading-relaxed font-sans text-sm"
+      >
+        Printed on 250gsm art paper. Smyth-sewn. Finished with a cloth cover
+        embossed in 22k foil. Not a photobook — an artifact.
+      </motion.p>
     </section>
   );
 }

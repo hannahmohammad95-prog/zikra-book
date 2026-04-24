@@ -16,8 +16,9 @@ export default function Nav() {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="font-serif text-xl tracking-widest text-gold-600">
-          ZIKRA
+        <Link href="/" className="flex flex-col items-start leading-none">
+          <span className="font-serif text-sm tracking-[0.3em] text-gold-600 uppercase">Zikra Book</span>
+          <span className="font-serif text-xs text-gold-400 tracking-widest" style={{ fontFeatureSettings: '"kern"' }}>ذكرى</span>
         </Link>
 
         <div className="flex items-center gap-8 text-sm tracking-wide">
