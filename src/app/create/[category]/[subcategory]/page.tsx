@@ -12,7 +12,6 @@ const PAGE_OPTIONS = [
   { pages: 60, label: "60 Pages", price: 550, note: "The full story, nothing left out" },
 ];
 
-// Make titles readable e.g. "saudi-arabia" → "Saudi Arabia"
 function toTitle(slug: string) {
   return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
@@ -24,30 +23,15 @@ export default function SubcategoryPage() {
   const subcategory = typeof params.subcategory === "string" ? params.subcategory : "";
   const subTitle    = toTitle(subcategory);
 
-  const templates        = TEMPLATES[subcategory] ?? [];
+  const templates = TEMPLATES[subcategory] ?? [];
   const [selectedTemplate, setSelectedTemplate] = useState<string>(templates[0]?.id ?? "");
-  const [selectedPages, setSelectedPages] = useState<number>(40);
-  const [form, setForm]   = useState({ name: "", email: "", phone: "", notes: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  function validate() {
-    const e: Record<string, string> = {};
-    if (!form.name.trim())  e.name  = "Please enter your name.";
-    if (!form.email.trim()) e.email = "Please enter your email.";
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Please enter a valid email.";
-    if (!form.phone.trim()) e.phone = "Please enter your phone number.";
-    return e;
-  }
+  const [selectedPages, setSelectedPages]       = useState<number>(40);
+  const [notes, setNotes]                       = useState("");
 
   function handleContinue() {
-    const e = validate();
-    if (Object.keys(e).length > 0) { setErrors(e); return; }
     const qs = new URLSearchParams({
       pages:    String(selectedPages),
-      name:     form.name,
-      email:    form.email,
-      phone:    form.phone,
-      notes:    form.notes,
+      notes,
       template: selectedTemplate,
     });
     router.push(`/create/${category}/${subcategory}/upload?${qs.toString()}`);
@@ -72,11 +56,11 @@ export default function SubcategoryPage() {
               Your {subTitle} Book
             </h1>
             <p className="text-ink-700 font-sans text-sm">
-              Choose your size and tell us a little about yourself.
+              Choose your size and we'll take care of the rest.
             </p>
           </motion.div>
 
-          {/* Template gallery — only shown if templates exist for this country/occasion */}
+          {/* Template gallery */}
           {templates.length > 0 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -97,12 +81,7 @@ export default function SubcategoryPage() {
                     }`}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={tpl.imageUrl}
-                      alt={tpl.name}
-                      className="w-full aspect-[3/4] object-cover"
-                    />
-                    {/* Selected badge */}
+                    <img src={tpl.imageUrl} alt={tpl.name} className="w-full aspect-[3/4] object-cover" />
                     {selectedTemplate === tpl.id && (
                       <div className="absolute top-2 right-2 bg-gold-gradient text-cream-50 text-[10px] tracking-widest px-2 py-0.5 rounded-full">
                         ✓ SELECTED
@@ -154,73 +133,29 @@ export default function SubcategoryPage() {
             </div>
           </motion.div>
 
-          {/* Details form */}
+          {/* Special requests only */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.3 }}
             className="bg-white rounded-2xl border border-gold-400/20 p-8 mb-8"
           >
-            <h2 className="font-serif text-lg text-ink-900 mb-6">Your details</h2>
-            <div className="flex flex-col gap-5">
-
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">Full Name *</label>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="Hannah Mohammed"
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
-                />
-                {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
-              </div>
-
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">Email Address *</label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="you@example.com"
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
-                />
-                {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
-              </div>
-
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">Phone Number *</label>
-                <input
-                  type="tel"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  placeholder="+974 5555 0000"
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
-                />
-                {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
-              </div>
-
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">
-                  Special Requests <span className="normal-case tracking-normal text-ink-400">(optional)</span>
-                </label>
-                <textarea
-                  value={form.notes}
-                  onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  placeholder="Any special wishes, dedications, or requests for your book..."
-                  rows={3}
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300 resize-none"
-                />
-              </div>
-
-            </div>
+            <h2 className="font-serif text-lg text-ink-900 mb-2">Any special requests?</h2>
+            <p className="text-ink-700 font-sans text-xs mb-4">Optional — dedications, preferences, notes for our team.</p>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="e.g. Please add a dedication on the first page: 'To Mum, with love'..."
+              rows={3}
+              className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300 resize-none"
+            />
           </motion.div>
 
           {/* Navigation */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 items-center"
           >
             <button
