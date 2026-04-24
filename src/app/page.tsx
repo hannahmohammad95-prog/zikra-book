@@ -15,7 +15,7 @@ export default async function HomePage() {
   try {
     products = await getProducts(6);
   } catch (_e) {
-    // Token not configured yet — graceful fallback
+    console.error("Shopify fetch error:", _e);
   }
 
   return (
