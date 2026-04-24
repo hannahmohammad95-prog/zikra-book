@@ -31,16 +31,23 @@ type Props = {
   searchParams:  Record<string, string>;
 };
 
-export default function BookEditor({ photos, pages, category: _category, subcategory: _subcategory, searchParams }: Props) {
+export default function BookEditor({ photos, pages, category, subcategory, searchParams }: Props) {
   const router = useRouter();
 
-  // Initialise all pages with "full" layout and no photo assigned
   const [pageData, setPageData] = useState<PageData[]>(
     Array.from({ length: pages }, () => ({ layout: "full", photos: [null, null] }))
   );
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage]   = useState(0);
   const [selectedSlot, setSelectedSlot] = useState<number>(0);
-  const [submitted, setSubmitted] = useState(false);
+  const [showContact, setShowContact]   = useState(false);
+  const [submitted, setSubmitted]       = useState(false);
+  const [sending, setSending]           = useState(false);
+
+  // Contact form state
+  const [name, setName]               = useState("");
+  const [contactType, setContactType] = useState<"email" | "whatsapp">("email");
+  const [contact, setContact]         = useState("");
+  const [formError, setFormError]     = useState("");
 
   const page = pageData[currentPage];
 
@@ -73,9 +80,50 @@ export default function BookEditor({ photos, pages, category: _category, subcate
     });
   }
 
-  function handleSubmit() {
-    setSubmitted(true);
-    // In a future step we'll send this to an API / email
+  async function handleSubmit() {
+    // Validate contact form
+    if (!name.trim()) { setFormError("Please enter your name."); return; }
+    if (!contact.trim()) { setFormError(`Please enter your ${contactType === "email" ? "email address" : "WhatsApp number"}.`); return; }
+    if (contactType === "email" && !/\S+@\S+\.\S+/.test(contact)) { setFormError("Please enter a valid email."); return; }
+    setFormError("");
+    setSending(true);
+
+    if (contactType === "whatsapp") {
+      // Send order notification email to Hannah then redirect customer to WhatsApp
+      const allPhotos = pageData.flatMap((p) => p.photos.filter(Boolean));
+      await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name, contact, contactType,
+          category: category ?? "",
+          subcategory: subcategory ?? "",
+          pages, notes: searchParams.notes ?? "",
+          photos: allPhotos,
+        }),
+      });
+      setSending(false);
+      setSubmitted(true);
+      // Open Hannah's WhatsApp with pre-filled message
+      const msg = encodeURIComponent(`Hi! I just placed an order on Zikra Book 📖\nName: ${name}\nBook: ${(subcategory ?? "").replace(/-/g, " ")} (${pages} pages)`);
+      window.open(`https://wa.me/97455115749?text=${msg}`, "_blank");
+    } else {
+      // Send emails and show confirmation
+      const allPhotos = pageData.flatMap((p) => p.photos.filter(Boolean));
+      await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name, contact, contactType,
+          category: category ?? "",
+          subcategory: subcategory ?? "",
+          pages, notes: searchParams.notes ?? "",
+          photos: allPhotos,
+        }),
+      });
+      setSending(false);
+      setSubmitted(true);
+    }
   }
 
   const filledPages = pageData.filter((p) => p.photos[0] !== null).length;
@@ -271,12 +319,89 @@ export default function BookEditor({ photos, pages, category: _category, subcate
             </div>
 
             <button
-              onClick={handleSubmit}
+              onClick={() => setShowContact(true)}
               disabled={filledPages === 0}
               className="px-10 py-3.5 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
             >
               SUBMIT MY BOOK ORDER →
             </button>
+
+            {/* ── Contact form modal ── */}
+            {showContact && !submitted && (
+              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl"
+                >
+                  <h2 className="font-serif text-2xl text-ink-900 mb-2">Almost there! 🎉</h2>
+                  <p className="text-ink-700 font-sans text-sm mb-6">How should we send your confirmation?</p>
+
+                  {/* Name */}
+                  <div className="mb-4">
+                    <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">Your Name *</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Hannah Mohammed"
+                      className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
+                    />
+                  </div>
+
+                  {/* Contact type toggle */}
+                  <div className="mb-4">
+                    <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-2">Send confirmation via *</label>
+                    <div className="flex gap-3">
+                      {(["email", "whatsapp"] as const).map((type) => (
+                        <button
+                          key={type}
+                          onClick={() => { setContactType(type); setContact(""); }}
+                          className={`flex-1 py-2.5 rounded-lg border text-sm font-sans transition-all ${
+                            contactType === type
+                              ? "border-gold-400 bg-gold-400/10 text-gold-600"
+                              : "border-gold-400/20 text-ink-700 hover:border-gold-400/50"
+                          }`}
+                        >
+                          {type === "email" ? "📧 Email" : "💬 WhatsApp"}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Contact input */}
+                  <div className="mb-6">
+                    <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">
+                      {contactType === "email" ? "Email Address *" : "WhatsApp Number *"}
+                    </label>
+                    <input
+                      type={contactType === "email" ? "email" : "tel"}
+                      value={contact}
+                      onChange={(e) => setContact(e.target.value)}
+                      placeholder={contactType === "email" ? "you@example.com" : "+974 5555 0000"}
+                      className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
+                    />
+                    {formError && <p className="text-red-400 text-xs mt-1">{formError}</p>}
+                  </div>
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowContact(false)}
+                      className="px-5 py-3 text-sm text-ink-700 font-sans hover:text-gold-500 transition-colors"
+                    >
+                      ← Back
+                    </button>
+                    <button
+                      onClick={handleSubmit}
+                      disabled={sending}
+                      className="flex-1 py-3 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-md disabled:opacity-50"
+                    >
+                      {sending ? "Sending..." : "CONFIRM ORDER →"}
+                    </button>
+                  </div>
+                </motion.div>
+              </div>
+            )}
           </div>
 
         </div>
