@@ -90,16 +90,32 @@ export default function BookEditor({ photos, pages, category: _category, subcate
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="text-6xl mb-6">🎉</div>
+            <div className="text-6xl mb-6">✨</div>
             <h1 className="font-serif text-4xl md:text-5xl text-ink-900 mb-4">
-              Your book is on its way!
+              Your book is ready!
             </h1>
-            <p className="text-ink-700 font-sans text-base max-w-md mx-auto mb-2">
-              Thank you, <strong>{searchParams.name}</strong>! We have received your layout and photos.
+            <p className="text-ink-700 font-sans text-base max-w-md mx-auto mb-4">
+              We have received your layout and photos — your Zikra Book is in good hands.
             </p>
-            <p className="text-ink-700 font-sans text-sm max-w-md mx-auto mb-8">
-              Our team will review your book and reach out to you at <strong>{searchParams.email}</strong> or <strong>{searchParams.phone}</strong> within 24 hours.
-            </p>
+
+            {/* What happens next */}
+            <div className="bg-white border border-gold-400/20 rounded-2xl p-6 max-w-sm mx-auto mb-8 text-left">
+              <p className="text-gold-500 text-xs tracking-[0.3em] uppercase font-sans mb-4">What happens next</p>
+              <ul className="flex flex-col gap-3">
+                {[
+                  "Our team reviews your photos and layout",
+                  "We contact you within 24 hours to confirm your order",
+                  "You approve the final design",
+                  "We print and deliver your book to your door 📦",
+                ].map((step, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm font-sans text-ink-700">
+                    <span className="text-gold-400 font-serif text-base leading-tight">{i + 1}.</span>
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
             <button
               onClick={() => router.push("/")}
               className="px-10 py-4 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-lg"
