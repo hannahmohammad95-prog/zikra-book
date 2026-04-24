@@ -29,7 +29,7 @@ const config: Config = {
         sans:  ["var(--font-inter)", "system-ui", "sans-serif"],
       },
       backgroundImage: {
-        "gold-gradient": "linear-gradient(135deg, #C1714F 0%, #C1714F 100%)",
+        "gold-gradient": "linear-gradient(135deg, #D4B483 0%, #A87C3C 50%, #6B4A10 100%)",
       },
       keyframes: {
         "fade-up": {
