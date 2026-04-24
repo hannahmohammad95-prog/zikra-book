@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
+import { TEMPLATES } from "@/data/templates";
 
 const PAGE_OPTIONS = [
   { pages: 20, label: "20 Pages", price: 250, note: "Perfect for a short trip or event" },
@@ -23,6 +24,8 @@ export default function SubcategoryPage() {
   const subcategory = typeof params.subcategory === "string" ? params.subcategory : "";
   const subTitle    = toTitle(subcategory);
 
+  const templates        = TEMPLATES[subcategory] ?? [];
+  const [selectedTemplate, setSelectedTemplate] = useState<string>(templates[0]?.id ?? "");
   const [selectedPages, setSelectedPages] = useState<number>(40);
   const [form, setForm]   = useState({ name: "", email: "", phone: "", notes: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -40,11 +43,12 @@ export default function SubcategoryPage() {
     const e = validate();
     if (Object.keys(e).length > 0) { setErrors(e); return; }
     const qs = new URLSearchParams({
-      pages: String(selectedPages),
-      name:  form.name,
-      email: form.email,
-      phone: form.phone,
-      notes: form.notes,
+      pages:    String(selectedPages),
+      name:     form.name,
+      email:    form.email,
+      phone:    form.phone,
+      notes:    form.notes,
+      template: selectedTemplate,
     });
     router.push(`/create/${category}/${subcategory}/upload?${qs.toString()}`);
   }
@@ -72,11 +76,52 @@ export default function SubcategoryPage() {
             </p>
           </motion.div>
 
+          {/* Template gallery — only shown if templates exist for this country/occasion */}
+          {templates.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="mb-10"
+            >
+              <h2 className="font-serif text-lg text-ink-900 mb-4">Choose your template</h2>
+              <div className={`grid gap-4 ${templates.length === 1 ? "grid-cols-1 max-w-xs" : "grid-cols-2 sm:grid-cols-3"}`}>
+                {templates.map((tpl) => (
+                  <button
+                    key={tpl.id}
+                    onClick={() => setSelectedTemplate(tpl.id)}
+                    className={`group relative rounded-2xl overflow-hidden border-2 transition-all duration-200 ${
+                      selectedTemplate === tpl.id
+                        ? "border-gold-400 shadow-lg scale-[1.02]"
+                        : "border-gold-400/20 hover:border-gold-400/60"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={tpl.imageUrl}
+                      alt={tpl.name}
+                      className="w-full aspect-[3/4] object-cover"
+                    />
+                    {/* Selected badge */}
+                    {selectedTemplate === tpl.id && (
+                      <div className="absolute top-2 right-2 bg-gold-gradient text-cream-50 text-[10px] tracking-widest px-2 py-0.5 rounded-full">
+                        ✓ SELECTED
+                      </div>
+                    )}
+                    <div className="p-3 bg-white text-left">
+                      <p className="font-sans text-sm text-ink-900">{tpl.name}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
           {/* Page count selector */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            transition={{ delay: templates.length > 0 ? 0.2 : 0.1 }}
             className="mb-10"
           >
             <h2 className="font-serif text-lg text-ink-900 mb-4">How many pages?</h2>
