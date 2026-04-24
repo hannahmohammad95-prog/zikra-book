@@ -59,8 +59,8 @@ export default async function HomePage() {
 
       {/* 5. Footer */}
       <footer className="bg-ink-900 text-cream-200/60 py-12 px-6 text-center">
-        <p className="font-serif text-gold-400 text-xl mb-2">Zikra</p>
-        <p className="text-xs tracking-widest uppercase mb-6">Preserve Qatar, Forever</p>
+        <p className="font-serif text-gold-400 text-xl mb-2">Zikra Book</p>
+        <p className="text-xs tracking-widest uppercase mb-6">Every journey deserves a page.</p>
         <p className="text-xs">© {new Date().getFullYear()} Zikra Book. All rights reserved.</p>
       </footer>
     </>

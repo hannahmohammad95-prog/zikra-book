@@ -89,7 +89,7 @@ export default function BookViewer() {
               <div className="relative text-center px-8 flex flex-col items-center gap-2">
                 {/* Arabic — same font as logo */}
                 <p
-                  className="text-3xl leading-none"
+                  className="text-5xl leading-none"
                   style={{
                     fontFamily: "var(--font-arabic)",
                     direction: "rtl",
@@ -104,7 +104,7 @@ export default function BookViewer() {
 
                 {/* English — same font as logo */}
                 <p
-                  className="text-[10px] tracking-[0.28em] uppercase"
+                  className="text-[13px] tracking-[0.28em] uppercase"
                   style={{
                     fontFamily: "var(--font-cormorant)",
                     fontWeight: 300,
@@ -117,7 +117,7 @@ export default function BookViewer() {
 
                 {/* Tagline */}
                 <p
-                  className="text-[10px] italic mt-2 leading-relaxed"
+                  className="text-[12px] italic mt-2 leading-relaxed"
                   style={{
                     fontFamily: "var(--font-cormorant)",
                     fontWeight: 300,
