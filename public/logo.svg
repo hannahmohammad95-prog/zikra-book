@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 180" width="400" height="180">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&amp;family=Noto+Naskh+Arabic:wght@400&amp;display=swap');
+    </style>
+  </defs>
+  
+  <!-- Background transparent -->
+  <rect width="400" height="180" fill="none"/>
+  
+  <!-- Arabic text: ذكرى -->
+  <text 
+    x="200" 
+    y="72" 
+    font-family="'Noto Naskh Arabic', 'Arial Unicode MS', serif" 
+    font-size="42" 
+    font-weight="400"
+    fill="#1c1a17" 
+    text-anchor="middle"
+    letter-spacing="2">ذكرى</text>
+  
+  <!-- Divider line -->
+  <line x1="155" y1="90" x2="245" y2="90" stroke="#c4a882" stroke-width="0.8"/>
+  
+  <!-- English text: ZIKRA BOOK -->
+  <text 
+    x="200" 
+    y="122" 
+    font-family="'Cormorant Garamond', 'Georgia', serif" 
+    font-size="24" 
+    font-weight="300"
+    fill="#1c1a17" 
+    text-anchor="middle" 
+    letter-spacing="8">ZIKRA BOOK</text>
+
+</svg>

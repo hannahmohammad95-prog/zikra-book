@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Nav() {
@@ -16,9 +17,8 @@ export default function Nav() {
       className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm"
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="flex flex-col items-start leading-none">
-          <span className="font-serif text-sm tracking-[0.3em] text-gold-600 uppercase">Zikra Book</span>
-          <span className="font-serif text-xs text-gold-400 tracking-widest" style={{ fontFeatureSettings: '"kern"' }}>ذكرى</span>
+        <Link href="/">
+          <Image src="/logo.svg" alt="Zikra Book" width={100} height={45} priority />
         </Link>
 
         <div className="flex items-center gap-8 text-sm tracking-wide">

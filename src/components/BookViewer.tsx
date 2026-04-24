@@ -11,11 +11,11 @@ export default function BookViewer() {
     offset: ["start end", "end start"],
   });
 
-  // Full 360° feel — rotates from tilted left to tilted right as you scroll
-  const rotateY = useTransform(scrollYProgress, [0, 1], [-35, 35]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [10, 0, -10]);
-  const scale   = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.85, 1, 1, 0.85]);
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
+  // Full 360° rotation as user scrolls through the section
+  const rotateY = useTransform(scrollYProgress, [0, 1], [0, 360]);
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [8, 0, -8]);
+  const scale   = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
   return (
     <section
@@ -70,8 +70,8 @@ export default function BookViewer() {
             <div
               className="absolute inset-0 rounded-r-xl flex items-center justify-center overflow-hidden"
               style={{
-                background: "linear-gradient(160deg, #D4B483 0%, #8A6225 55%, #2E2010 100%)",
-                boxShadow: "12px 16px 60px rgba(107,74,16,0.5), -4px 0 16px rgba(0,0,0,0.25)",
+                background: "linear-gradient(160deg, #2C3E5A 0%, #1A2740 55%, #0F1A2E 100%)",
+                boxShadow: "12px 16px 60px rgba(15,26,46,0.45), -4px 0 16px rgba(0,0,0,0.2)",
               }}
             >
               {/* Subtle texture overlay */}
@@ -102,7 +102,7 @@ export default function BookViewer() {
             <div
               className="absolute left-0 top-2 bottom-2 w-6"
               style={{
-                background: "linear-gradient(to right, #1A1208, #3D2D18)",
+                background: "linear-gradient(to right, #080F1C, #1A2740)",
                 transform: "translateX(-22px) rotateY(-90deg)",
                 transformOrigin: "right center",
                 boxShadow: "-6px 0 20px rgba(0,0,0,0.4)",
