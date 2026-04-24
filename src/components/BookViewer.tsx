@@ -28,8 +28,8 @@ export default function BookViewer() {
     <section
       ref={ref}
       id="story"
-      className="flex flex-col items-center justify-center bg-cream-50 px-6 py-32"
-      style={{ minHeight: "160vh" }}
+      className="flex flex-col items-center justify-center bg-cream-50 px-6 py-16"
+      style={{ minHeight: "110vh" }}
     >
       {/* Soft warm glow */}
       <div
@@ -59,7 +59,7 @@ export default function BookViewer() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.1 }}
-        className="font-serif text-4xl md:text-6xl text-ink-900 text-center mb-16 max-w-xl leading-tight"
+        className="font-serif text-4xl md:text-6xl text-ink-900 text-center mb-10 max-w-xl leading-tight"
       >
         A book that holds<br />the weight of a place.
       </motion.h2>
@@ -160,7 +160,7 @@ export default function BookViewer() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1, delay: 0.4 }}
-        className="mt-16 text-ink-700 text-center max-w-md leading-relaxed font-sans text-sm"
+        className="mt-10 text-ink-700 text-center max-w-md leading-relaxed font-sans text-sm"
       >
         A4 format. Matte cover. Double-sided laminated photos inside.
         Every page crafted to hold a memory that lasts forever.
