@@ -18,7 +18,7 @@ export default function Nav() {
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/">
-          <Image src="/logo.svg" alt="Zikra Book" width={100} height={45} priority />
+          <Image src="/logo.svg" alt="Zikra Book" width={160} height={72} priority />
         </Link>
 
         <div className="flex items-center gap-8 text-sm tracking-wide">

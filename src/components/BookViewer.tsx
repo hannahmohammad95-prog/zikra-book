@@ -3,34 +3,42 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+// Beige/linen book colours — calm and premium
+const COVER_BG   = "linear-gradient(160deg, #F0E6D0 0%, #E2D0B0 50%, #D4BC90 100%)";
+const COVER_SHADOW = "12px 16px 60px rgba(180,150,100,0.25), -4px 0 16px rgba(0,0,0,0.08)";
+const SPINE_BG   = "linear-gradient(to left, #E2D0B0, #D4BC90)";
+const TEXT_COLOR = "#5C4A2A";
+
 export default function BookViewer() {
   const ref = useRef<HTMLDivElement>(null);
 
+  // Make the section 200vh so scrolling is slower and the rotation feels cinematic
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
 
-  // Full 360° rotation as user scrolls through the section
-  const rotateY = useTransform(scrollYProgress, [0, 1], [0, 360]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [8, 0, -8]);
-  const scale   = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+  // Slower: 0 → 270° over the full scroll range
+  const rotateY = useTransform(scrollYProgress, [0, 1], [0, 270]);
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [6, 0, -6]);
+  const scale   = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.82, 1, 1, 0.82]);
   const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
 
   return (
     <section
       ref={ref}
       id="story"
-      className="min-h-screen flex flex-col items-center justify-center bg-cream-50 px-6 py-24"
+      className="flex flex-col items-center justify-center bg-cream-50 px-6 py-32"
+      style={{ minHeight: "160vh" }}
     >
-      {/* Soft gold glow behind the book */}
+      {/* Soft warm glow */}
       <div
         aria-hidden
         className="absolute pointer-events-none"
         style={{
-          width: "600px",
-          height: "600px",
-          background: "radial-gradient(ellipse, rgba(196,154,90,0.15) 0%, transparent 70%)",
+          width: "500px",
+          height: "500px",
+          background: "radial-gradient(ellipse, rgba(212,188,144,0.18) 0%, transparent 70%)",
         }}
       />
 
@@ -61,64 +69,62 @@ export default function BookViewer() {
         <motion.div
           style={{ rotateY, rotateX, scale, opacity }}
           className="relative"
-          transition={{ type: "spring", stiffness: 40, damping: 20 }}
         >
-          {/* Book wrapper — large and dramatic */}
           <div className="relative w-72 h-96 md:w-96 md:h-[30rem]">
 
-            {/* Front cover */}
+            {/* Front cover — off-white / linen beige */}
             <div
-              className="absolute inset-0 rounded-r-xl flex items-center justify-center overflow-hidden"
-              style={{
-                background: "linear-gradient(160deg, #2C3E5A 0%, #1A2740 55%, #0F1A2E 100%)",
-                boxShadow: "12px 16px 60px rgba(15,26,46,0.45), -4px 0 16px rgba(0,0,0,0.2)",
-              }}
+              className="absolute inset-0 rounded-l-sm rounded-r-xl flex items-center justify-center overflow-hidden"
+              style={{ background: COVER_BG, boxShadow: COVER_SHADOW }}
             >
-              {/* Subtle texture overlay */}
+              {/* Subtle linen texture */}
               <div
-                className="absolute inset-0 opacity-10"
+                className="absolute inset-0"
                 style={{
-                  backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)",
+                  backgroundImage: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(180,150,100,0.04) 3px, rgba(180,150,100,0.04) 4px)",
                 }}
               />
 
               {/* Cover text */}
               <div className="relative text-center px-10">
-                <div className="mb-6 mx-auto w-10 h-px bg-cream-50/30" />
-                <p className="text-cream-50/50 text-[10px] tracking-[0.5em] uppercase mb-4 font-sans">
+                <div className="mb-5 mx-auto w-8 h-px" style={{ background: TEXT_COLOR, opacity: 0.3 }} />
+                <p className="text-[10px] tracking-[0.5em] uppercase mb-4 font-sans" style={{ color: TEXT_COLOR, opacity: 0.5 }}>
                   Zikra Book
                 </p>
-                <p className="font-serif text-cream-50 text-3xl leading-snug mb-2">
+                <p className="font-serif text-3xl leading-snug mb-2" style={{ color: TEXT_COLOR }}>
                   ذكرى
                 </p>
-                <p className="font-serif text-cream-50/60 text-sm italic">
+                <p className="font-serif text-sm italic" style={{ color: TEXT_COLOR, opacity: 0.55 }}>
                   every journey deserves a page
                 </p>
-                <div className="mt-6 mx-auto w-10 h-px bg-cream-50/30" />
+                <div className="mt-5 mx-auto w-8 h-px" style={{ background: TEXT_COLOR, opacity: 0.3 }} />
               </div>
             </div>
 
-            {/* Spine */}
+            {/* Spine — RIGHT side, same colour as cover */}
             <div
-              className="absolute left-0 top-2 bottom-2 w-6"
+              className="absolute right-0 top-2 bottom-2 w-6"
               style={{
-                background: "linear-gradient(to right, #080F1C, #1A2740)",
-                transform: "translateX(-22px) rotateY(-90deg)",
-                transformOrigin: "right center",
-                boxShadow: "-6px 0 20px rgba(0,0,0,0.4)",
+                background: SPINE_BG,
+                transform: "translateX(22px) rotateY(90deg)",
+                transformOrigin: "left center",
+                boxShadow: "6px 0 20px rgba(0,0,0,0.08)",
               }}
             />
 
-            {/* Page stack */}
+            {/* Page stack — LEFT side */}
             <div
-              className="absolute right-0 top-3 bottom-3 w-4 bg-cream-100 rounded-r-sm"
-              style={{ boxShadow: "inset -3px 0 8px rgba(0,0,0,0.08), 2px 0 4px rgba(0,0,0,0.05)" }}
+              className="absolute left-0 top-3 bottom-3 w-4 rounded-l-sm"
+              style={{
+                background: "linear-gradient(to right, #F5F0E8, #EDE4D0)",
+                boxShadow: "inset 3px 0 8px rgba(0,0,0,0.06)",
+              }}
             />
           </div>
         </motion.div>
       </div>
 
-      {/* Caption */}
+      {/* Description */}
       <motion.p
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -126,8 +132,8 @@ export default function BookViewer() {
         transition={{ duration: 1, delay: 0.4 }}
         className="mt-16 text-ink-700 text-center max-w-md leading-relaxed font-sans text-sm"
       >
-        Printed on 250gsm art paper. Smyth-sewn. Finished with a cloth cover
-        embossed in 22k foil. Not a photobook — an artifact.
+        A4 format. Matte cover. Double-sided laminated photos inside.
+        Every page crafted to hold a memory that lasts forever.
       </motion.p>
     </section>
   );
