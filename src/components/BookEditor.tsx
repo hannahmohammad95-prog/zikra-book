@@ -92,10 +92,10 @@ export default function BookEditor({ photos, pages, category: _category, subcate
           >
             <div className="text-6xl mb-6">✨</div>
             <h1 className="font-serif text-4xl md:text-5xl text-ink-900 mb-4">
-              Your book is ready!
+              Your order is under preparation.
             </h1>
             <p className="text-ink-700 font-sans text-base max-w-md mx-auto mb-4">
-              We have received your layout and photos — your Zikra Book is in good hands.
+              We have received your photos and layout. Our team will be in touch with you shortly to confirm the details.
             </p>
 
             {/* What happens next */}
