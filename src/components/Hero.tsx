@@ -34,7 +34,7 @@ export default function Hero() {
       >
         {/* Eyebrow label */}
         <motion.p variants={item} className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-6 font-sans">
-          Handcrafted in Qatar
+          Handcrafted for Every Journey
         </motion.p>
 
         {/* Main headline */}
@@ -52,8 +52,8 @@ export default function Hero() {
           variants={item}
           className="text-ink-700 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-10 font-sans"
         >
-          Zikra transforms your photographs of Qatar — the dunes, the souqs,
-          the skyline at dusk — into a cinematic heirloom book you will pass down for generations.
+          Zikra transforms your most precious photographs — your travels, your
+          celebrations, your milestones — into a cinematic heirloom book you will pass down for generations.
         </motion.p>
 
         {/* CTA buttons */}
