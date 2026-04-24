@@ -14,7 +14,7 @@ export default async function HomePage() {
   let products: ShopifyProduct[] = [];
   try {
     products = await getProducts(6);
-  } catch {
+  } catch (_e) {
     // Token not configured yet — graceful fallback
   }
 
