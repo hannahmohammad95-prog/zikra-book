@@ -17,9 +17,9 @@ const CATEGORY_NAMES: Record<string, string> = {
 
 // ── Page count options with pricing ──────────────────────────────────────────
 const PAGE_OPTIONS = [
-  { pages: 20, label: "20 Pages", price: 299, note: "Perfect for a short trip or event" },
-  { pages: 40, label: "40 Pages", price: 449, note: "Our most popular — room to breathe", popular: true },
-  { pages: 60, label: "60 Pages", price: 599, note: "The full story, nothing left out" },
+  { pages: 20, label: "20 Pages", price: 250, note: "Perfect for a short trip or event" },
+  { pages: 40, label: "40 Pages", price: 350, note: "Our most popular — room to breathe", popular: true },
+  { pages: 60, label: "60 Pages", price: 550, note: "The full story, nothing left out" },
 ];
 
 export default function CategoryPage() {
