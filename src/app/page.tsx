@@ -7,11 +7,11 @@ import Hero          from "@/components/Hero";
 import BookViewer    from "@/components/BookViewer";
 import StickySection from "@/components/StickySection";
 import ProductCard   from "@/components/ProductCard";
-import { getProducts } from "@/lib/shopify";
+import { getProducts, type ShopifyProduct } from "@/lib/shopify";
 
 export default async function HomePage() {
   // Fetch products — if the token isn't set yet, we show an empty grid
-  let products = [];
+  let products: ShopifyProduct[] = [];
   try {
     products = await getProducts(6);
   } catch {
