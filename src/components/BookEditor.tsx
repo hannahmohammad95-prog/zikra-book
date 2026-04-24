@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
 import { useRouter } from "next/navigation";
-import type { UploadedPhoto } from "@/app/create/[category]/upload/page";
+import type { UploadedPhoto } from "@/types/book";
 
 // ── Layout options per page ───────────────────────────────────────────────────
 type Layout = "full" | "left" | "right" | "top" | "bottom" | "two";
@@ -27,10 +27,11 @@ type Props = {
   photos:       UploadedPhoto[];
   pages:        number;
   category:     string;
+  subcategory:  string;
   searchParams: Record<string, string>;
 };
 
-export default function BookEditor({ photos, pages, category, searchParams }: Props) {
+export default function BookEditor({ photos, pages, category, subcategory: _subcategory, searchParams }: Props) {
   const router = useRouter();
 
   // Initialise all pages with "full" layout and no photo assigned

@@ -1,219 +1,139 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
 
-// ── Category display names ────────────────────────────────────────────────────
-const CATEGORY_NAMES: Record<string, string> = {
-  travel:     "Travel",
-  wedding:    "Wedding",
-  birthday:   "Birthday",
-  pregnancy:  "Pregnancy Journey",
-  graduation: "Graduation",
-  family:     "Family",
+type SubOption = { slug: string; emoji: string; title: string };
+
+const SUB_OPTIONS: Record<string, SubOption[]> = {
+  travel: [
+    { slug: "qatar",        emoji: "🇶🇦", title: "Qatar"        },
+    { slug: "uae",          emoji: "🇦🇪", title: "UAE"          },
+    { slug: "saudi-arabia", emoji: "🇸🇦", title: "Saudi Arabia" },
+    { slug: "jordan",       emoji: "🇯🇴", title: "Jordan"       },
+    { slug: "egypt",        emoji: "🇪🇬", title: "Egypt"        },
+    { slug: "morocco",      emoji: "🇲🇦", title: "Morocco"      },
+    { slug: "turkey",       emoji: "🇹🇷", title: "Turkey"       },
+    { slug: "france",       emoji: "🇫🇷", title: "France"       },
+    { slug: "italy",        emoji: "🇮🇹", title: "Italy"        },
+    { slug: "spain",        emoji: "🇪🇸", title: "Spain"        },
+    { slug: "portugal",     emoji: "🇵🇹", title: "Portugal"     },
+    { slug: "australia",    emoji: "🇦🇺", title: "Australia"    },
+    { slug: "new-zealand",  emoji: "🇳🇿", title: "New Zealand"  },
+    { slug: "japan",        emoji: "🇯🇵", title: "Japan"        },
+    { slug: "singapore",    emoji: "🇸🇬", title: "Singapore"    },
+    { slug: "china",        emoji: "🇨🇳", title: "China"        },
+    { slug: "thailand",     emoji: "🇹🇭", title: "Thailand"     },
+    { slug: "indonesia",    emoji: "🇮🇩", title: "Indonesia"    },
+    { slug: "vietnam",      emoji: "🇻🇳", title: "Vietnam"      },
+    { slug: "south-africa", emoji: "🇿🇦", title: "South Africa" },
+    { slug: "tanzania",     emoji: "🇹🇿", title: "Tanzania"     },
+    { slug: "canada",       emoji: "🇨🇦", title: "Canada"       },
+    { slug: "mexico",       emoji: "🇲🇽", title: "Mexico"       },
+    { slug: "peru",         emoji: "🇵🇪", title: "Peru"         },
+    { slug: "argentina",    emoji: "🇦🇷", title: "Argentina"    },
+    { slug: "ecuador",      emoji: "🇪🇨", title: "Ecuador"      },
+    { slug: "puerto-rico",  emoji: "🇵🇷", title: "Puerto Rico"  },
+  ],
+  occasions: [
+    { slug: "wedding",    emoji: "💍", title: "Wedding"           },
+    { slug: "birthday",   emoji: "🎂", title: "Birthday"          },
+    { slug: "graduation", emoji: "🎓", title: "Graduation"        },
+    { slug: "pregnancy",  emoji: "🤰", title: "Pregnancy Journey" },
+  ],
+  family: [
+    { slug: "sibling-book",  emoji: "👫", title: "Sibling Book"       },
+    { slug: "mothers-day",   emoji: "💐", title: "Mother's Day"        },
+    { slug: "fathers-day",   emoji: "👔", title: "Father's Day"        },
+    { slug: "annual-book",   emoji: "📖", title: "Annual Family Book"  },
+    { slug: "reunion",       emoji: "🏡", title: "Family Reunion"      },
+  ],
 };
 
-// ── Page count options with pricing ──────────────────────────────────────────
-const PAGE_OPTIONS = [
-  { pages: 20, label: "20 Pages", price: 250, note: "Perfect for a short trip or event" },
-  { pages: 40, label: "40 Pages", price: 350, note: "Our most popular — room to breathe", popular: true },
-  { pages: 60, label: "60 Pages", price: 550, note: "The full story, nothing left out" },
-];
+const CATEGORY_TITLES: Record<string, { title: string; subtitle: string }> = {
+  travel:    { title: "Where did you go?",        subtitle: "Choose your destination and we'll tailor your book to that journey." },
+  occasions: { title: "What's the occasion?",     subtitle: "Pick the milestone and we'll craft every page around it." },
+  family:    { title: "What kind of family book?", subtitle: "Choose the type and we'll make it one they'll treasure forever." },
+};
+
+const container = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.05 } },
+};
+
+const card = {
+  hidden: { opacity: 0, y: 20 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+};
 
 export default function CategoryPage() {
   const params   = useParams();
   const router   = useRouter();
   const category = typeof params.category === "string" ? params.category : "";
-  const title    = CATEGORY_NAMES[category] ?? "Your Book";
-
-  const [selectedPages, setSelectedPages] = useState<number>(40);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", notes: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  function validate() {
-    const e: Record<string, string> = {};
-    if (!form.name.trim())  e.name  = "Please enter your name.";
-    if (!form.email.trim()) e.email = "Please enter your email.";
-    else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = "Please enter a valid email.";
-    if (!form.phone.trim()) e.phone = "Please enter your phone number.";
-    return e;
-  }
-
-  function handleContinue() {
-    const e = validate();
-    if (Object.keys(e).length > 0) { setErrors(e); return; }
-
-    // Pass everything forward as URL search params
-    const params = new URLSearchParams({
-      pages: String(selectedPages),
-      name:  form.name,
-      email: form.email,
-      phone: form.phone,
-      notes: form.notes,
-    });
-    router.push(`/create/${category}/upload?${params.toString()}`);
-  }
+  const options  = SUB_OPTIONS[category] ?? [];
+  const meta     = CATEGORY_TITLES[category] ?? { title: "Choose your book", subtitle: "" };
 
   return (
     <>
       <Nav />
       <main className="min-h-screen bg-cream-50 pt-32 pb-24 px-6">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
 
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
             className="text-center mb-12"
           >
             <p className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-4 font-sans">
-              Step 2 of 3
+              Step 1 of 3
             </p>
             <h1 className="font-serif text-4xl md:text-5xl text-ink-900 mb-3 leading-tight">
-              Your {title} Book
+              {meta.title}
             </h1>
-            <p className="text-ink-700 font-sans text-sm">
-              Choose your size and tell us a little about yourself.
+            <p className="text-ink-700 font-sans text-sm max-w-md mx-auto">
+              {meta.subtitle}
             </p>
           </motion.div>
 
-          {/* Page count selector */}
+          {/* Sub-options grid */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-10"
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className={`grid gap-4 ${
+              category === "travel"
+                ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4"
+                : "grid-cols-1 sm:grid-cols-2"
+            }`}
           >
-            <h2 className="font-serif text-lg text-ink-900 mb-4">How many pages?</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              {PAGE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.pages}
-                  onClick={() => setSelectedPages(opt.pages)}
-                  className={`relative rounded-xl border p-5 text-left transition-all duration-200 ${
-                    selectedPages === opt.pages
-                      ? "border-gold-400 bg-white shadow-md"
-                      : "border-gold-400/20 bg-white hover:border-gold-400/50"
-                  }`}
+            {options.map((opt) => (
+              <motion.div key={opt.slug} variants={card}>
+                <Link
+                  href={`/create/${category}/${opt.slug}`}
+                  className="group flex items-center gap-3 p-4 bg-white rounded-xl border border-gold-400/20 hover:border-gold-400/60 hover:shadow-md transition-all duration-200"
                 >
-                  {opt.popular && (
-                    <span className="absolute -top-2.5 left-4 bg-gold-gradient text-cream-50 text-[10px] tracking-widest px-3 py-0.5 rounded-full">
-                      POPULAR
-                    </span>
-                  )}
-                  <p className="font-serif text-xl text-ink-900 mb-1">{opt.label}</p>
-                  <p className="text-gold-600 font-sans text-sm font-medium mb-2">
-                    {opt.price} QAR
-                  </p>
-                  <p className="text-ink-700 text-xs font-sans leading-snug">{opt.note}</p>
-
-                  {/* Selected indicator */}
-                  <div className={`mt-3 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
-                    selectedPages === opt.pages ? "border-gold-400 bg-gold-400" : "border-ink-300"
-                  }`}>
-                    {selectedPages === opt.pages && (
-                      <div className="w-1.5 h-1.5 rounded-full bg-white" />
-                    )}
-                  </div>
-                </button>
-              ))}
-            </div>
+                  <span className="text-2xl">{opt.emoji}</span>
+                  <span className="font-sans text-sm text-ink-900 group-hover:text-gold-600 transition-colors">
+                    {opt.title}
+                  </span>
+                  <span className="ml-auto text-gold-400 text-xs group-hover:translate-x-0.5 transition-transform">→</span>
+                </Link>
+              </motion.div>
+            ))}
           </motion.div>
 
-          {/* Details form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-2xl border border-gold-400/20 p-8 mb-8"
-          >
-            <h2 className="font-serif text-lg text-ink-900 mb-6">Your details</h2>
-
-            <div className="flex flex-col gap-5">
-              {/* Name */}
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="Hannah Mohammed"
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
-                />
-                {errors.name && <p className="text-red-400 text-xs mt-1">{errors.name}</p>}
-              </div>
-
-              {/* Email */}
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">
-                  Email Address *
-                </label>
-                <input
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="you@example.com"
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
-                />
-                {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
-              </div>
-
-              {/* Phone */}
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">
-                  Phone Number *
-                </label>
-                <input
-                  type="tel"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  placeholder="+974 5555 0000"
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
-                />
-                {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
-              </div>
-
-              {/* Notes */}
-              <div>
-                <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">
-                  Special Requests <span className="normal-case tracking-normal text-ink-400">(optional)</span>
-                </label>
-                <textarea
-                  value={form.notes}
-                  onChange={(e) => setForm({ ...form, notes: e.target.value })}
-                  placeholder="Any special wishes, dedications, or requests for your book..."
-                  rows={3}
-                  className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300 resize-none"
-                />
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Continue button */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 items-center"
-          >
+          {/* Back */}
+          <div className="mt-10 text-center">
             <button
               onClick={() => router.back()}
               className="text-ink-700 text-sm font-sans hover:text-gold-500 transition-colors"
             >
               ← Back
             </button>
-            <button
-              onClick={handleContinue}
-              className="flex-1 sm:flex-none px-10 py-4 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-lg"
-            >
-              CONTINUE TO UPLOAD →
-            </button>
-          </motion.div>
+          </div>
 
         </div>
       </main>
