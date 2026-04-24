@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Noto_Naskh_Arabic, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
 // Google Fonts loaded via Next.js — zero layout shift, zero external request
@@ -12,6 +12,20 @@ const inter = Inter({
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-playfair",
+  display: "swap",
+});
+
+const arabic = Noto_Naskh_Arabic({
+  subsets: ["arabic"],
+  weight: ["400"],
+  variable: "--font-arabic",
+  display: "swap",
+});
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300"],
+  variable: "--font-cormorant",
   display: "swap",
 });
 
@@ -29,7 +43,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${arabic.variable} ${cormorant.variable}`}>
       <body>{children}</body>
     </html>
   );
