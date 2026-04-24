@@ -24,14 +24,14 @@ type PageData = {
 };
 
 type Props = {
-  photos:       UploadedPhoto[];
-  pages:        number;
-  category:     string;
-  subcategory:  string;
-  searchParams: Record<string, string>;
+  photos:        UploadedPhoto[];
+  pages:         number;
+  category:      string;
+  subcategory?:  string;
+  searchParams:  Record<string, string>;
 };
 
-export default function BookEditor({ photos, pages, category, subcategory: _subcategory, searchParams }: Props) {
+export default function BookEditor({ photos, pages, category: _category, subcategory: _subcategory, searchParams }: Props) {
   const router = useRouter();
 
   // Initialise all pages with "full" layout and no photo assigned
