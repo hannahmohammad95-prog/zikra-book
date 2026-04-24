@@ -18,9 +18,8 @@ export default function BookViewer() {
     offset: ["start end", "end start"],
   });
 
-  // Gentle rock: angled left → faces you → angled right
-  // Never goes past 90° so text never mirrors
-  const rotateY = useTransform(scrollYProgress, [0, 0.5, 1], [-30, 0, 30]);
+  // Rock from -45° → facing you → 45°
+  const rotateY = useTransform(scrollYProgress, [0, 0.5, 1], [-45, 0, 45]);
   const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [5, 0, -5]);
   const scale   = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.88, 1, 1, 0.88]);
   const opacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0, 1, 1, 0]);
@@ -86,22 +85,49 @@ export default function BookViewer() {
                 }}
               />
 
-              {/* Cover text */}
-              <div className="relative text-center px-10">
-                <div className="mb-5 mx-auto w-8 h-px" style={{ background: TEXT_COLOR, opacity: 0.3 }} />
-                <p className="text-[10px] tracking-[0.5em] uppercase mb-4 font-sans" style={{ color: TEXT_COLOR, opacity: 0.5 }}>
-                  Zikra Book
-                </p>
+              {/* Cover text — mirrors the logo exactly */}
+              <div className="relative text-center px-8 flex flex-col items-center gap-2">
+                {/* Arabic — same font as logo */}
                 <p
-                  className="font-serif text-3xl leading-snug mb-2"
-                  style={{ color: TEXT_COLOR, direction: "rtl", unicodeBidi: "embed" }}
+                  className="text-3xl leading-none"
+                  style={{
+                    fontFamily: "var(--font-arabic)",
+                    direction: "rtl",
+                    color: TEXT_COLOR,
+                  }}
                 >
                   ذكرى
                 </p>
-                <p className="font-serif text-sm italic" style={{ color: TEXT_COLOR, opacity: 0.55 }}>
+
+                {/* Gold divider — same as logo */}
+                <div className="w-12 h-px" style={{ background: "#C4A882", opacity: 0.7 }} />
+
+                {/* English — same font as logo */}
+                <p
+                  className="text-[10px] tracking-[0.28em] uppercase"
+                  style={{
+                    fontFamily: "var(--font-cormorant)",
+                    fontWeight: 300,
+                    color: TEXT_COLOR,
+                    opacity: 0.8,
+                  }}
+                >
+                  Zikra Book
+                </p>
+
+                {/* Tagline */}
+                <p
+                  className="text-[10px] italic mt-2 leading-relaxed"
+                  style={{
+                    fontFamily: "var(--font-cormorant)",
+                    fontWeight: 300,
+                    color: TEXT_COLOR,
+                    opacity: 0.55,
+                    letterSpacing: "0.05em",
+                  }}
+                >
                   every journey deserves a page
                 </p>
-                <div className="mt-5 mx-auto w-8 h-px" style={{ background: TEXT_COLOR, opacity: 0.3 }} />
               </div>
             </div>
 
