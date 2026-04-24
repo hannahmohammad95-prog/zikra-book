@@ -18,11 +18,12 @@ export default function BookViewer() {
     offset: ["start end", "end start"],
   });
 
-  // Slower: 0 → 270° over the full scroll range
-  const rotateY = useTransform(scrollYProgress, [0, 1], [0, 270]);
-  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [6, 0, -6]);
-  const scale   = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.82, 1, 1, 0.82]);
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0, 1, 1, 0]);
+  // Gentle rock: angled left → faces you → angled right
+  // Never goes past 90° so text never mirrors
+  const rotateY = useTransform(scrollYProgress, [0, 0.5, 1], [-30, 0, 30]);
+  const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [5, 0, -5]);
+  const scale   = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.88, 1, 1, 0.88]);
+  const opacity = useTransform(scrollYProgress, [0, 0.12, 0.88, 1], [0, 1, 1, 0]);
 
   return (
     <section
@@ -91,7 +92,10 @@ export default function BookViewer() {
                 <p className="text-[10px] tracking-[0.5em] uppercase mb-4 font-sans" style={{ color: TEXT_COLOR, opacity: 0.5 }}>
                   Zikra Book
                 </p>
-                <p className="font-serif text-3xl leading-snug mb-2" style={{ color: TEXT_COLOR }}>
+                <p
+                  className="font-serif text-3xl leading-snug mb-2"
+                  style={{ color: TEXT_COLOR, direction: "rtl", unicodeBidi: "embed" }}
+                >
                   ذكرى
                 </p>
                 <p className="font-serif text-sm italic" style={{ color: TEXT_COLOR, opacity: 0.55 }}>
