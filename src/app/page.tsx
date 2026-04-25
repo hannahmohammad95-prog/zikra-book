@@ -58,10 +58,16 @@ export default async function HomePage() {
       </section>
 
       {/* 5. Footer */}
-      <footer className="bg-ink-900 text-cream-200/60 py-12 px-6 text-center">
-        <p className="font-serif text-gold-400 text-xl mb-2">Zikra Book</p>
-        <p className="text-xs tracking-widest uppercase mb-6">Every journey deserves a page.</p>
-        <p className="text-xs">© {new Date().getFullYear()} Zikra Book. All rights reserved.</p>
+      <footer className="bg-ink-900 text-cream-200/60 py-16 px-6 text-center">
+        <p className="font-serif text-gold-400 text-2xl mb-1">Zikra Book</p>
+        <p className="text-xs tracking-widest uppercase mb-8">Every journey deserves a page.</p>
+        <div className="flex justify-center gap-8 text-xs mb-8">
+          <a href="/about"              className="hover:text-gold-400 transition-colors">About</a>
+          <a href="/contact"            className="hover:text-gold-400 transition-colors">Contact</a>
+          <a href="/#books"             className="hover:text-gold-400 transition-colors">Books</a>
+          <a href="mailto:hello@zikrabook.com" className="hover:text-gold-400 transition-colors">hello@zikrabook.com</a>
+        </div>
+        <p className="text-xs opacity-40">© {new Date().getFullYear()} Zikra Book. All rights reserved.</p>
       </footer>
     </>
   );

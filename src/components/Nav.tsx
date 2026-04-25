@@ -35,7 +35,8 @@ export default function Nav() {
         <div className="flex items-center gap-6 text-sm tracking-wide">
           <Link href="#story"   className="hidden md:block text-ink-700 hover:text-gold-500 transition-colors">Story</Link>
           <Link href="#books"   className="hidden md:block text-ink-700 hover:text-gold-500 transition-colors">Books</Link>
-          <Link href="#process" className="hidden md:block text-ink-700 hover:text-gold-500 transition-colors">Process</Link>
+          <Link href="/about"   className="hidden md:block text-ink-700 hover:text-gold-500 transition-colors">About</Link>
+          <Link href="/contact" className="hidden md:block text-ink-700 hover:text-gold-500 transition-colors">Contact</Link>
           <Link
             href="#books"
             className="px-5 py-2 bg-gold-gradient text-cream-50 text-xs rounded-full tracking-widest font-medium hover:opacity-90 transition-opacity"
