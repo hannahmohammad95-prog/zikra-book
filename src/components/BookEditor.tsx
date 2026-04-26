@@ -35,8 +35,10 @@ type Props = {
 export default function BookEditor({ photos, pages, category, subcategory, searchParams }: Props) {
   const router = useRouter();
 
+  const totalSides = pages * 2; // each page has a front and a back
+
   const [pageData, setPageData] = useState<PageData[]>(
-    Array.from({ length: pages }, () => ({ layout: "full", photos: [null, null] }))
+    Array.from({ length: totalSides }, () => ({ layout: "full", photos: [null, null] }))
   );
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState(0);
@@ -49,6 +51,13 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
 
   const page        = pageData[currentPage];
   const filledPages = pageData.filter((p) => p.photos[0] !== null).length;
+
+  // Label each side: "Page 1 — Front", "Page 1 — Back", "Page 2 — Front" …
+  function getSideLabel(index: number) {
+    const pageNum = Math.floor(index / 2) + 1;
+    const side    = index % 2 === 0 ? "Front" : "Back";
+    return { pageNum, side, full: `Page ${pageNum} — ${side}` };
+  }
 
   function setLayout(layout: Layout) {
     setPageData((prev) => {
@@ -190,7 +199,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
             <p className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-2 font-sans">Book Editor</p>
             <h1 className="font-serif text-3xl text-ink-900">Arrange your photos</h1>
             <p className="text-ink-700 font-sans text-sm mt-1">
-              Page {currentPage + 1} of {pages} · {filledPages} page{filledPages !== 1 ? "s" : ""} filled
+              {getSideLabel(currentPage).full} · {filledPages} of {totalSides} sides filled
             </p>
           </div>
 
@@ -268,27 +277,39 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
           <div className="mt-6 border-t border-gold-400/10 pt-4">
             <p className="text-xs tracking-widest uppercase text-ink-700 font-sans mb-3">Pages</p>
             <div className="flex gap-2 overflow-x-auto pb-2">
-              {pageData.map((p, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrentPage(i)}
-                  className={`flex-shrink-0 overflow-hidden border-2 transition-all ${
-                    i === currentPage
-                      ? "border-gold-400 shadow-md"
-                      : "border-transparent hover:border-gold-400/40"
-                  }`}
-                  style={{ width: "48px", height: "64px", borderRadius: "3px" }}
-                >
-                  {p.photos[0] ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={p.photos[0].url} alt="" className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full bg-cream-100 flex items-center justify-center">
-                      <span className="text-ink-300 text-[10px] font-sans">{i + 1}</span>
+              {pageData.map((p, i) => {
+                const { pageNum, side } = getSideLabel(i);
+                return (
+                  <button
+                    key={i}
+                    onClick={() => setCurrentPage(i)}
+                    className={`flex-shrink-0 overflow-hidden border-2 transition-all flex flex-col ${
+                      i === currentPage
+                        ? "border-gold-400 shadow-md"
+                        : "border-gold-400/10 hover:border-gold-400/40"
+                    }`}
+                    style={{ width: "56px", borderRadius: "3px" }}
+                  >
+                    {/* Thumbnail */}
+                    <div style={{ height: "64px" }} className="w-full overflow-hidden">
+                      {p.photos[0] ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={p.photos[0].url} alt="" className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-cream-100 flex items-center justify-center">
+                          <span className="text-ink-300 text-[10px] font-sans">📷</span>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </button>
-              ))}
+                    {/* Label */}
+                    <div className={`w-full py-0.5 text-center ${i === currentPage ? "bg-gold-400" : "bg-cream-100"}`}>
+                      <p className={`text-[9px] font-sans font-medium leading-tight ${i === currentPage ? "text-white" : "text-ink-500"}`}>
+                        P{pageNum} {side === "Front" ? "▲" : "▼"}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
@@ -304,7 +325,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
               </button>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(pages - 1, p + 1))}
-                disabled={currentPage === pages - 1}
+                disabled={currentPage === totalSides - 1}
                 className="px-5 py-2.5 border border-gold-400/30 rounded-full text-sm font-sans text-ink-700 hover:border-gold-400 transition-colors disabled:opacity-30"
               >
                 Next →
