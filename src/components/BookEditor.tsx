@@ -7,15 +7,16 @@ import { useRouter } from "next/navigation";
 import type { UploadedPhoto } from "@/types/book";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
-type Layout = "full" | "left" | "right" | "top" | "bottom" | "two";
+type Layout = "full" | "left" | "right" | "top" | "bottom" | "two" | "two-vertical";
 
 const LAYOUTS: { id: Layout; label: string; icon: string }[] = [
-  { id: "full",   label: "Full page",   icon: "⬛" },
-  { id: "left",   label: "Left side",   icon: "◧"  },
-  { id: "right",  label: "Right side",  icon: "◨"  },
-  { id: "top",    label: "Top half",    icon: "⬒"  },
-  { id: "bottom", label: "Bottom half", icon: "⬓"  },
-  { id: "two",    label: "Two photos",  icon: "▪▪" },
+  { id: "full",          label: "Full page",      icon: "⬛" },
+  { id: "two",           label: "Side by side",   icon: "◫"  },
+  { id: "two-vertical",  label: "Top & Bottom",   icon: "⬒"  },
+  { id: "left",          label: "Left only",      icon: "◧"  },
+  { id: "right",         label: "Right only",     icon: "◨"  },
+  { id: "top",           label: "Top only",       icon: "▀"  },
+  { id: "bottom",        label: "Bottom only",    icon: "▄"  },
 ];
 
 type PageData = {
@@ -45,6 +46,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
   const [showContact, setShowContact] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
+  const [name, setName] = useState("");
   const [contactType, setContactType] = useState<"email" | "whatsapp">("email");
   const [contact, setContact] = useState("");
   const [formError, setFormError] = useState("");
@@ -109,6 +111,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
   }
 
   async function handleSubmit() {
+    if (!name.trim()) { setFormError("Please enter your name."); return; }
     if (!contact.trim()) {
       setFormError(`Please enter your ${contactType === "email" ? "email address" : "WhatsApp number"}.`);
       return;
@@ -125,7 +128,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
       method:  "POST",
       headers: { "Content-Type": "application/json" },
       body:    JSON.stringify({
-        name: "Customer", contact, contactType,
+        name, contact, contactType,
         category:    category    ?? "",
         subcategory: subcategory ?? "",
         pages,
@@ -272,6 +275,8 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
               <p className="text-center text-ink-400 text-xs font-sans mt-3">
                 {page.layout === "two"
                   ? `Placing in ${selectedSlot === 0 ? "left" : "right"} slot — click the other side to switch`
+                  : page.layout === "two-vertical"
+                  ? `Placing in ${selectedSlot === 0 ? "top" : "bottom"} slot — click the other side to switch`
                   : "Click a photo from the left to place it on this page"}
               </p>
             </div>
@@ -357,6 +362,17 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
                 <h2 className="font-serif text-2xl text-ink-900 mb-2">Almost there! 🎉</h2>
                 <p className="text-ink-700 font-sans text-sm mb-6">How should we send your confirmation?</p>
 
+                {/* Name */}
+                <div className="mb-4">
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="First Name Last Name"
+                    className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
+                  />
+                </div>
+
                 <div className="mb-4">
                   <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-2">
                     Send confirmation via *
@@ -427,6 +443,7 @@ function PagePreview({
   onSelectSlot: (slot: number) => void;
   onClearSlot:  (slot: number) => void;
 }) {
+  // Side by side (left | right)
   if (layout === "two") {
     return (
       <div className="absolute inset-0 flex gap-px">
@@ -445,14 +462,34 @@ function PagePreview({
     );
   }
 
-  // Positions for each layout — all edge-to-edge, no gap
+  // Top & Bottom (top | bottom)
+  if (layout === "two-vertical") {
+    return (
+      <div className="absolute inset-0 flex flex-col gap-px">
+        {[0, 1].map((slot) => (
+          <PhotoSlot
+            key={slot}
+            photo={photos[slot]}
+            selected={selectedSlot === slot}
+            onClick={() => onSelectSlot(slot)}
+            onClear={() => onClearSlot(slot)}
+            className="flex-1 w-full"
+            edgeToEdge
+          />
+        ))}
+      </div>
+    );
+  }
+
+  // Single-photo layouts
   const wrapperClass: Record<Layout, string> = {
-    full:   "absolute inset-0",
-    left:   "absolute left-0 top-0 bottom-0 right-1/2",
-    right:  "absolute right-0 top-0 bottom-0 left-1/2",
-    top:    "absolute top-0 left-0 right-0 bottom-1/2",
-    bottom: "absolute bottom-0 left-0 right-0 top-1/2",
-    two:    "absolute inset-0",
+    full:          "absolute inset-0",
+    left:          "absolute left-0 top-0 bottom-0 right-1/2",
+    right:         "absolute right-0 top-0 bottom-0 left-1/2",
+    top:           "absolute top-0 left-0 right-0 bottom-1/2",
+    bottom:        "absolute bottom-0 left-0 right-0 top-1/2",
+    two:           "absolute inset-0",
+    "two-vertical":"absolute inset-0",
   };
 
   return (
