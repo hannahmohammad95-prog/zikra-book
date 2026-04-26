@@ -1,7 +1,14 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { v2 as cloudinary } from "cloudinary";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+cloudinary.config({
+  cloud_name: "dis5pqgzn",
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -10,6 +17,12 @@ export async function POST(req: Request) {
   const photoLinks = photos
     .map((p: { url: string }, i: number) => `<li><a href="${p.url}">Photo ${i + 1}</a></li>`)
     .join("");
+
+  // Generate a single zip download URL for all photos
+  const publicIds = photos.map((p: { publicId: string }) => p.publicId).filter(Boolean);
+  const zipUrl = publicIds.length > 0
+    ? cloudinary.utils.download_zip_url({ public_ids: publicIds, resource_type: "image" })
+    : null;
 
   try {
     // ── Email to Hannah ───────────────────────────────────────────────────────
@@ -34,7 +47,8 @@ export async function POST(req: Request) {
           </table>
 
           <hr style="border: 1px solid #E8D9A8; margin: 24px 0;" />
-          <h3 style="font-size: 16px; margin-bottom: 12px;">Photo Links</h3>
+          <h3 style="font-size: 16px; margin-bottom: 12px;">Photos (${photos.length} uploaded)</h3>
+          ${zipUrl ? `<a href="${zipUrl}" style="display:inline-block; margin-bottom:16px; padding: 12px 24px; background: linear-gradient(135deg,#D4B483,#A87C3C); color:#fff; border-radius:999px; font-size:13px; text-decoration:none; letter-spacing:2px;">⬇ DOWNLOAD ALL PHOTOS (ZIP)</a>` : ""}
           <ul style="font-size: 14px; line-height: 2;">${photoLinks}</ul>
         </div>
       `,
