@@ -6,7 +6,9 @@
       "Read(//Users/hannah/.nvm/**)",
       "Read(//Users/hannah/**)",
       "Bash(command -v bun)",
-      "Bash(gh --version)"
+      "Bash(gh --version)",
+      "Bash(npm install *)",
+      "Bash(npm run *)"
     ]
   }
 }

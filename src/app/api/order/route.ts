@@ -14,7 +14,7 @@ export async function POST(req: Request) {
   try {
     // ── Email to Hannah ───────────────────────────────────────────────────────
     await resend.emails.send({
-      from:    "Zikra Book Orders <onboarding@resend.dev>",
+      from:    "Zikra Book Orders <hello@zikrabook.com>",
       to:      "hello@zikrabook.com",
       subject: `📖 New Order — ${name} | ${subcategory} (${pages} pages)`,
       html: `
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
     // ── Confirmation email to customer (only if they chose email) ─────────────
     if (contactType === "email") {
       await resend.emails.send({
-        from:    "Zikra Book <onboarding@resend.dev>",
+        from:    "Zikra Book <hello@zikrabook.com>",
         to:      contact,
         subject: "Your Zikra Book order is under preparation ✨",
         html: `
