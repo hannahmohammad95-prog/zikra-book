@@ -44,7 +44,6 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
   const [sending, setSending]           = useState(false);
 
   // Contact form state
-  const [name, setName]               = useState("");
   const [contactType, setContactType] = useState<"email" | "whatsapp">("email");
   const [contact, setContact]         = useState("");
   const [formError, setFormError]     = useState("");
@@ -82,7 +81,6 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
 
   async function handleSubmit() {
     // Validate contact form
-    if (!name.trim()) { setFormError("Please enter your name."); return; }
     if (!contact.trim()) { setFormError(`Please enter your ${contactType === "email" ? "email address" : "WhatsApp number"}.`); return; }
     if (contactType === "email" && !/\S+@\S+\.\S+/.test(contact)) { setFormError("Please enter a valid email."); return; }
     setFormError("");
@@ -95,7 +93,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name, contact, contactType,
+          name: "Customer", contact, contactType,
           category: category ?? "",
           subcategory: subcategory ?? "",
           pages, notes: searchParams.notes ?? "",
@@ -105,7 +103,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
       setSending(false);
       setSubmitted(true);
       // Open Hannah's WhatsApp with pre-filled message
-      const msg = encodeURIComponent(`Hi! I just placed an order on Zikra Book 📖\nName: ${name}\nBook: ${(subcategory ?? "").replace(/-/g, " ")} (${pages} pages)`);
+      const msg = encodeURIComponent(`Hi! I just placed an order on Zikra Book 📖\nBook: ${(subcategory ?? "").replace(/-/g, " ")} (${pages} pages)`);
       window.open(`https://wa.me/97455115749?text=${msg}`, "_blank");
     } else {
       // Send emails and show confirmation
@@ -114,7 +112,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name, contact, contactType,
+          name: "Customer", contact, contactType,
           category: category ?? "",
           subcategory: subcategory ?? "",
           pages, notes: searchParams.notes ?? "",
@@ -336,18 +334,6 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
                 >
                   <h2 className="font-serif text-2xl text-ink-900 mb-2">Almost there! 🎉</h2>
                   <p className="text-ink-700 font-sans text-sm mb-6">How should we send your confirmation?</p>
-
-                  {/* Name */}
-                  <div className="mb-4">
-                    <label className="block text-xs tracking-widest uppercase text-ink-700 font-sans mb-1.5">Your Name *</label>
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Hannah Mohammed"
-                      className="w-full border border-gold-400/30 rounded-lg px-4 py-3 text-sm font-sans text-ink-900 bg-cream-50 focus:outline-none focus:border-gold-400 transition-colors placeholder:text-ink-300"
-                    />
-                  </div>
 
                   {/* Contact type toggle */}
                   <div className="mb-4">
