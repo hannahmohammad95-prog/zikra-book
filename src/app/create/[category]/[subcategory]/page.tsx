@@ -7,9 +7,9 @@ import Nav from "@/components/Nav";
 import { TEMPLATES } from "@/data/templates";
 
 const PAGE_OPTIONS = [
-  { pages: 20, label: "20 Pages", price: 250, note: "Perfect for a short trip or event" },
-  { pages: 40, label: "40 Pages", price: 350, note: "Our most popular — room to breathe", popular: true },
-  { pages: 60, label: "60 Pages", price: 550, note: "The full story, nothing left out" },
+  { pages: 20, label: "20 Pages", price: 450, sides: 40, note: "Perfect for a short trip or event" },
+  { pages: 40, label: "40 Pages", price: 350, sides: 80, note: "Our most popular — room to breathe", popular: true },
+  { pages: 60, label: "60 Pages", price: 550, sides: 120, note: "The full story, nothing left out" },
 ];
 
 function toTitle(slug: string) {
@@ -120,7 +120,8 @@ export default function SubcategoryPage() {
                       POPULAR
                     </span>
                   )}
-                  <p className="font-serif text-xl text-ink-900 mb-1">{opt.label}</p>
+                  <p className="font-serif text-xl text-ink-900 mb-0.5">{opt.label}</p>
+                  <p className="text-ink-400 font-sans text-[11px] mb-2">{opt.sides} sides (front &amp; back)</p>
                   <p className="text-gold-600 font-sans text-sm font-medium mb-2">{opt.price} QAR</p>
                   <p className="text-ink-700 text-xs font-sans leading-snug">{opt.note}</p>
                   <div className={`mt-3 w-4 h-4 rounded-full border-2 flex items-center justify-center transition-colors ${
