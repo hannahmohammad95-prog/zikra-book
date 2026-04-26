@@ -7,7 +7,7 @@ import Nav from "@/components/Nav";
 import { TEMPLATES } from "@/data/templates";
 
 const PAGE_OPTIONS = [
-  { pages: 20, label: "20 Pages", price: 450, sides: 40, note: "Perfect for a short trip or event" },
+  { pages: 20, label: "20 Pages", price: 250, sides: 40, note: "Perfect for a short trip or event" },
   { pages: 40, label: "40 Pages", price: 350, sides: 80, note: "Our most popular — room to breathe", popular: true },
   { pages: 60, label: "60 Pages", price: 550, sides: 120, note: "The full story, nothing left out" },
 ];
