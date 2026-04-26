@@ -190,32 +190,41 @@ export default function UploadPage() {
             )}
           </AnimatePresence>
 
-          {/* Navigation */}
-          <div className="flex flex-col sm:flex-row gap-4 items-center">
+          {/* Spacer so content doesn't hide behind sticky bar */}
+          <div className="h-24" />
+
+        </div>
+      </main>
+
+      {/* Sticky bottom bar — always visible */}
+      <div className="fixed bottom-0 left-0 right-0 bg-cream-50/95 backdrop-blur-sm border-t border-gold-400/20 px-6 py-4 z-40">
+        <div className="max-w-3xl mx-auto flex items-center justify-between gap-4">
+          <div>
             <button
               onClick={() => router.back()}
               className="text-ink-700 text-sm font-sans hover:text-gold-500 transition-colors"
             >
               ← Back
             </button>
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            {!canProceed && (
+              <p className="text-ink-400 text-xs font-sans">
+                {photos.length === 0
+                  ? `Upload at least ${minPhotos} photos to continue`
+                  : `${minPhotos - photos.length} more photo${minPhotos - photos.length !== 1 ? "s" : ""} needed`}
+              </p>
+            )}
             <button
               onClick={() => setStep("editor")}
               disabled={!canProceed}
-              className="flex-1 sm:flex-none px-10 py-4 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
+              className="px-10 py-3 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
             >
               ARRANGE MY BOOK →
             </button>
           </div>
-          {!canProceed && (
-            <p className="text-center text-ink-400 text-xs font-sans mt-3">
-              {photos.length === 0
-                ? `Upload at least ${minPhotos} photos to continue (1 per page)`
-                : `${minPhotos - photos.length} more photo${minPhotos - photos.length !== 1 ? "s" : ""} needed to continue`}
-            </p>
-          )}
-
         </div>
-      </main>
+      </div>
     </>
   );
 }
