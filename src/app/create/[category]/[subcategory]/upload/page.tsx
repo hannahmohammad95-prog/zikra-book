@@ -26,8 +26,8 @@ export default function UploadPage() {
   const [step, setStep]           = useState<"upload" | "editor">("upload");
   const [dragOver, setDragOver]   = useState(false);
 
-  const minPhotos = pages;           // 1 photo per page minimum
-  const maxPhotos = pages * 2;       // 2 photos per page maximum
+  const minPhotos = pages * 2;       // 1 photo per side (front & back)
+  const maxPhotos = pages * 4;       // 2 photos per side maximum
   const canProceed = photos.length >= minPhotos;
   const atMax      = photos.length >= maxPhotos;
 
