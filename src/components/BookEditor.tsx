@@ -74,9 +74,9 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
     img.onload = () => {
       const isLandscape = img.naturalWidth > img.naturalHeight;
       setPageData((prev) => {
-        const next  = [...prev];
-        const cur   = next[currentPage];
-        const slots = [...cur.photos];
+        const next    = [...prev];
+        const cur     = next[currentPage];
+        const slots   = [...cur.photos];
         const isEmpty = !cur.photos[0] && !cur.photos[1];
 
         if (isEmpty) {
@@ -84,9 +84,13 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
           const autoLayout: Layout = isLandscape ? "two" : "full";
           slots[0] = photo;
           next[currentPage] = { layout: autoLayout, photos: slots };
+          // Auto-advance to slot 1 so next click fills the second slot
+          if (autoLayout === "two") setSelectedSlot(1);
         } else {
           slots[selectedSlot] = photo;
           next[currentPage] = { ...cur, photos: slots };
+          // If in two-photo layout and we just filled slot 0, advance to slot 1
+          if (cur.layout === "two" && selectedSlot === 0) setSelectedSlot(1);
         }
         return next;
       });
@@ -206,27 +210,28 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
           <div className="flex gap-4 items-start">
 
             {/* ── Left: photo library ───────────────────────────────────── */}
-            <div className="w-40 flex-shrink-0">
+            <div className="w-48 flex-shrink-0">
               <p className="text-xs tracking-widest uppercase text-ink-700 font-sans mb-3">Your Photos</p>
-              <div className="grid grid-cols-2 gap-1.5 max-h-[500px] overflow-y-auto pr-1">
-                {photos.map((photo) => (
-                  <button
-                    key={photo.id}
-                    onClick={() => assignPhoto(photo)}
-                    className="aspect-square rounded-md overflow-hidden border-2 border-transparent hover:border-gold-400 transition-all relative group"
-                    title="Click to place on page"
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={photo.url} alt={photo.name} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gold-400/0 group-hover:bg-gold-400/20 transition-colors flex items-center justify-center">
-                      <span className="text-white text-lg opacity-0 group-hover:opacity-100 drop-shadow">+</span>
-                    </div>
-                  </button>
-                ))}
+              <div className="bg-white rounded-xl border border-gold-400/20 p-2 max-h-[520px] overflow-y-auto">
+                <div className="grid grid-cols-2 gap-2">
+                  {photos.map((photo) => (
+                    <button
+                      key={photo.id}
+                      onClick={() => assignPhoto(photo)}
+                      className="aspect-square rounded-lg overflow-hidden border-2 border-cream-200 hover:border-gold-400 transition-all relative group bg-cream-100"
+                      title="Click to place on page"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={photo.url} alt={photo.name} className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
+                        <span className="text-white text-2xl opacity-0 group-hover:opacity-100 drop-shadow font-light">+</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
-              <p className="text-ink-400 text-[10px] font-sans mt-3 leading-snug">
-                Portrait photos → full page<br />
-                Landscape photos → 2 per page
+              <p className="text-ink-400 text-[10px] font-sans mt-2 leading-snug">
+                Portrait → full page · Landscape → 2 per page
               </p>
             </div>
 
@@ -266,7 +271,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
 
               <p className="text-center text-ink-400 text-xs font-sans mt-3">
                 {page.layout === "two"
-                  ? `Slot ${selectedSlot + 1} selected — click a photo to place it`
+                  ? `Placing in ${selectedSlot === 0 ? "left" : "right"} slot — click the other side to switch`
                   : "Click a photo from the left to place it on this page"}
               </p>
             </div>
