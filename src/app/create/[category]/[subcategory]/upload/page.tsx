@@ -26,6 +26,11 @@ export default function UploadPage() {
   const [step, setStep]           = useState<"upload" | "editor">("upload");
   const [dragOver, setDragOver]   = useState(false);
 
+  const minPhotos = pages;           // 1 photo per page minimum
+  const maxPhotos = pages * 2;       // 2 photos per page maximum
+  const canProceed = photos.length >= minPhotos;
+  const atMax      = photos.length >= maxPhotos;
+
   async function uploadFile(file: File): Promise<UploadedPhoto> {
     const formData = new FormData();
     formData.append("file", file);
@@ -42,12 +47,16 @@ export default function UploadPage() {
     setUploading(true);
     try {
       const uploaded = await Promise.all(imageFiles.map(uploadFile));
-      setPhotos((prev) => [...prev, ...uploaded]);
+      setPhotos((prev) => {
+        const combined = [...prev, ...uploaded];
+        // Never exceed the maximum
+        return combined.slice(0, maxPhotos);
+      });
     } finally {
       setUploading(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, subcategory]);
+  }, [category, subcategory, maxPhotos]);
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files) handleFiles(e.target.files);
@@ -84,9 +93,15 @@ export default function UploadPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
             <p className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-4 font-sans">Step 3 of 3</p>
             <h1 className="font-serif text-4xl md:text-5xl text-ink-900 mb-3 leading-tight">Upload your photos</h1>
-            <p className="text-ink-700 font-sans text-sm max-w-md mx-auto">
+            <p className="text-ink-700 font-sans text-sm max-w-md mx-auto mb-4">
               Upload all the photos you want in your {subTitle} book. You will arrange them on the next screen.
             </p>
+            {/* Photo limits */}
+            <div className="inline-flex gap-4 bg-white border border-gold-400/20 rounded-xl px-6 py-3 text-xs font-sans">
+              <span className="text-ink-700">📷 Min: <strong className="text-ink-900">{minPhotos} photos</strong></span>
+              <span className="text-gold-400">|</span>
+              <span className="text-ink-700">Max: <strong className="text-ink-900">{maxPhotos} photos</strong></span>
+            </div>
           </motion.div>
 
           {/* Drop zone */}
@@ -94,34 +109,44 @@ export default function UploadPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+            onDragOver={(e) => { if (!atMax) { e.preventDefault(); setDragOver(true); } }}
             onDragLeave={() => setDragOver(false)}
-            onDrop={handleDrop}
+            onDrop={atMax ? undefined : handleDrop}
             className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-200 mb-8 ${
-              dragOver ? "border-gold-400 bg-gold-400/5" : "border-gold-400/30 bg-white hover:border-gold-400/60"
+              atMax
+                ? "border-gold-400/20 bg-cream-100 opacity-50 cursor-not-allowed"
+                : dragOver
+                ? "border-gold-400 bg-gold-400/5"
+                : "border-gold-400/30 bg-white hover:border-gold-400/60"
             }`}
           >
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleInputChange}
-              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-            />
+            {!atMax && (
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleInputChange}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+              />
+            )}
             <div className="text-4xl mb-4">📸</div>
             <p className="font-serif text-xl text-ink-900 mb-2">
-              {uploading ? "Uploading..." : "Drop your photos here"}
+              {uploading ? "Uploading..." : atMax ? "Maximum reached" : "Drop your photos here"}
             </p>
-            <p className="text-ink-700 font-sans text-sm mb-4">or click anywhere in this box to browse your files</p>
+            <p className="text-ink-700 font-sans text-sm mb-4">
+              {atMax
+                ? `You've reached the maximum of ${maxPhotos} photos for a ${pages}-page book`
+                : "or click anywhere in this box to browse your files"}
+            </p>
             {uploading ? (
               <div className="flex justify-center">
                 <div className="w-8 h-8 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
               </div>
-            ) : (
+            ) : !atMax ? (
               <span className="inline-block px-6 py-2 border border-gold-400/40 text-gold-600 text-xs tracking-widest rounded-full font-sans">
                 BROWSE FILES
               </span>
-            )}
+            ) : null}
           </motion.div>
 
           {/* Uploaded photos */}
@@ -130,9 +155,16 @@ export default function UploadPage() {
               <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="font-serif text-lg text-ink-900">
-                    {photos.length} photo{photos.length !== 1 ? "s" : ""} uploaded
+                    {photos.length} / {maxPhotos} photos uploaded
                   </h2>
                   <p className="text-ink-700 text-xs font-sans">Click ✕ to remove</p>
+                </div>
+                {/* Progress bar */}
+                <div className="w-full bg-cream-200 rounded-full h-1.5 mb-4">
+                  <div
+                    className={`h-1.5 rounded-full transition-all duration-300 ${canProceed ? "bg-gold-400" : "bg-gold-300"}`}
+                    style={{ width: `${Math.min((photos.length / minPhotos) * 100, 100)}%` }}
+                  />
                 </div>
                 <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3">
                   {photos.map((photo) => (
@@ -168,14 +200,18 @@ export default function UploadPage() {
             </button>
             <button
               onClick={() => setStep("editor")}
-              disabled={photos.length === 0}
+              disabled={!canProceed}
               className="flex-1 sm:flex-none px-10 py-4 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-lg disabled:opacity-30 disabled:cursor-not-allowed"
             >
               ARRANGE MY BOOK →
             </button>
           </div>
-          {photos.length === 0 && (
-            <p className="text-center text-ink-400 text-xs font-sans mt-3">Upload at least one photo to continue</p>
+          {!canProceed && (
+            <p className="text-center text-ink-400 text-xs font-sans mt-3">
+              {photos.length === 0
+                ? `Upload at least ${minPhotos} photos to continue (1 per page)`
+                : `${minPhotos - photos.length} more photo${minPhotos - photos.length !== 1 ? "s" : ""} needed to continue`}
+            </p>
           )}
 
         </div>
