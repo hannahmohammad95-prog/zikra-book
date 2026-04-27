@@ -316,7 +316,7 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
                 ← Prev
               </button>
               <button
-                onClick={() => setCurrentPage((p) => Math.min(pages - 1, p + 1))}
+                onClick={() => setCurrentPage((p) => Math.min(totalSides - 1, p + 1))}
                 disabled={currentPage === totalSides - 1}
                 className="px-5 py-2.5 border border-gold-400/30 rounded-full text-sm font-sans text-ink-700 hover:border-gold-400 transition-colors disabled:opacity-30"
               >

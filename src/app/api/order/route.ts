@@ -33,15 +33,26 @@ export async function POST(req: Request) {
 
   const orderTime = getQatarTime();
 
-  // Generate a signed zip download URL (no API call needed — signed client-side)
+  // Generate a signed zip download URL
   const publicIds: string[] = photos
     .map((p: { publicId: string }) => p.publicId)
     .filter(Boolean);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const zipUrl: string | null = publicIds.length > 0
-    ? (cloudinary.utils as any).download_zip_url({ public_ids: publicIds, resource_type: "image" })
-    : null;
+  console.log("📦 Order received — publicIds:", publicIds);
+
+  let zipUrl: string | null = null;
+  if (publicIds.length > 0) {
+    try {
+      const result = cloudinary.utils.download_zip_url({
+        public_ids:    publicIds,
+        resource_type: "image",
+      });
+      zipUrl = result && typeof result === "string" && result.length > 0 ? result : null;
+      console.log("📦 zipUrl:", zipUrl);
+    } catch (e) {
+      console.error("❌ download_zip_url failed:", e);
+    }
+  }
 
   try {
     // ── Email to Hannah ─────────────────────────────────────────────────────
