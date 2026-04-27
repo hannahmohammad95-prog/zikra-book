@@ -33,7 +33,7 @@ export async function POST(req: Request) {
 
   const orderTime = getQatarTime();
 
-  // Generate zip download URL via Cloudinary archive API
+  // Generate zip download URL via Cloudinary
   let zipUrl: string | null = null;
   try {
     const publicIds: string[] = photos
@@ -41,16 +41,17 @@ export async function POST(req: Request) {
       .filter(Boolean);
 
     if (publicIds.length > 0) {
-      const result = await cloudinary.api.create_zip({
+      const result = await cloudinary.uploader.create_archive({
         public_ids:       publicIds,
         resource_type:    "image",
         target_public_id: `zikra-order-${Date.now()}`,
+        type:             "upload",
       });
       zipUrl = result.secure_url ?? result.url ?? null;
     }
   } catch (zipErr) {
     console.error("Zip generation error:", zipErr);
-    // Fall back to listing individual links — don't break the whole order
+    // Fall back to individual links — don't break the whole order
   }
 
   try {
