@@ -48,7 +48,12 @@ export default function ContactPage() {
             href="mailto:hello@zikrabook.com"
             className="flex-1 group bg-white border border-gold-400/20 rounded-2xl p-6 text-center hover:border-gold-400/60 hover:shadow-md transition-all duration-200"
           >
-            <div className="text-3xl mb-3">📧</div>
+            <div className="flex justify-center mb-3">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-9 h-9 text-gold-500 group-hover:text-gold-600 transition-colors">
+                <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z"/>
+                <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z"/>
+              </svg>
+            </div>
             <p className="font-serif text-ink-900 mb-1">Email us</p>
             <p className="text-gold-500 text-sm font-sans group-hover:text-gold-600 transition-colors">
               hello@zikrabook.com
