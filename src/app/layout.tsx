@@ -30,14 +30,39 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title:       "Zikra Book — Preserve Qatar, Forever",
-  description: "Cinematic travel photo books crafted from your memories of Qatar. Heirloom quality. Delivered to your door.",
+  title: {
+    default:  "Zikra Book — Preserve Qatar, Forever",
+    template: "%s | Zikra Book",
+  },
+  description: "Cinematic travel photo books crafted from your memories of Qatar. Heirloom quality, museum-grade print, delivered to your door.",
+  keywords: [
+    "photo book Qatar",
+    "travel photo book",
+    "custom photo book Doha",
+    "memory book Qatar",
+    "heirloom photo book",
+    "زكرى",
+    "كتاب صور",
+    "photo album Qatar",
+  ],
+  authors: [{ name: "Zikra Book", url: "https://zikrabook.com" }],
+  metadataBase: new URL("https://zikrabook.com"),
   openGraph: {
-    title:       "Zikra Book",
-    description: "Your Qatar memories, bound in gold.",
+    title:       "Zikra Book — Preserve Qatar, Forever",
+    description: "Your memories of Qatar, bound in gold. Heirloom-quality travel photo books, delivered to your door.",
     siteName:    "Zikra Book",
+    url:         "https://zikrabook.com",
     locale:      "en_US",
     type:        "website",
+  },
+  twitter: {
+    card:        "summary_large_image",
+    title:       "Zikra Book — Preserve Qatar, Forever",
+    description: "Your memories of Qatar, bound in gold.",
+  },
+  robots: {
+    index:  true,
+    follow: true,
   },
 };
 
