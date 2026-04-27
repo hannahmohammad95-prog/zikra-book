@@ -33,26 +33,15 @@ export async function POST(req: Request) {
 
   const orderTime = getQatarTime();
 
-  // Generate zip download URL via Cloudinary
-  let zipUrl: string | null = null;
-  try {
-    const publicIds: string[] = photos
-      .map((p: { publicId: string }) => p.publicId)
-      .filter(Boolean);
+  // Generate a signed zip download URL (no API call needed — signed client-side)
+  const publicIds: string[] = photos
+    .map((p: { publicId: string }) => p.publicId)
+    .filter(Boolean);
 
-    if (publicIds.length > 0) {
-      const result = await cloudinary.uploader.create_archive({
-        public_ids:       publicIds,
-        resource_type:    "image",
-        target_public_id: `zikra-order-${Date.now()}`,
-        type:             "upload",
-      });
-      zipUrl = result.secure_url ?? result.url ?? null;
-    }
-  } catch (zipErr) {
-    console.error("Zip generation error:", zipErr);
-    // Fall back to individual links — don't break the whole order
-  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const zipUrl: string | null = publicIds.length > 0
+    ? (cloudinary.utils as any).download_zip_url({ public_ids: publicIds, resource_type: "image" })
+    : null;
 
   try {
     // ── Email to Hannah ─────────────────────────────────────────────────────
