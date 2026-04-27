@@ -70,34 +70,21 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
     setSelectedSlot(0);
   }
 
-  // Auto-detect orientation and set layout on first photo placed
+  // Place photo into the currently selected slot, respecting the chosen layout
   function assignPhoto(photo: UploadedPhoto) {
-    const img = new window.Image();
-    img.onload = () => {
-      const isLandscape = img.naturalWidth > img.naturalHeight;
-      setPageData((prev) => {
-        const next    = [...prev];
-        const cur     = next[currentPage];
-        const slots   = [...cur.photos];
-        const isEmpty = !cur.photos[0] && !cur.photos[1];
-
-        if (isEmpty) {
-          // Auto layout: landscape → two photos side by side, portrait → full page
-          const autoLayout: Layout = isLandscape ? "two" : "full";
-          slots[0] = photo;
-          next[currentPage] = { layout: autoLayout, photos: slots };
-          // Auto-advance to slot 1 so next click fills the second slot
-          if (autoLayout === "two") setSelectedSlot(1);
-        } else {
-          slots[selectedSlot] = photo;
-          next[currentPage] = { ...cur, photos: slots };
-          // If in two-photo layout and we just filled slot 0, advance to slot 1
-          if (cur.layout === "two" && selectedSlot === 0) setSelectedSlot(1);
-        }
-        return next;
-      });
-    };
-    img.src = photo.url;
+    setPageData((prev) => {
+      const next  = [...prev];
+      const cur   = next[currentPage];
+      const slots = [...cur.photos];
+      slots[selectedSlot] = photo;
+      next[currentPage] = { ...cur, photos: slots };
+      return next;
+    });
+    // Auto-advance to slot 1 after filling slot 0 in two-photo layouts
+    const cur = pageData[currentPage];
+    if ((cur.layout === "two" || cur.layout === "two-vertical") && selectedSlot === 0) {
+      setSelectedSlot(1);
+    }
   }
 
   function clearSlot(slot: number) {

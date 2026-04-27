@@ -10,6 +10,19 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// Qatar time (UTC+3)
+function getQatarTime() {
+  return new Date().toLocaleString("en-GB", {
+    timeZone:    "Asia/Qatar",
+    day:         "2-digit",
+    month:       "short",
+    year:        "numeric",
+    hour:        "2-digit",
+    minute:      "2-digit",
+    hour12:      true,
+  });
+}
+
 export async function POST(req: Request) {
   const body = await req.json();
   const { name, contact, contactType, category, subcategory, pages, notes, photos } = body;
@@ -18,14 +31,30 @@ export async function POST(req: Request) {
     .map((p: { url: string }, i: number) => `<li><a href="${p.url}">Photo ${i + 1}</a></li>`)
     .join("");
 
-  // Generate a single zip download URL for all photos
-  const publicIds = photos.map((p: { publicId: string }) => p.publicId).filter(Boolean);
-  const zipUrl = publicIds.length > 0
-    ? cloudinary.utils.download_zip_url({ public_ids: publicIds, resource_type: "image" })
-    : null;
+  const orderTime = getQatarTime();
+
+  // Generate zip download URL via Cloudinary archive API
+  let zipUrl: string | null = null;
+  try {
+    const publicIds: string[] = photos
+      .map((p: { publicId: string }) => p.publicId)
+      .filter(Boolean);
+
+    if (publicIds.length > 0) {
+      const result = await cloudinary.api.create_zip({
+        public_ids:       publicIds,
+        resource_type:    "image",
+        target_public_id: `zikra-order-${Date.now()}`,
+      });
+      zipUrl = result.secure_url ?? result.url ?? null;
+    }
+  } catch (zipErr) {
+    console.error("Zip generation error:", zipErr);
+    // Fall back to listing individual links — don't break the whole order
+  }
 
   try {
-    // ── Email to Hannah ───────────────────────────────────────────────────────
+    // ── Email to Hannah ─────────────────────────────────────────────────────
     await resend.emails.send({
       from:    "Zikra Book Orders <hello@zikrabook.com>",
       to:      "hello@zikrabook.com",
@@ -34,6 +63,7 @@ export async function POST(req: Request) {
         <div style="font-family: Georgia, serif; max-width: 600px; margin: 0 auto; padding: 32px; color: #1A1208;">
           <h1 style="font-size: 28px; margin-bottom: 8px;">New Zikra Book Order 📖</h1>
           <p style="color: #A87C3C; font-size: 13px; letter-spacing: 2px; text-transform: uppercase;">Order Notification</p>
+          <p style="color: #6B4A10; font-size: 12px;">Received: ${orderTime} (Qatar time)</p>
           <hr style="border: 1px solid #E8D9A8; margin: 24px 0;" />
 
           <table style="width: 100%; border-collapse: collapse;">
@@ -48,13 +78,18 @@ export async function POST(req: Request) {
 
           <hr style="border: 1px solid #E8D9A8; margin: 24px 0;" />
           <h3 style="font-size: 16px; margin-bottom: 12px;">Photos (${photos.length} uploaded)</h3>
-          ${zipUrl ? `<a href="${zipUrl}" style="display:inline-block; margin-bottom:16px; padding: 12px 24px; background: linear-gradient(135deg,#D4B483,#A87C3C); color:#fff; border-radius:999px; font-size:13px; text-decoration:none; letter-spacing:2px;">⬇ DOWNLOAD ALL PHOTOS (ZIP)</a>` : ""}
+
+          ${zipUrl
+            ? `<a href="${zipUrl}" style="display:inline-block; margin-bottom:20px; padding: 14px 28px; background: linear-gradient(135deg,#D4B483,#A87C3C); color:#fff; border-radius:999px; font-size:13px; text-decoration:none; letter-spacing:2px; font-family:sans-serif;">⬇ DOWNLOAD ALL PHOTOS (ZIP)</a>`
+            : `<p style="font-size:13px; color:#6B4A10;">Individual photo links below:</p>`
+          }
+
           <ul style="font-size: 14px; line-height: 2;">${photoLinks}</ul>
         </div>
       `,
     });
 
-    // ── Confirmation email to customer (only if they chose email) ─────────────
+    // ── Confirmation email to customer ───────────────────────────────────────
     if (contactType === "email") {
       await resend.emails.send({
         from:    "Zikra Book <hello@zikrabook.com>",
