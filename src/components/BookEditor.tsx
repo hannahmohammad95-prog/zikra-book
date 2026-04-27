@@ -10,13 +10,8 @@ import type { UploadedPhoto } from "@/types/book";
 type Layout = "full" | "left" | "right" | "top" | "bottom" | "two" | "two-vertical";
 
 const LAYOUTS: { id: Layout; label: string; icon: string }[] = [
-  { id: "full",          label: "Full page",      icon: "⬛" },
-  { id: "two",           label: "Side by side",   icon: "◫"  },
-  { id: "two-vertical",  label: "Top & Bottom",   icon: "⬒"  },
-  { id: "left",          label: "Left only",      icon: "◧"  },
-  { id: "right",         label: "Right only",     icon: "◨"  },
-  { id: "top",           label: "Top only",       icon: "▀"  },
-  { id: "bottom",        label: "Bottom only",    icon: "▄"  },
+  { id: "full",         label: "Full page",    icon: "⬛" },
+  { id: "two-vertical", label: "Top & Bottom", icon: "⬒" },
 ];
 
 type PageData = {
