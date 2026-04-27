@@ -56,11 +56,18 @@ export default function ContactPage() {
           </a>
 
           {/* Instagram */}
-          <div className="flex-1 bg-white border border-gold-400/20 rounded-2xl p-6 text-center opacity-60">
+          <a
+            href="https://www.instagram.com/zikrabook"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 group bg-white border border-gold-400/20 rounded-2xl p-6 text-center hover:border-gold-400/60 hover:shadow-md transition-all duration-200"
+          >
             <div className="text-3xl mb-3">📸</div>
             <p className="font-serif text-ink-900 mb-1">Instagram</p>
-            <p className="text-ink-400 text-sm font-sans">Coming soon</p>
-          </div>
+            <p className="text-gold-500 text-sm font-sans group-hover:text-gold-600 transition-colors">
+              @zikrabook
+            </p>
+          </a>
         </motion.div>
 
         {/* Response time note */}
