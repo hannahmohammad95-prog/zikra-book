@@ -20,7 +20,7 @@ export default function UploadPage() {
   const subcategory = typeof params.subcategory === "string" ? params.subcategory : "";
   const subTitle    = toTitle(subcategory);
   const pages       = Number(searchParams.get("pages") ?? 20);
-  const hue         = Number(searchParams.get("hue") ?? 200);
+  const color       = searchParams.get("color") ?? "#7eb8d4";
   const symbol      = searchParams.get("symbol") ?? "";
   const year        = searchParams.get("year") ?? "";
 
@@ -82,7 +82,7 @@ export default function UploadPage() {
         pages={pages}
         category={category}
         subcategory={subcategory}
-        hue={hue}
+        color={color}
         symbol={symbol}
         year={year}
         searchParams={Object.fromEntries(searchParams.entries())}
@@ -97,7 +97,7 @@ export default function UploadPage() {
         <div className="max-w-3xl mx-auto">
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-10">
-            <p className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-4 font-sans">Step 3 of 3</p>
+            <p className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-4 font-sans">Step 4 of 4</p>
             <h1 className="font-serif text-4xl md:text-5xl text-ink-900 mb-3 leading-tight">Upload your photos</h1>
             <p className="text-ink-700 font-sans text-sm max-w-md mx-auto mb-4">
               Upload all the photos you want in your {subTitle} book. You will arrange them on the next screen.

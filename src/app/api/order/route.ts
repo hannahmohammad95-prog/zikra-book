@@ -25,7 +25,7 @@ function getQatarTime() {
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { name, contact, contactType, category, subcategory, pages, notes, photos, hue, symbol, year, arrangement } = body;
+  const { name, contact, contactType, category, subcategory, pages, notes, photos, color, symbol, year, arrangement } = body;
 
   const photoLinks = photos
     .map((p: { url: string }, i: number) => `<li><a href="${p.url}">Photo ${i + 1}</a></li>`)
@@ -82,12 +82,12 @@ export async function POST(req: Request) {
           <!-- Cover design -->
           <h3 style="font-size: 15px; margin-bottom: 12px; color: #1A1208;">Cover Design</h3>
           <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
-            <div style="width:64px; height:80px; border-radius:6px; flex-shrink:0; background:linear-gradient(160deg, hsl(${hue ?? 210},55%,68%), hsl(${hue ?? 210},75%,35%)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+            <div style="width:64px; height:80px; border-radius:6px; flex-shrink:0; background:${color ?? "#7eb8d4"}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
               ${symbol ? `<img src="https://res.cloudinary.com/dis5pqgzn/image/upload/zikra_book/symbols/${subcategory}/${symbol}" width="28" height="28" style="object-fit:contain;" />` : ""}
               <span style="color:white; font-size:7px; letter-spacing:1px; text-align:center; padding:0 4px;">${(subcategory ?? "").replace(/-/g, " ").toUpperCase()}</span>
             </div>
             <div>
-              <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Colour hue: <strong>${hue ?? "—"}°</strong></p>
+              <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Cover colour: <strong>${color ?? "—"}</strong></p>
               <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Symbol: <strong>${symbol ? symbol.replace(/_/g, " ") : "None"}</strong></p>
               <p style="font-size:13px; color:#6B4A10; margin:0;">Spine year: <strong>${year || "—"}</strong></p>
             </div>

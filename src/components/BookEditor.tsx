@@ -24,14 +24,14 @@ type Props = {
   pages:        number;
   category:     string;
   subcategory?: string;
-  hue?:         number;
+  color?:       string;
   symbol?:      string;
   year?:        string;
   searchParams: Record<string, string>;
 };
 
 // ── Main component ────────────────────────────────────────────────────────────
-export default function BookEditor({ photos, pages, category, subcategory, hue = 210, symbol = "", year = "", searchParams }: Props) {
+export default function BookEditor({ photos, pages, category, subcategory, color = "#7eb8d4", symbol = "", year = "", searchParams }: Props) {
   const router = useRouter();
 
   const totalSides = pages * 2; // each page has a front and a back
@@ -126,7 +126,7 @@ export default function BookEditor({ photos, pages, category, subcategory, hue =
         subcategory: subcategory ?? "",
         pages,
         notes:       searchParams.notes ?? "",
-        hue,
+        color,
         symbol,
         year,
         photos:      allPhotos,
