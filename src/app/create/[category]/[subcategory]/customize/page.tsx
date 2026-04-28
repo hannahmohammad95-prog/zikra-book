@@ -29,8 +29,8 @@ export default function CustomizePage() {
   const [selectedSymbol, setSelectedSymbol] = useState(symbols[0]?.id ?? "");
   const [year,           setYear]           = useState("");
 
-  // Cover gradient from chosen hue — vivid, saturated colours
-  const coverGradient = `linear-gradient(180deg, hsl(${hue}, 90%, 52%), hsl(${hue}, 100%, 32%))`;
+  // Cover — soft pastel gradient matching the colour swatch
+  const coverGradient = `linear-gradient(180deg, hsl(${hue}, 60%, 84%), hsl(${hue}, 55%, 70%))`;
 
   function handleContinue() {
     const qs = new URLSearchParams({
@@ -91,10 +91,10 @@ export default function CustomizePage() {
                 <p
                   className="text-white text-center px-4 leading-tight w-full"
                   style={{
-                    fontFamily:    "var(--font-bebas)",
-                    fontSize:      "26px",
-                    letterSpacing: "0.22em",
-                    textShadow:    "0 1px 8px rgba(0,0,0,0.3)",
+                    fontFamily:    "BobbyJones, sans-serif",
+                    fontSize:      "28px",
+                    letterSpacing: "0.2em",
+                    textShadow:    "0 1px 6px rgba(0,0,0,0.15)",
                   }}
                 >
                   {subTitle.toUpperCase()}
@@ -146,7 +146,7 @@ export default function CustomizePage() {
                 <div
                   className="relative h-10 rounded-full cursor-pointer"
                   style={{
-                    background: "linear-gradient(to right, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000)",
+                    background: "linear-gradient(to right, hsl(270,60%,82%), hsl(210,60%,82%), hsl(150,50%,80%), hsl(60,55%,82%), hsl(30,65%,82%), hsl(350,60%,82%))",
                   }}
                 >
                   <input
@@ -162,7 +162,7 @@ export default function CustomizePage() {
                     className="absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full border-4 border-white shadow-lg pointer-events-none transition-all duration-75"
                     style={{
                       left:            `calc(${(hue / 360) * 100}% - 16px)`,
-                      backgroundColor: `hsl(${hue}, 90%, 50%)`,
+                      backgroundColor: `hsl(${hue}, 60%, 80%)`,
                     }}
                   />
                 </div>
@@ -171,7 +171,7 @@ export default function CustomizePage() {
                 <div className="flex items-center gap-3 mt-4">
                   <div
                     className="w-8 h-8 rounded-full border border-white shadow"
-                    style={{ background: `hsl(${hue}, 90%, 50%)` }}
+                    style={{ background: `hsl(${hue}, 60%, 80%)` }}
                   />
                   <p className="text-ink-700 text-sm font-sans">
                     Selected colour — hue {hue}°

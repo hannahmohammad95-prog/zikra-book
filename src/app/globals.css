@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "BobbyJones";
+  src: url("/fonts/BobbyJones.otf") format("opentype"),
+       url("/fonts/BobbyJonesRough.ttf") format("truetype");
+  font-weight: normal;
+  font-style:  normal;
+  font-display: swap;
+}
+
 :root {
   --font-playfair: "Playfair Display", Georgia, serif;
   --font-inter:    "Inter", system-ui, sans-serif;
