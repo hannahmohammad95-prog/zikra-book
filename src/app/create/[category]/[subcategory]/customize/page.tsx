@@ -207,7 +207,7 @@ export default function CustomizePage() {
                 <p className="text-ink-400 text-xs font-sans mb-5">Slide to pick any colour for your book cover.</p>
                 <div
                   className="relative h-10 rounded-full cursor-pointer"
-                  style={{ background: "linear-gradient(to right, hsl(270,50%,82%), hsl(210,55%,82%), hsl(150,45%,82%), hsl(60,50%,84%), hsl(30,60%,82%), hsl(350,55%,82%))" }}
+                  style={{ background: "linear-gradient(to right, hsl(0,55%,84%), hsl(20,58%,84%), hsl(40,55%,85%), hsl(60,50%,85%), hsl(90,45%,83%), hsl(120,45%,83%), hsl(150,45%,82%), hsl(175,50%,82%), hsl(195,55%,82%), hsl(210,58%,82%), hsl(225,55%,82%), hsl(240,52%,83%), hsl(255,52%,83%), hsl(270,50%,82%), hsl(285,50%,82%), hsl(300,48%,82%), hsl(320,52%,83%), hsl(340,55%,83%), hsl(360,55%,84%))" }}
                 >
                   <input
                     type="range" min={0} max={360} value={hue}
