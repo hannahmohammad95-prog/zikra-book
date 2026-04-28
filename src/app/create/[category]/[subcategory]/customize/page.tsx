@@ -29,8 +29,8 @@ export default function CustomizePage() {
   const [selectedSymbol, setSelectedSymbol] = useState(symbols[0]?.id ?? "");
   const [year,           setYear]           = useState("");
 
-  // Cover — soft pastel gradient matching the colour swatch
-  const coverGradient = `linear-gradient(180deg, hsl(${hue}, 60%, 84%), hsl(${hue}, 55%, 70%))`;
+  // Cover — solid soft pastel colour (flat, like the reference)
+  const coverColor = `hsl(${hue}, 45%, 85%)`;
 
   function handleContinue() {
     const qs = new URLSearchParams({
@@ -78,51 +78,55 @@ export default function CustomizePage() {
             >
               <p className="text-xs tracking-widest uppercase text-ink-700 font-sans mb-4">Preview</p>
 
-              {/* Book cover */}
+              {/* Book cover — matches final print design */}
               <div
-                className="w-52 rounded-lg shadow-2xl flex flex-col items-center transition-all duration-300 overflow-hidden"
-                style={{
-                  aspectRatio: "3/4",
-                  background:  coverGradient,
-                  paddingTop:  "28px",
-                }}
+                className="w-52 rounded-md shadow-2xl flex flex-col items-center overflow-hidden transition-all duration-300"
+                style={{ aspectRatio: "3/4", backgroundColor: coverColor }}
               >
-                {/* Country name — top middle, all caps */}
+                {/* Country name — large, bold, top */}
                 <p
-                  className="text-white text-center px-4 leading-tight w-full"
+                  className="text-white text-center w-full pt-6 px-3 leading-none"
                   style={{
                     fontFamily:    "BobbyJones, sans-serif",
-                    fontSize:      "28px",
-                    letterSpacing: "0.2em",
-                    textShadow:    "0 1px 6px rgba(0,0,0,0.15)",
+                    fontSize:      "36px",
+                    letterSpacing: "0.1em",
+                    textShadow:    "0 2px 8px rgba(0,0,0,0.18)",
                   }}
                 >
                   {subTitle.toUpperCase()}
                 </p>
 
-                {/* Divider line */}
-                <div className="w-10 h-px bg-white/40 mt-2 mb-4" />
+                {/* Symbol — large, centered */}
+                <div className="flex-1 flex items-center justify-center w-full px-4">
+                  {selectedSymbolObj ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={selectedSymbolObj.url}
+                      alt={selectedSymbolObj.label}
+                      className="w-36 h-36 object-contain drop-shadow-xl"
+                    />
+                  ) : (
+                    <div className="w-32 h-32 rounded-full bg-white/20" />
+                  )}
+                </div>
+              </div>
 
-                {/* Symbol — below the name */}
-                {selectedSymbolObj && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={selectedSymbolObj.url}
-                    alt={selectedSymbolObj.label}
-                    className="w-28 h-28 object-contain drop-shadow-lg"
-                  />
-                )}
-
-                {/* Year — bottom */}
+              {/* Spine preview */}
+              <div
+                className="flex flex-row items-center mt-3 rounded px-3 py-1.5 gap-3"
+                style={{ backgroundColor: coverColor }}
+              >
+                <p
+                  className="text-white text-xs tracking-widest"
+                  style={{ fontFamily: "BobbyJones, sans-serif", letterSpacing: "0.15em" }}
+                >
+                  {subTitle.toUpperCase()}
+                </p>
                 {year && (
-                  <p
-                    className="text-white/70 text-[10px] tracking-[0.3em] font-sans mt-auto mb-4"
-                    style={{ textShadow: "0 1px 4px rgba(0,0,0,0.2)" }}
-                  >
-                    {year}
-                  </p>
+                  <p className="text-white/70 text-[10px] font-sans">{year}</p>
                 )}
               </div>
+              <p className="text-ink-400 text-[10px] font-sans mt-1">↑ Spine</p>
 
               <p className="text-ink-400 text-[10px] font-sans mt-3 text-center">
                 Live preview — updates as you choose
@@ -162,7 +166,7 @@ export default function CustomizePage() {
                     className="absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full border-4 border-white shadow-lg pointer-events-none transition-all duration-75"
                     style={{
                       left:            `calc(${(hue / 360) * 100}% - 16px)`,
-                      backgroundColor: `hsl(${hue}, 60%, 80%)`,
+                      backgroundColor: `hsl(${hue}, 45%, 82%)`,
                     }}
                   />
                 </div>
@@ -171,7 +175,7 @@ export default function CustomizePage() {
                 <div className="flex items-center gap-3 mt-4">
                   <div
                     className="w-8 h-8 rounded-full border border-white shadow"
-                    style={{ background: `hsl(${hue}, 60%, 80%)` }}
+                    style={{ background: `hsl(${hue}, 45%, 85%)` }}
                   />
                   <p className="text-ink-700 text-sm font-sans">
                     Selected colour — hue {hue}°

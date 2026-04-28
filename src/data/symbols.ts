@@ -4,20 +4,17 @@ export type BookSymbol = {
   url:   string;
 };
 
-const CLOUD = "https://res.cloudinary.com/dis5pqgzn/image/upload/f_auto,q_auto";
-
-// Add 3 symbols per country as you upload them to Cloudinary
-// Folder structure: zikra_book/SYMBOLS/{COUNTRY}/{filename}
 export const SYMBOLS: Record<string, BookSymbol[]> = {
   italy: [
-    { id: "leaning_tower", label: "Leaning Tower", url: `${CLOUD}/zikra_book/SYMBOLS/ITALY/leaning%20tower.jpg` },
-    { id: "italian_flag",  label: "Italian Flag",  url: `${CLOUD}/zikra_book/SYMBOLS/ITALY/italian%20flag.jpg`  },
-    { id: "pizza",         label: "Pizza",         url: `${CLOUD}/zikra_book/SYMBOLS/ITALY/pizza.jpg`           },
+    { id: "pizza",         label: "Pizza",         url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777380729/Cover_kqpqdr.jpg"  },
+    { id: "italian_flag",  label: "Italian Flag",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777380728/2_iccjwa.jpg"      },
+    { id: "leaning_tower", label: "Leaning Tower", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777380729/3_hrxlt5.jpg"      },
   ],
-  // Add more countries below as you upload their symbols:
+  // Add more countries below as you upload their symbols to Cloudinary
+  // Copy the URL from Cloudinary (click image → Copy URL) and paste it here
   // france: [
-  //   { id: "eiffel",    label: "Eiffel Tower",  url: `${CLOUD}/zikra_book/symbols/france/eiffel`    },
-  //   { id: "croissant", label: "Croissant",      url: `${CLOUD}/zikra_book/symbols/france/croissant` },
-  //   { id: "flag",      label: "French Flag",    url: `${CLOUD}/zikra_book/symbols/france/flag`      },
+  //   { id: "eiffel",    label: "Eiffel Tower", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v.../..." },
+  //   { id: "croissant", label: "Croissant",     url: "..." },
+  //   { id: "flag",      label: "French Flag",   url: "..." },
   // ],
 };
