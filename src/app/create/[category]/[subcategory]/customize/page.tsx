@@ -34,7 +34,7 @@ const PALETTE = [
 const TEXT_SIZE_MIN = 18;
 const TEXT_SIZE_MAX = 100;
 const ICON_SIZE_MIN = 40;
-const ICON_SIZE_MAX = 195;
+const ICON_SIZE_MAX = 380;
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function CustomizePage() {
