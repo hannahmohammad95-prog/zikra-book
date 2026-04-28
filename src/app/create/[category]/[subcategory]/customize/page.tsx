@@ -26,6 +26,8 @@ export default function CustomizePage() {
   const symbols = SYMBOLS[subcategory] ?? [];
 
   const [hue,            setHue]            = useState(210);
+  const [sat,            setSat]            = useState(45);
+  const [light,          setLight]          = useState(85);
   const [selectedSymbol, setSelectedSymbol] = useState(symbols[0]?.id ?? "");
   const [year,           setYear]           = useState("");
 
@@ -35,7 +37,15 @@ export default function CustomizePage() {
   const [dragging, setDragging] = useState<"text" | "icon" | null>(null);
   const coverRef = useRef<HTMLDivElement>(null);
 
-  const coverColor = `hsl(${hue}, 45%, 85%)`;
+  const coverColor = `hsl(${hue}, ${sat}%, ${light}%)`;
+
+  const VIVID_COLORS = [
+    { label: "Red",    hue: 0,   sat: 75, light: 52 },
+    { label: "Orange", hue: 25,  sat: 88, light: 54 },
+    { label: "Green",  hue: 138, sat: 62, light: 38 },
+    { label: "Blue",   hue: 210, sat: 78, light: 46 },
+    { label: "Pink",   hue: 338, sat: 72, light: 55 },
+  ];
   const selectedSymbolObj = symbols.find((s) => s.id === selectedSymbol);
 
   // ── Drag handlers ─────────────────────────────────────────────────────────
@@ -211,14 +221,38 @@ export default function CustomizePage() {
                 >
                   <input
                     type="range" min={0} max={360} value={hue}
-                    onChange={(e) => setHue(Number(e.target.value))}
+                    onChange={(e) => { setHue(Number(e.target.value)); setSat(45); setLight(85); }}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
                   <div
                     className="absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full border-4 border-white shadow-lg pointer-events-none transition-all duration-75"
-                    style={{ left: `calc(${(hue / 360) * 100}% - 16px)`, backgroundColor: coverColor }}
+                    style={{ left: `calc(${(hue / 360) * 100}% - 16px)`, backgroundColor: `hsl(${hue}, 45%, 85%)` }}
                   />
                 </div>
+
+                {/* Darker colour swatches */}
+                <div className="mt-5">
+                  <p className="text-ink-400 text-xs font-sans mb-3">Or pick a deeper shade:</p>
+                  <div className="flex gap-3 flex-wrap">
+                    {VIVID_COLORS.map((c) => {
+                      const isSelected = hue === c.hue && sat === c.sat && light === c.light;
+                      return (
+                        <button
+                          key={c.label}
+                          onClick={() => { setHue(c.hue); setSat(c.sat); setLight(c.light); }}
+                          className={`flex flex-col items-center gap-1.5 group`}
+                        >
+                          <div
+                            className={`w-10 h-10 rounded-full shadow transition-all duration-150 ${isSelected ? "ring-4 ring-offset-2 ring-ink-400 scale-110" : "hover:scale-105"}`}
+                            style={{ backgroundColor: `hsl(${c.hue}, ${c.sat}%, ${c.light}%)` }}
+                          />
+                          <p className="text-[10px] font-sans text-ink-500">{c.label}</p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-3 mt-4">
                   <div className="w-7 h-7 rounded-full border border-white shadow" style={{ backgroundColor: coverColor }} />
                   <p className="text-ink-700 text-sm font-sans">Selected colour</p>
@@ -242,7 +276,7 @@ export default function CustomizePage() {
                         }`}
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={sym.url} alt={sym.label} className="w-16 h-16 object-contain" />
+                        <img src={sym.url} alt={sym.label} className="w-16 h-16 object-contain" style={{ mixBlendMode: "multiply" }} />
                         <p className="text-xs font-sans text-ink-700">{sym.label}</p>
                         {selectedSymbol === sym.id && (
                           <span className="text-[10px] tracking-widest text-gold-500 font-sans">✓ SELECTED</span>
