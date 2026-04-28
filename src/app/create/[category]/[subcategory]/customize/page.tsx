@@ -126,7 +126,7 @@ export default function CustomizePage() {
               {/* Cover */}
               <div
                 ref={coverRef}
-                className="relative rounded-md shadow-2xl overflow-hidden select-none"
+                className="relative rounded-md shadow-2xl select-none"
                 style={{
                   width: "210px", aspectRatio: "3/4",
                   backgroundColor: color,
@@ -144,12 +144,13 @@ export default function CustomizePage() {
                   <p style={{
                     fontFamily: "BobbyJones,'Bebas Neue',Impact,sans-serif",
                     fontSize:   `${textSize}px`,
-                    fontWeight: 900,
+                    fontWeight: "normal",
                     color:      "white",
                     letterSpacing: "0.08em",
                     lineHeight: 1,
                     whiteSpace: "nowrap",
                     textShadow: "0 2px 10px rgba(0,0,0,0.2)",
+                    fontSynthesis: "none",
                   }}>
                     {subTitle.toUpperCase()}
                   </p>

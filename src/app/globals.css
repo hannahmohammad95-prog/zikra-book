@@ -6,9 +6,10 @@
   font-family: "BobbyJones";
   src: url("/fonts/BobbyJones.otf") format("opentype"),
        url("/fonts/BobbyJonesRough.ttf") format("truetype");
-  font-weight: normal;
+  font-weight: 100 900;
   font-style:  normal;
   font-display: swap;
+  font-synthesis: none;
 }
 
 :root {
