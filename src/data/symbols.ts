@@ -4,15 +4,15 @@ export type BookSymbol = {
   url:   string;
 };
 
-const CLOUD = "https://res.cloudinary.com/dis5pqgzn/image/upload";
+const CLOUD = "https://res.cloudinary.com/dis5pqgzn/image/upload/f_auto,q_auto";
 
 // Add 3 symbols per country as you upload them to Cloudinary
-// Folder structure: zikra_book/symbols/{country-slug}/{filename}
+// Folder structure: zikra_book/SYMBOLS/{COUNTRY}/{filename}
 export const SYMBOLS: Record<string, BookSymbol[]> = {
   italy: [
-    { id: "leaning_tower", label: "Leaning Tower", url: `${CLOUD}/zikra_book/symbols/italy/leaning_tower` },
-    { id: "italian_flag",  label: "Italian Flag",  url: `${CLOUD}/zikra_book/symbols/italy/italian_flag`  },
-    { id: "pizza",         label: "Pizza",         url: `${CLOUD}/zikra_book/symbols/italy/pizza`         },
+    { id: "leaning_tower", label: "Leaning Tower", url: `${CLOUD}/zikra_book/SYMBOLS/ITALY/leaning%20tower` },
+    { id: "italian_flag",  label: "Italian Flag",  url: `${CLOUD}/zikra_book/SYMBOLS/ITALY/italian%20flag`  },
+    { id: "pizza",         label: "Pizza",         url: `${CLOUD}/zikra_book/SYMBOLS/ITALY/pizza`           },
   ],
   // Add more countries below as you upload their symbols:
   // france: [

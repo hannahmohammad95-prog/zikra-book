@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Noto_Naskh_Arabic, Cormorant_Garamond } from "next/font/google";
+import { Inter, Playfair_Display, Noto_Naskh_Arabic, Cormorant_Garamond, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 
 // Google Fonts loaded via Next.js — zero layout shift, zero external request
@@ -26,6 +26,13 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300"],
   variable: "--font-cormorant",
+  display: "swap",
+});
+
+const bebas = Bebas_Neue({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-bebas",
   display: "swap",
 });
 
@@ -68,7 +75,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} ${arabic.variable} ${cormorant.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable} ${arabic.variable} ${cormorant.variable} ${bebas.variable}`}>
       <body>{children}</body>
     </html>
   );

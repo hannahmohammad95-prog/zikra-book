@@ -29,8 +29,8 @@ export default function CustomizePage() {
   const [selectedSymbol, setSelectedSymbol] = useState(symbols[0]?.id ?? "");
   const [year,           setYear]           = useState("");
 
-  // Cover gradient from chosen hue
-  const coverGradient = `linear-gradient(160deg, hsl(${hue}, 55%, 68%), hsl(${hue}, 75%, 35%))`;
+  // Cover gradient from chosen hue — vivid, saturated colours
+  const coverGradient = `linear-gradient(180deg, hsl(${hue}, 90%, 52%), hsl(${hue}, 100%, 32%))`;
 
   function handleContinue() {
     const qs = new URLSearchParams({
@@ -80,40 +80,43 @@ export default function CustomizePage() {
 
               {/* Book cover */}
               <div
-                className="w-52 rounded-lg shadow-2xl flex flex-col items-center justify-center gap-4 transition-all duration-300"
+                className="w-52 rounded-lg shadow-2xl flex flex-col items-center transition-all duration-300 overflow-hidden"
                 style={{
                   aspectRatio: "3/4",
                   background:  coverGradient,
+                  paddingTop:  "28px",
                 }}
               >
-                {/* Symbol */}
-                {selectedSymbolObj && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={selectedSymbolObj.url}
-                    alt={selectedSymbolObj.label}
-                    className="w-24 h-24 object-contain drop-shadow-lg"
-                  />
-                )}
-
-                {/* Country name */}
+                {/* Country name — top middle, all caps */}
                 <p
-                  className="text-white text-center px-4 leading-tight"
+                  className="text-white text-center px-4 leading-tight w-full"
                   style={{
-                    fontFamily: "var(--font-cormorant)",
-                    fontSize:   "22px",
-                    fontWeight: 300,
-                    letterSpacing: "0.12em",
-                    textShadow: "0 1px 8px rgba(0,0,0,0.25)",
+                    fontFamily:    "var(--font-bebas)",
+                    fontSize:      "26px",
+                    letterSpacing: "0.22em",
+                    textShadow:    "0 1px 8px rgba(0,0,0,0.3)",
                   }}
                 >
                   {subTitle.toUpperCase()}
                 </p>
 
-                {/* Year */}
+                {/* Divider line */}
+                <div className="w-10 h-px bg-white/40 mt-2 mb-4" />
+
+                {/* Symbol — below the name */}
+                {selectedSymbolObj && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={selectedSymbolObj.url}
+                    alt={selectedSymbolObj.label}
+                    className="w-28 h-28 object-contain drop-shadow-lg"
+                  />
+                )}
+
+                {/* Year — bottom */}
                 {year && (
                   <p
-                    className="text-white/80 text-xs tracking-[0.3em] font-sans"
+                    className="text-white/70 text-[10px] tracking-[0.3em] font-sans mt-auto mb-4"
                     style={{ textShadow: "0 1px 4px rgba(0,0,0,0.2)" }}
                   >
                     {year}
@@ -143,7 +146,7 @@ export default function CustomizePage() {
                 <div
                   className="relative h-10 rounded-full cursor-pointer"
                   style={{
-                    background: "linear-gradient(to right, hsl(0,70%,60%), hsl(30,70%,60%), hsl(60,70%,60%), hsl(90,70%,60%), hsl(120,70%,60%), hsl(150,70%,60%), hsl(180,70%,60%), hsl(210,70%,60%), hsl(240,70%,60%), hsl(270,70%,60%), hsl(300,70%,60%), hsl(330,70%,60%), hsl(360,70%,60%))",
+                    background: "linear-gradient(to right, #ff0000, #ff8000, #ffff00, #00ff00, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0000)",
                   }}
                 >
                   <input
@@ -159,7 +162,7 @@ export default function CustomizePage() {
                     className="absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-full border-4 border-white shadow-lg pointer-events-none transition-all duration-75"
                     style={{
                       left:            `calc(${(hue / 360) * 100}% - 16px)`,
-                      backgroundColor: `hsl(${hue}, 75%, 50%)`,
+                      backgroundColor: `hsl(${hue}, 90%, 50%)`,
                     }}
                   />
                 </div>
@@ -168,7 +171,7 @@ export default function CustomizePage() {
                 <div className="flex items-center gap-3 mt-4">
                   <div
                     className="w-8 h-8 rounded-full border border-white shadow"
-                    style={{ background: coverGradient }}
+                    style={{ background: `hsl(${hue}, 90%, 50%)` }}
                   />
                   <p className="text-ink-700 text-sm font-sans">
                     Selected colour — hue {hue}°
