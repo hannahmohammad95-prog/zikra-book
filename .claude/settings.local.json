@@ -14,7 +14,9 @@
       "Bash(node -e \"const { v2: cloudinary } = require\\('cloudinary'\\); cloudinary.config\\({ cloud_name: 'dis5pqgzn', api_key: undefined, api_secret: undefined }\\); const url = cloudinary.utils.download_zip_url\\({ public_ids: ['test1', 'test2'], resource_type: 'image' }\\); console.log\\('Type:', typeof url\\); console.log\\('Value:', url\\);\")",
       "Bash(npx tsc *)",
       "Bash(cp \"/Users/hannah/Downloads/Bobby Jones/Bobby Jones Soft Outline.otf\" \"/Users/hannah/Documents/Zikra Book/public/fonts/BobbyJones.otf\")",
-      "Bash(cp \"/Users/hannah/Downloads/Bobby Jones/Bobby Rough Soft Outline.ttf\" \"/Users/hannah/Documents/Zikra Book/public/fonts/BobbyJonesRough.ttf\")"
+      "Bash(cp \"/Users/hannah/Downloads/Bobby Jones/Bobby Rough Soft Outline.ttf\" \"/Users/hannah/Documents/Zikra Book/public/fonts/BobbyJonesRough.ttf\")",
+      "Bash(cp \"/Users/hannah/Downloads/Bobby Jones/Bobby Jones Soft.otf\" \"/Users/hannah/Documents/Zikra Book/public/fonts/BobbyJones.otf\")",
+      "Bash(cp \"/Users/hannah/Downloads/Bobby Jones/Bobby Rough Soft.ttf\" \"/Users/hannah/Documents/Zikra Book/public/fonts/BobbyJonesRough.ttf\")"
     ]
   }
 }
