@@ -254,7 +254,7 @@ export default function CustomizePage() {
                     onMouseDown={startDrag("icon")} onTouchStart={startDrag("icon")}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={selectedSymbolObj.url} alt={selectedSymbolObj.label} style={{ width: "130px", height: "130px", objectFit: "contain", display: "block" }} draggable={false} />
+                    <img src={selectedSymbolObj.url} alt={selectedSymbolObj.label} style={{ width: "130px", height: "130px", objectFit: "contain", display: "block", mixBlendMode: "multiply" }} draggable={false} />
                   </div>
                 )}
               </div>
@@ -299,11 +299,11 @@ export default function CustomizePage() {
                         key={sym.id}
                         onClick={() => setSelectedSymbol(sym.id)}
                         className={`flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all duration-200 ${
-                          selectedSymbol === sym.id ? "border-gold-400 bg-gold-400/5 shadow-md" : "border-gold-400/20 hover:border-gold-400/50"
+                          selectedSymbol === sym.id ? "border-gold-400 bg-amber-50 shadow-md" : "border-gold-400/20 bg-cream-100 hover:border-gold-400/50"
                         }`}
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={sym.url} alt={sym.label} className="w-16 h-16 object-contain" />
+                        <img src={sym.url} alt={sym.label} className="w-16 h-16 object-contain" style={{ mixBlendMode: "multiply" }} />
                         <p className="text-xs font-sans text-ink-700">{sym.label}</p>
                         {selectedSymbol === sym.id && <span className="text-[10px] tracking-widest text-gold-500 font-sans">✓ SELECTED</span>}
                       </button>
