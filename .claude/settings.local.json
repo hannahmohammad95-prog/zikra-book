@@ -8,7 +8,11 @@
       "Bash(command -v bun)",
       "Bash(gh --version)",
       "Bash(npm install *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(node -e \"const { v2: cloudinary } = require\\('cloudinary'\\); cloudinary.config\\({ cloud_name: 'dis5pqgzn', api_key: '346562148178459', api_secret: '4NuQLRUjwEoer5jUd9vp6NQlofo' }\\); console.log\\('archive_url exists:', typeof cloudinary.utils.archive_url\\); console.log\\('download_zip_url exists:', typeof cloudinary.utils.download_zip_url\\); const url = cloudinary.utils.archive_url\\({ public_ids: ['test1', 'test2'], resource_type: 'image', format: 'zip', mode: 'download' }\\); console.log\\('Result:', url\\);\")",
+      "Bash(node -e \"const { v2: cloudinary } = require\\('cloudinary'\\); cloudinary.config\\({ cloud_name: 'dis5pqgzn', api_key: '346562148178459', api_secret: '4NuQLRUjwEoer5jUd9vp6NQlofo' }\\); const url = cloudinary.utils.download_zip_url\\({ public_ids: ['test1', 'test2'], resource_type: 'image' }\\); console.log\\('Type:', typeof url\\); console.log\\('Value:', url\\);\")",
+      "Bash(node -e \"const { v2: cloudinary } = require\\('cloudinary'\\); cloudinary.config\\({ cloud_name: 'dis5pqgzn', api_key: undefined, api_secret: undefined }\\); const url = cloudinary.utils.download_zip_url\\({ public_ids: ['test1', 'test2'], resource_type: 'image' }\\); console.log\\('Type:', typeof url\\); console.log\\('Value:', url\\);\")",
+      "Bash(npx tsc *)"
     ]
   }
 }

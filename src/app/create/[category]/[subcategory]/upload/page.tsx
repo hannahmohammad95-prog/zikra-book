@@ -20,6 +20,9 @@ export default function UploadPage() {
   const subcategory = typeof params.subcategory === "string" ? params.subcategory : "";
   const subTitle    = toTitle(subcategory);
   const pages       = Number(searchParams.get("pages") ?? 20);
+  const hue         = Number(searchParams.get("hue") ?? 200);
+  const symbol      = searchParams.get("symbol") ?? "";
+  const year        = searchParams.get("year") ?? "";
 
   const [photos, setPhotos]       = useState<UploadedPhoto[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -79,6 +82,9 @@ export default function UploadPage() {
         pages={pages}
         category={category}
         subcategory={subcategory}
+        hue={hue}
+        symbol={symbol}
+        year={year}
         searchParams={Object.fromEntries(searchParams.entries())}
       />
     );

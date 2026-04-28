@@ -25,7 +25,7 @@ function getQatarTime() {
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { name, contact, contactType, category, subcategory, pages, notes, photos } = body;
+  const { name, contact, contactType, category, subcategory, pages, notes, photos, hue, symbol, year, arrangement } = body;
 
   const photoLinks = photos
     .map((p: { url: string }, i: number) => `<li><a href="${p.url}">Photo ${i + 1}</a></li>`)
@@ -78,13 +78,52 @@ export async function POST(req: Request) {
           </table>
 
           <hr style="border: 1px solid #E8D9A8; margin: 24px 0;" />
-          <h3 style="font-size: 16px; margin-bottom: 12px;">Photos (${photos.length} uploaded)</h3>
 
+          <!-- Cover design -->
+          <h3 style="font-size: 15px; margin-bottom: 12px; color: #1A1208;">Cover Design</h3>
+          <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+            <div style="width:64px; height:80px; border-radius:6px; flex-shrink:0; background:linear-gradient(160deg, hsl(${hue ?? 210},55%,68%), hsl(${hue ?? 210},75%,35%)); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; box-shadow:0 2px 8px rgba(0,0,0,0.15);">
+              ${symbol ? `<img src="https://res.cloudinary.com/dis5pqgzn/image/upload/zikra_book/symbols/${subcategory}/${symbol}" width="28" height="28" style="object-fit:contain;" />` : ""}
+              <span style="color:white; font-size:7px; letter-spacing:1px; text-align:center; padding:0 4px;">${(subcategory ?? "").replace(/-/g, " ").toUpperCase()}</span>
+            </div>
+            <div>
+              <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Colour hue: <strong>${hue ?? "—"}°</strong></p>
+              <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Symbol: <strong>${symbol ? symbol.replace(/_/g, " ") : "None"}</strong></p>
+              <p style="font-size:13px; color:#6B4A10; margin:0;">Spine year: <strong>${year || "—"}</strong></p>
+            </div>
+          </div>
+
+          <hr style="border: 1px solid #E8D9A8; margin: 24px 0;" />
+
+          <!-- Page arrangement -->
+          <h3 style="font-size: 15px; margin-bottom: 4px; color: #1A1208;">Page Layout (${pages} pages · ${(arrangement ?? []).length} sides)</h3>
+          <p style="font-size:12px; color:#6B4A10; margin-bottom:12px;">Each box = one side of a page</p>
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:8px; margin-bottom:20px;">
+            ${(arrangement ?? []).map((side: { side: string; layout: string; photos: ({ url: string; name: string } | null)[] }) => {
+              const [photo1, photo2] = side.photos;
+              const isTwoPhoto = side.layout === "two" || side.layout === "two-vertical";
+              return `
+                <div style="border:1px solid #E8D9A8; border-radius:6px; overflow:hidden; font-family:sans-serif;">
+                  <div style="background:#F5EFE0; padding:3px 6px; font-size:9px; color:#6B4A10; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${side.side}</div>
+                  ${isTwoPhoto ? `
+                    <div style="${side.layout === "two" ? "display:flex;" : "display:flex; flex-direction:column;"}">
+                      ${photo1 ? `<img src="${photo1.url}" width="${side.layout === "two" ? "50%" : "100%"}" height="40" style="object-fit:cover;" />` : `<div style="width:${side.layout === "two" ? "50%" : "100%"}; height:40px; background:#EDE8DC; display:flex; align-items:center; justify-content:center; font-size:9px; color:#A8996E;">empty</div>`}
+                      ${photo2 ? `<img src="${photo2.url}" width="${side.layout === "two" ? "50%" : "100%"}" height="40" style="object-fit:cover;" />` : `<div style="width:${side.layout === "two" ? "50%" : "100%"}; height:40px; background:#EDE8DC; display:flex; align-items:center; justify-content:center; font-size:9px; color:#A8996E;">empty</div>`}
+                    </div>
+                  ` : `
+                    ${photo1 ? `<img src="${photo1.url}" width="100%" height="60" style="object-fit:cover; display:block;" />` : `<div style="height:60px; background:#EDE8DC; display:flex; align-items:center; justify-content:center; font-size:9px; color:#A8996E;">empty</div>`}
+                  `}
+                </div>
+              `;
+            }).join("")}
+          </div>
+
+          <!-- Download all photos -->
+          <h3 style="font-size: 15px; margin-bottom: 12px; color: #1A1208;">All Photos (${photos.length} uploaded)</h3>
           ${zipUrl
             ? `<a href="${zipUrl}" style="display:inline-block; margin-bottom:20px; padding: 14px 28px; background: linear-gradient(135deg,#D4B483,#A87C3C); color:#fff; border-radius:999px; font-size:13px; text-decoration:none; letter-spacing:2px; font-family:sans-serif;">⬇ DOWNLOAD ALL PHOTOS (ZIP)</a>`
             : `<p style="font-size:13px; color:#6B4A10;">Individual photo links below:</p>`
           }
-
           <ul style="font-size: 14px; line-height: 2;">${photoLinks}</ul>
         </div>
       `,

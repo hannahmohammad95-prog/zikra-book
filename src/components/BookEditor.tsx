@@ -24,11 +24,14 @@ type Props = {
   pages:        number;
   category:     string;
   subcategory?: string;
+  hue?:         number;
+  symbol?:      string;
+  year?:        string;
   searchParams: Record<string, string>;
 };
 
 // ── Main component ────────────────────────────────────────────────────────────
-export default function BookEditor({ photos, pages, category, subcategory, searchParams }: Props) {
+export default function BookEditor({ photos, pages, category, subcategory, hue = 210, symbol = "", year = "", searchParams }: Props) {
   const router = useRouter();
 
   const totalSides = pages * 2; // each page has a front and a back
@@ -106,6 +109,14 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
     setSending(true);
 
     const allPhotos = pageData.flatMap((p) => p.photos.filter(Boolean));
+
+    // Full layout arrangement — every side with its layout and photos
+    const arrangement = pageData.map((p, i) => ({
+      side:    getSideLabel(i).full,
+      layout:  p.layout,
+      photos:  p.photos.map((ph) => ph ? { url: ph.url, name: ph.name } : null),
+    }));
+
     await fetch("/api/order", {
       method:  "POST",
       headers: { "Content-Type": "application/json" },
@@ -114,8 +125,12 @@ export default function BookEditor({ photos, pages, category, subcategory, searc
         category:    category    ?? "",
         subcategory: subcategory ?? "",
         pages,
-        notes:  searchParams.notes ?? "",
-        photos: allPhotos,
+        notes:       searchParams.notes ?? "",
+        hue,
+        symbol,
+        year,
+        photos:      allPhotos,
+        arrangement,
       }),
     });
 

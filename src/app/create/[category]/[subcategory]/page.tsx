@@ -34,7 +34,7 @@ export default function SubcategoryPage() {
       notes,
       template: selectedTemplate,
     });
-    router.push(`/create/${category}/${subcategory}/upload?${qs.toString()}`);
+    router.push(`/create/${category}/${subcategory}/customize?${qs.toString()}`);
   }
 
   return (
@@ -50,7 +50,7 @@ export default function SubcategoryPage() {
             className="text-center mb-12"
           >
             <p className="text-gold-500 text-xs tracking-[0.35em] uppercase mb-4 font-sans">
-              Step 2 of 3
+              Step 2 of 4
             </p>
             <h1 className="font-serif text-4xl md:text-5xl text-ink-900 mb-3 leading-tight">
               Your {subTitle} Book
@@ -169,7 +169,7 @@ export default function SubcategoryPage() {
               onClick={handleContinue}
               className="flex-1 sm:flex-none px-10 py-4 bg-gold-gradient text-cream-50 rounded-full text-sm tracking-widest font-medium hover:opacity-90 transition-opacity shadow-lg"
             >
-              CONTINUE TO UPLOAD →
+              CONTINUE →
             </button>
           </motion.div>
 
