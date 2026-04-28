@@ -25,7 +25,7 @@ function getQatarTime() {
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { name, contact, contactType, category, subcategory, pages, notes, photos, color, symbol, year, arrangement } = body;
+  const { name, contact, contactType, category, subcategory, pages, notes, photos, color, symbol, year, textSize, iconSize, arrangement } = body;
 
   const photoLinks = photos
     .map((p: { url: string }, i: number) => `<li><a href="${p.url}">Photo ${i + 1}</a></li>`)
@@ -89,6 +89,8 @@ export async function POST(req: Request) {
             <div>
               <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Cover colour: <strong>${color ?? "—"}</strong></p>
               <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Symbol: <strong>${symbol ? symbol.replace(/_/g, " ") : "None"}</strong></p>
+              <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Text size: <strong>${textSize ?? "—"}px</strong></p>
+              <p style="font-size:13px; color:#6B4A10; margin:0 0 4px;">Icon size: <strong>${iconSize ?? "—"}px</strong></p>
               <p style="font-size:13px; color:#6B4A10; margin:0;">Spine year: <strong>${year || "—"}</strong></p>
             </div>
           </div>

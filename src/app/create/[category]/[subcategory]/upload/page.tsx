@@ -20,9 +20,11 @@ export default function UploadPage() {
   const subcategory = typeof params.subcategory === "string" ? params.subcategory : "";
   const subTitle    = toTitle(subcategory);
   const pages       = Number(searchParams.get("pages") ?? 20);
-  const color       = searchParams.get("color") ?? "#7eb8d4";
-  const symbol      = searchParams.get("symbol") ?? "";
-  const year        = searchParams.get("year") ?? "";
+  const color       = searchParams.get("color")    ?? "#7eb8d4";
+  const symbol      = searchParams.get("symbol")   ?? "";
+  const year        = searchParams.get("year")     ?? "";
+  const textSize    = Number(searchParams.get("textSize") ?? 34);
+  const iconSize    = Number(searchParams.get("iconSize") ?? 110);
 
   const [photos, setPhotos]       = useState<UploadedPhoto[]>([]);
   const [uploading, setUploading] = useState(false);
@@ -85,6 +87,8 @@ export default function UploadPage() {
         color={color}
         symbol={symbol}
         year={year}
+        textSize={textSize}
+        iconSize={iconSize}
         searchParams={Object.fromEntries(searchParams.entries())}
       />
     );
