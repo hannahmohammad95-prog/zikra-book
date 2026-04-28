@@ -33,7 +33,7 @@ type Props = {
 };
 
 // ── Main component ────────────────────────────────────────────────────────────
-export default function BookEditor({ photos, pages, category, subcategory, color = "#7eb8d4", symbol = "", year = "", textSize = 34, iconSize = 110, searchParams }: Props) {
+export default function BookEditor({ photos, pages, category, subcategory, color = "#7eb8d4", symbol = "", year = "", textSize = 42, iconSize = 150, searchParams }: Props) {
   const router = useRouter();
 
   const totalSides = pages * 2; // each page has a front and a back

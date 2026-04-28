@@ -28,19 +28,13 @@ const PALETTE = [
   "#C882A8", "#D88898", "#E89898", "#F09898", "#F0A888", "#F0AE7A", "#EFB46A", "#F0A840",
 ];
 
-const TEXT_SIZES = [
-  { label: "S",  px: 26 },
-  { label: "M",  px: 34 },
-  { label: "L",  px: 42 },
-  { label: "XL", px: 50 },
-];
-
-const ICON_SIZES = [
-  { label: "S",  px: 80  },
-  { label: "M",  px: 110 },
-  { label: "L",  px: 140 },
-  { label: "XL", px: 170 },
-];
+// Cover is rendered at 210px wide × 280px tall in the preview.
+// Text max ~100px lets even short names fill edge-to-edge.
+// Icon max 195px (just inside the 210px cover width).
+const TEXT_SIZE_MIN = 18;
+const TEXT_SIZE_MAX = 100;
+const ICON_SIZE_MIN = 40;
+const ICON_SIZE_MAX = 195;
 
 // ── Main page ─────────────────────────────────────────────────────────────────
 export default function CustomizePage() {
@@ -60,8 +54,8 @@ export default function CustomizePage() {
 
   // State
   const [color,          setColor]          = useState(PALETTE[3]);   // default: nice blue
-  const [textSize,       setTextSize]       = useState(34);
-  const [iconSize,       setIconSize]       = useState(110);
+  const [textSize,       setTextSize]       = useState(42);
+  const [iconSize,       setIconSize]       = useState(150);
   const [selectedSymbol, setSelectedSymbol] = useState(symbols[0]?.id ?? "");
   const [year,           setYear]           = useState("");
 
@@ -227,45 +221,49 @@ export default function CustomizePage() {
                 </div>
               </div>
 
-              {/* Text size */}
+              {/* Text size slider */}
               <div className="bg-white rounded-2xl border border-gold-400/20 p-6">
-                <h2 className="font-serif text-lg text-ink-900 mb-1">Text size</h2>
-                <p className="text-ink-400 text-xs font-sans mb-4">How big should the country name appear on the cover?</p>
-                <div className="flex gap-3">
-                  {TEXT_SIZES.map((sz) => (
-                    <button
-                      key={sz.px}
-                      onClick={() => setTextSize(sz.px)}
-                      className={`w-14 py-2.5 rounded-xl border-2 text-sm font-sans font-semibold transition-all ${
-                        textSize === sz.px
-                          ? "border-gold-400 bg-gold-400/10 text-gold-600"
-                          : "border-gold-400/20 text-ink-700 hover:border-gold-400/50"
-                      }`}
-                    >
-                      {sz.label}
-                    </button>
-                  ))}
+                <div className="flex items-center justify-between mb-1">
+                  <h2 className="font-serif text-lg text-ink-900">Text size</h2>
+                  <span className="text-gold-500 text-sm font-sans font-medium">{textSize}px</span>
+                </div>
+                <p className="text-ink-400 text-xs font-sans mb-5">Drag to resize the country name on the cover.</p>
+                <div className="relative">
+                  <div className="flex items-center justify-between text-[10px] text-ink-300 font-sans mb-1.5">
+                    <span>A</span>
+                    <span className="text-2xl leading-none">A</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={TEXT_SIZE_MIN} max={TEXT_SIZE_MAX}
+                    value={textSize}
+                    onChange={(e) => setTextSize(Number(e.target.value))}
+                    className="w-full h-2 rounded-full appearance-none cursor-pointer accent-amber-400"
+                    style={{ background: `linear-gradient(to right, #D4B483 0%, #D4B483 ${((textSize - TEXT_SIZE_MIN) / (TEXT_SIZE_MAX - TEXT_SIZE_MIN)) * 100}%, #E8D9A8 ${((textSize - TEXT_SIZE_MIN) / (TEXT_SIZE_MAX - TEXT_SIZE_MIN)) * 100}%, #E8D9A8 100%)` }}
+                  />
                 </div>
               </div>
 
-              {/* Icon size */}
+              {/* Icon size slider */}
               <div className="bg-white rounded-2xl border border-gold-400/20 p-6">
-                <h2 className="font-serif text-lg text-ink-900 mb-1">Symbol size</h2>
-                <p className="text-ink-400 text-xs font-sans mb-4">How big should the symbol appear on the cover?</p>
-                <div className="flex gap-3">
-                  {ICON_SIZES.map((sz) => (
-                    <button
-                      key={sz.px}
-                      onClick={() => setIconSize(sz.px)}
-                      className={`w-14 py-2.5 rounded-xl border-2 text-sm font-sans font-semibold transition-all ${
-                        iconSize === sz.px
-                          ? "border-gold-400 bg-gold-400/10 text-gold-600"
-                          : "border-gold-400/20 text-ink-700 hover:border-gold-400/50"
-                      }`}
-                    >
-                      {sz.label}
-                    </button>
-                  ))}
+                <div className="flex items-center justify-between mb-1">
+                  <h2 className="font-serif text-lg text-ink-900">Symbol size</h2>
+                  <span className="text-gold-500 text-sm font-sans font-medium">{iconSize}px</span>
+                </div>
+                <p className="text-ink-400 text-xs font-sans mb-5">Drag to resize the symbol on the cover.</p>
+                <div className="relative">
+                  <div className="flex items-center justify-between text-ink-300 font-sans mb-1.5">
+                    <span className="text-xs">⬡</span>
+                    <span className="text-2xl leading-none">⬡</span>
+                  </div>
+                  <input
+                    type="range"
+                    min={ICON_SIZE_MIN} max={ICON_SIZE_MAX}
+                    value={iconSize}
+                    onChange={(e) => setIconSize(Number(e.target.value))}
+                    className="w-full h-2 rounded-full appearance-none cursor-pointer accent-amber-400"
+                    style={{ background: `linear-gradient(to right, #D4B483 0%, #D4B483 ${((iconSize - ICON_SIZE_MIN) / (ICON_SIZE_MAX - ICON_SIZE_MIN)) * 100}%, #E8D9A8 ${((iconSize - ICON_SIZE_MIN) / (ICON_SIZE_MAX - ICON_SIZE_MIN)) * 100}%, #E8D9A8 100%)` }}
+                  />
                 </div>
               </div>
 

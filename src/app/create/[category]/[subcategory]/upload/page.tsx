@@ -23,8 +23,8 @@ export default function UploadPage() {
   const color       = searchParams.get("color")    ?? "#7eb8d4";
   const symbol      = searchParams.get("symbol")   ?? "";
   const year        = searchParams.get("year")     ?? "";
-  const textSize    = Number(searchParams.get("textSize") ?? 34);
-  const iconSize    = Number(searchParams.get("iconSize") ?? 110);
+  const textSize    = Number(searchParams.get("textSize") ?? 42);
+  const iconSize    = Number(searchParams.get("iconSize") ?? 150);
 
   const [photos, setPhotos]       = useState<UploadedPhoto[]>([]);
   const [uploading, setUploading] = useState(false);
