@@ -124,51 +124,35 @@ export default function CustomizePage() {
               <p className="text-xs tracking-widest uppercase text-ink-700 font-sans mb-3">Preview — drag to reposition</p>
 
               {/* 3-panel spread: Back | Spine | Front */}
-              <div className="flex shadow-2xl select-none" style={{ height: "200px", borderRadius: "6px", overflow: "visible" }}>
+              <div className="flex shadow-2xl select-none" style={{ borderRadius: "6px", overflow: "visible" }}>
 
                 {/* Back cover */}
                 <div
                   className="relative flex-shrink-0"
-                  style={{ width: "150px", height: "200px", backgroundColor: color, borderRadius: "6px 0 0 6px" }}
+                  style={{ width: "220px", height: "293px", backgroundColor: color, borderRadius: "6px 0 0 6px" }}
                 >
-                  {/* Country name at bottom */}
-                  <p className="cover-font absolute bottom-4 left-0 right-0 text-center text-white"
-                     style={{ fontSize: "13px", letterSpacing: "0.08em", lineHeight: 1 }}>
+                  <p className="cover-font absolute bottom-6 left-0 right-0 text-center text-white"
+                     style={{ fontSize: "22px", letterSpacing: "0.06em", lineHeight: 1 }}>
                     {subTitle.toUpperCase()}
                   </p>
                 </div>
 
-                {/* Spine */}
+                {/* Spine — hard cover, flat */}
                 <div
                   className="relative flex-shrink-0"
-                  style={{ width: "36px", height: "200px", backgroundColor: color, filter: "brightness(0.78)" }}
+                  style={{ width: "44px", height: "293px", backgroundColor: color, filter: "brightness(0.72)" }}
                 >
-                  {/* Spiral rings */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-evenly py-2">
-                    {Array.from({ length: 9 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="flex-shrink-0 rounded-full"
-                        style={{
-                          width: "18px", height: "18px",
-                          border: "3px solid rgba(255,255,255,0.5)",
-                          backgroundColor: "rgba(0,0,0,0.18)",
-                        }}
-                      />
-                    ))}
-                  </div>
-                  {/* Country + year — vertical text */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  {/* Country + year vertical */}
+                  <div className="absolute inset-0 flex items-center justify-center">
                     <p className="cover-font text-white"
                        style={{
-                         fontSize: "8px",
-                         letterSpacing: "0.2em",
+                         fontSize: "11px",
+                         letterSpacing: "0.22em",
                          writingMode: "vertical-rl",
                          transform: "rotate(180deg)",
                          whiteSpace: "nowrap",
-                         textShadow: "0 1px 4px rgba(0,0,0,0.4)",
                        }}>
-                      {subTitle.toUpperCase()}{year ? `  ${year}` : ""}
+                      {subTitle.toUpperCase()}{year ? `   ${year}` : "   YEAR"}
                     </p>
                   </div>
                 </div>
@@ -178,7 +162,7 @@ export default function CustomizePage() {
                   ref={coverRef}
                   className="relative flex-shrink-0"
                   style={{
-                    width: "150px", height: "200px",
+                    width: "220px", height: "293px",
                     backgroundColor: color,
                     borderRadius: "0 6px 6px 0",
                     cursor: dragging ? "grabbing" : "default",
@@ -224,10 +208,10 @@ export default function CustomizePage() {
               </div>
 
               {/* Labels */}
-              <div className="flex text-[10px] text-ink-400 font-sans mt-1.5" style={{ width: "336px" }}>
-                <span className="text-center" style={{ width: "150px" }}>Back cover</span>
-                <span className="text-center" style={{ width: "36px" }}>Spine</span>
-                <span className="text-center" style={{ width: "150px" }}>Front cover ✦ drag</span>
+              <div className="flex text-[10px] text-ink-400 font-sans mt-1.5" style={{ width: "484px" }}>
+                <span className="text-center" style={{ width: "220px" }}>Back cover</span>
+                <span className="text-center" style={{ width: "44px" }}>Spine</span>
+                <span className="text-center" style={{ width: "220px" }}>Front cover ✦ drag</span>
               </div>
             </motion.div>
 
