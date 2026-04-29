@@ -94,9 +94,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   japan: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "japan_flag",     label: "Japan Flag",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777454036/Japan_Flag_lqmvga.svg"     },
+    { id: "blossom_tree",   label: "Blossom Tree",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777454024/Blossom_Tree_dlyscf.svg"   },
+    { id: "blossom_flower", label: "Blossom Flower", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777454021/Blossom_Flower_yokgm3.svg" },
   ],
 
   singapore: [
