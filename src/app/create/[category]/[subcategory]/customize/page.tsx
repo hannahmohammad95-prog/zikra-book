@@ -144,9 +144,10 @@ export default function CustomizePage() {
                 >
                   {/* Country name — upper portion */}
                   <div className="absolute left-0 right-0 flex justify-center" style={{ top: "12%" }}>
-                    <p className="cover-font text-white"
+                    <p className="text-white font-sans"
                        style={{
                          fontSize: "11px",
+                         fontWeight: 300,
                          letterSpacing: "0.22em",
                          writingMode: "vertical-rl",
                          transform: "rotate(180deg)",
@@ -157,9 +158,10 @@ export default function CustomizePage() {
                   </div>
                   {/* Year — lower portion */}
                   <div className="absolute left-0 right-0 flex justify-center" style={{ bottom: "12%" }}>
-                    <p className="cover-font text-white"
+                    <p className="text-white font-sans"
                        style={{
                          fontSize: "11px",
+                         fontWeight: 300,
                          letterSpacing: "0.22em",
                          writingMode: "vertical-rl",
                          transform: "rotate(180deg)",
