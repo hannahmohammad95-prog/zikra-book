@@ -21,11 +21,4 @@ export const TEMPLATES: Record<string, Template[]> = {
       imageUrl: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777033035/Greece_dguinn.png",
     },
   ],
-  spain: [
-    {
-      id:       "spain-1",
-      name:     "Spain Classic",
-      imageUrl: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777033034/Spain_xnnzam.png",
-    },
-  ],
 };
