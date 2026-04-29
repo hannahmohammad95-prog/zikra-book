@@ -163,7 +163,7 @@ export default function CustomizePage() {
                     <img
                       src={selectedSymbolObj.url}
                       alt={selectedSymbolObj.label}
-                      style={{ width: `${iconSize}px`, height: `${iconSize}px`, objectFit: "contain", display: "block", mixBlendMode: "multiply" }}
+                      style={{ width: `${iconSize}px`, height: `${iconSize}px`, maxWidth: "none", maxHeight: "none", objectFit: "contain", display: "block", mixBlendMode: "multiply" }}
                       draggable={false}
                     />
                   </div>
