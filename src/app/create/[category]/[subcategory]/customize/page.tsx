@@ -142,31 +142,39 @@ export default function CustomizePage() {
                   className="relative flex-shrink-0"
                   style={{ width: "44px", height: "293px", backgroundColor: color, filter: "brightness(0.72)" }}
                 >
-                  {/* Country name — upper portion */}
-                  <div className="absolute left-0 right-0 flex justify-center" style={{ top: "12%" }}>
-                    <p className="text-white font-sans"
-                       style={{
-                         fontSize: "11px",
-                         fontWeight: 300,
-                         letterSpacing: "0.22em",
-                         writingMode: "vertical-rl",
-                         transform: "rotate(180deg)",
-                         whiteSpace: "nowrap",
-                       }}>
+                  {/* Country — centred */}
+                  <div className="absolute left-0 right-0 flex justify-center"
+                       style={{ top: "50%", transform: "translateY(-120%)" }}>
+                    <p style={{
+                      fontFamily: "var(--font-inter), sans-serif",
+                      fontWeight: 300,
+                      fontSize: "11px",
+                      color: "white",
+                      letterSpacing: "0.22em",
+                      writingMode: "vertical-rl",
+                      transform: "rotate(180deg)",
+                      whiteSpace: "nowrap",
+                      WebkitFontSmoothing: "antialiased",
+                      WebkitTextStroke: "0px",
+                    }}>
                       {subTitle.toUpperCase()}
                     </p>
                   </div>
-                  {/* Year — lower portion */}
-                  <div className="absolute left-0 right-0 flex justify-center" style={{ bottom: "12%" }}>
-                    <p className="text-white font-sans"
-                       style={{
-                         fontSize: "11px",
-                         fontWeight: 300,
-                         letterSpacing: "0.22em",
-                         writingMode: "vertical-rl",
-                         transform: "rotate(180deg)",
-                         whiteSpace: "nowrap",
-                       }}>
+                  {/* Year — just below country, nudged left */}
+                  <div className="absolute flex justify-center"
+                       style={{ top: "50%", transform: "translateY(20%)", left: 0, right: "8px" }}>
+                    <p style={{
+                      fontFamily: "var(--font-inter), sans-serif",
+                      fontWeight: 300,
+                      fontSize: "10px",
+                      color: "white",
+                      letterSpacing: "0.18em",
+                      writingMode: "vertical-rl",
+                      transform: "rotate(180deg)",
+                      whiteSpace: "nowrap",
+                      WebkitFontSmoothing: "antialiased",
+                      WebkitTextStroke: "0px",
+                    }}>
                       {year || "YEAR"}
                     </p>
                   </div>
