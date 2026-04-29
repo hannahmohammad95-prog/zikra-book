@@ -159,17 +159,16 @@ export default function CustomizePage() {
                       {subTitle.toUpperCase()}
                     </p>
                   </div>
-                  {/* Year — just below country, nudged left */}
+                  {/* Year — just below country, nudged right, reads top to bottom */}
                   <div className="absolute flex justify-center"
-                       style={{ top: "50%", transform: "translateY(20%)", left: 0, right: "8px" }}>
+                       style={{ top: "50%", transform: "translateY(20%)", left: "8px", right: 0 }}>
                     <p style={{
                       fontFamily: "var(--font-inter), sans-serif",
                       fontWeight: 300,
-                      fontSize: "10px",
+                      fontSize: "9px",
                       color: "white",
                       letterSpacing: "0.18em",
                       writingMode: "vertical-rl",
-                      transform: "rotate(180deg)",
                       whiteSpace: "nowrap",
                       WebkitFontSmoothing: "antialiased",
                       WebkitTextStroke: "0px",
