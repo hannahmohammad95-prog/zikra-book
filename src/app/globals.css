@@ -9,7 +9,14 @@
   font-weight: 100 900;
   font-style:  normal;
   font-display: swap;
+}
+
+/* Prevent macOS from thinning Bobby Jones with antialiasing */
+.bobby-jones {
+  font-family: "BobbyJones", "Bebas Neue", Impact, sans-serif;
   font-synthesis: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
 }
 
 :root {

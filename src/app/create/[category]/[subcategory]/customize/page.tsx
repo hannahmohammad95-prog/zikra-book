@@ -141,16 +141,13 @@ export default function CustomizePage() {
                   style={{ left: `${textPos.x}%`, top: `${textPos.y}%`, transform: "translate(-50%,-50%)", cursor: "grab", zIndex: 10 }}
                   onMouseDown={startDrag("text")} onTouchStart={startDrag("text")}
                 >
-                  <p style={{
-                    fontFamily: "BobbyJones,'Bebas Neue',Impact,sans-serif",
-                    fontSize:   `${textSize}px`,
-                    fontWeight: "normal",
-                    color:      "white",
+                  <p className="bobby-jones" style={{
+                    fontSize:      `${textSize}px`,
+                    color:         "white",
                     letterSpacing: "0.08em",
-                    lineHeight: 1,
-                    whiteSpace: "nowrap",
-                    textShadow: "0 2px 10px rgba(0,0,0,0.2)",
-                    fontSynthesis: "none",
+                    lineHeight:    1,
+                    whiteSpace:    "nowrap",
+                    textShadow:    "0 2px 10px rgba(0,0,0,0.2)",
                   }}>
                     {subTitle.toUpperCase()}
                   </p>
@@ -179,7 +176,7 @@ export default function CustomizePage() {
                 className="flex flex-row items-center gap-3 mt-3 rounded px-4 py-1.5"
                 style={{ backgroundColor: color }}
               >
-                <p style={{ fontFamily: "BobbyJones,'Bebas Neue',Impact,sans-serif", color: "white", fontSize: "13px", letterSpacing: "0.15em" }}>
+                <p className="bobby-jones" style={{ color: "white", fontSize: "13px", letterSpacing: "0.15em" }}>
                   {subTitle.toUpperCase()}
                 </p>
                 {year && <p className="text-white/70 text-[10px] font-sans">{year}</p>}
