@@ -10,7 +10,7 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   italy: [
     { id: "pizza",         label: "Pizza",         url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777392823/pizza1_5f651d.png"   },
     { id: "italian_flag",  label: "Italian Flag",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777384054/2_pkjxcd.svg"        },
-    { id: "leaning_tower", label: "Leaning Tower", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777384055/3_kvidwj.svg"        },
+    { id: "leaning_tower", label: "Leaning Tower", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777452805/Leaning_Tower_yi3lqr.svg" },
   ],
 
   // ── TO DO — upload 3 symbols each to Cloudinary, paste URLs below ─────────
