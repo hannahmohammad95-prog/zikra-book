@@ -128,7 +128,7 @@ export default function CustomizePage() {
 
                 {/* Back cover */}
                 <div
-                  className="relative flex-shrink-0"
+                  className="relative flex-shrink-0 overflow-hidden"
                   style={{ width: "220px", height: "293px", backgroundColor: color, borderRadius: "6px 0 0 6px" }}
                 >
                   <p className="cover-font absolute bottom-6 left-0 right-0 text-center text-white"
@@ -173,7 +173,7 @@ export default function CustomizePage() {
                 {/* Front cover */}
                 <div
                   ref={coverRef}
-                  className="relative flex-shrink-0"
+                  className="relative flex-shrink-0 overflow-hidden"
                   style={{
                     width: "220px", height: "293px",
                     backgroundColor: color,
