@@ -144,10 +144,9 @@ export default function CustomizePage() {
                   <p className="cover-font" style={{
                     fontSize:      `${textSize}px`,
                     color:         "white",
-                    letterSpacing: "0.08em",
+                    letterSpacing: "0.01em",
                     lineHeight:    1,
                     whiteSpace:    "nowrap",
-                    textShadow:    "0 2px 10px rgba(0,0,0,0.2)",
                   }}>
                     {subTitle.toUpperCase()}
                   </p>

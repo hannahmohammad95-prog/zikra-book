@@ -11,12 +11,13 @@
   font-display: swap;
 }
 
-/* Cover display font — Bebas Neue via CSS variable */
+/* Cover display font — Bobby Jones */
 .cover-font {
-  font-family: var(--font-bebas), "Bebas Neue", Impact, sans-serif;
+  font-family: "BobbyJones", Impact, sans-serif;
   font-synthesis: none;
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;
+  -webkit-text-stroke: 1.5px currentColor;
 }
 
 :root {
