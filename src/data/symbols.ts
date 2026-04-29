@@ -64,9 +64,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   spain: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "spain_flag", label: "Spain Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777453663/Spain_Flag_qqbb1n.svg" },
+    { id: "fan",        label: "Fan",        url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777453663/Fan_b4e9yu.svg"        },
+    { id: "dance",      label: "Dance",      url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1777453661/Dance_qhnrnq.svg"      },
   ],
 
   portugal: [
