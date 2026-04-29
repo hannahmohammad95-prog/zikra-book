@@ -116,74 +116,119 @@ export default function CustomizePage() {
 
           <div className="flex flex-col lg:flex-row gap-10 items-start">
 
-            {/* ── Live cover preview ─────────────────────────────────── */}
+            {/* ── Book spread preview ────────────────────────────────── */}
             <motion.div
               initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
-              className="w-full lg:w-72 flex-shrink-0 flex flex-col items-center lg:sticky lg:top-28"
+              className="w-full lg:w-auto flex-shrink-0 flex flex-col items-center lg:sticky lg:top-28"
             >
               <p className="text-xs tracking-widest uppercase text-ink-700 font-sans mb-3">Preview — drag to reposition</p>
 
-              {/* Cover */}
-              <div
-                ref={coverRef}
-                className="relative rounded-md shadow-2xl select-none"
-                style={{
-                  width: "210px", aspectRatio: "3/4",
-                  backgroundColor: color,
-                  cursor: dragging ? "grabbing" : "default",
-                }}
-                onMouseMove={onMouseMove} onMouseUp={stopDrag} onMouseLeave={stopDrag}
-                onTouchMove={onTouchMove} onTouchEnd={stopDrag}
-              >
-                {/* Country name */}
+              {/* 3-panel spread: Back | Spine | Front */}
+              <div className="flex shadow-2xl select-none" style={{ height: "200px", borderRadius: "6px", overflow: "visible" }}>
+
+                {/* Back cover */}
                 <div
-                  className="absolute"
-                  style={{ left: `${textPos.x}%`, top: `${textPos.y}%`, transform: "translate(-50%,-50%)", cursor: "grab", zIndex: 10 }}
-                  onMouseDown={startDrag("text")} onTouchStart={startDrag("text")}
+                  className="relative flex-shrink-0"
+                  style={{ width: "150px", height: "200px", backgroundColor: color, borderRadius: "6px 0 0 6px" }}
                 >
-                  <p className="cover-font" style={{
-                    fontSize:      `${textSize}px`,
-                    color:         "white",
-                    letterSpacing: "0.01em",
-                    lineHeight:    1,
-                    whiteSpace:    "nowrap",
-                  }}>
+                  {/* Country name at bottom */}
+                  <p className="cover-font absolute bottom-4 left-0 right-0 text-center text-white"
+                     style={{ fontSize: "13px", letterSpacing: "0.08em", lineHeight: 1 }}>
                     {subTitle.toUpperCase()}
                   </p>
                 </div>
 
-                {/* Symbol */}
-                {selectedSymbolObj && (
+                {/* Spine */}
+                <div
+                  className="relative flex-shrink-0"
+                  style={{ width: "36px", height: "200px", backgroundColor: color, filter: "brightness(0.78)" }}
+                >
+                  {/* Spiral rings */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-evenly py-2">
+                    {Array.from({ length: 9 }).map((_, i) => (
+                      <div
+                        key={i}
+                        className="flex-shrink-0 rounded-full"
+                        style={{
+                          width: "18px", height: "18px",
+                          border: "3px solid rgba(255,255,255,0.5)",
+                          backgroundColor: "rgba(0,0,0,0.18)",
+                        }}
+                      />
+                    ))}
+                  </div>
+                  {/* Country + year — vertical text */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <p className="cover-font text-white"
+                       style={{
+                         fontSize: "8px",
+                         letterSpacing: "0.2em",
+                         writingMode: "vertical-rl",
+                         transform: "rotate(180deg)",
+                         whiteSpace: "nowrap",
+                         textShadow: "0 1px 4px rgba(0,0,0,0.4)",
+                       }}>
+                      {subTitle.toUpperCase()}{year ? `  ${year}` : ""}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Front cover */}
+                <div
+                  ref={coverRef}
+                  className="relative flex-shrink-0"
+                  style={{
+                    width: "150px", height: "200px",
+                    backgroundColor: color,
+                    borderRadius: "0 6px 6px 0",
+                    cursor: dragging ? "grabbing" : "default",
+                  }}
+                  onMouseMove={onMouseMove} onMouseUp={stopDrag} onMouseLeave={stopDrag}
+                  onTouchMove={onTouchMove} onTouchEnd={stopDrag}
+                >
+                  {/* Country name — draggable */}
                   <div
                     className="absolute"
-                    style={{ left: `${iconPos.x}%`, top: `${iconPos.y}%`, transform: "translate(-50%,-50%)", cursor: "grab", zIndex: 10 }}
-                    onMouseDown={startDrag("icon")} onTouchStart={startDrag("icon")}
+                    style={{ left: `${textPos.x}%`, top: `${textPos.y}%`, transform: "translate(-50%,-50%)", cursor: "grab", zIndex: 10 }}
+                    onMouseDown={startDrag("text")} onTouchStart={startDrag("text")}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={selectedSymbolObj.url}
-                      alt={selectedSymbolObj.label}
-                      style={{ width: `${iconSize}px`, height: `${iconSize}px`, maxWidth: "none", maxHeight: "none", objectFit: "contain", display: "block", mixBlendMode: "multiply" }}
-                      draggable={false}
-                    />
+                    <p className="cover-font" style={{
+                      fontSize:      `${textSize}px`,
+                      color:         "white",
+                      letterSpacing: "0.01em",
+                      lineHeight:    1,
+                      whiteSpace:    "nowrap",
+                    }}>
+                      {subTitle.toUpperCase()}
+                    </p>
                   </div>
-                )}
+
+                  {/* Symbol — draggable */}
+                  {selectedSymbolObj && (
+                    <div
+                      className="absolute"
+                      style={{ left: `${iconPos.x}%`, top: `${iconPos.y}%`, transform: "translate(-50%,-50%)", cursor: "grab", zIndex: 10 }}
+                      onMouseDown={startDrag("icon")} onTouchStart={startDrag("icon")}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={selectedSymbolObj.url}
+                        alt={selectedSymbolObj.label}
+                        style={{ width: `${iconSize}px`, height: `${iconSize}px`, maxWidth: "none", maxHeight: "none", objectFit: "contain", display: "block", mixBlendMode: "multiply" }}
+                        draggable={false}
+                      />
+                    </div>
+                  )}
+                </div>
+
               </div>
 
-              {/* Spine preview */}
-              <div
-                className="flex flex-row items-center gap-3 mt-3 rounded px-4 py-1.5"
-                style={{ backgroundColor: color }}
-              >
-                <p className="cover-font" style={{ color: "white", fontSize: "13px", letterSpacing: "0.15em" }}>
-                  {subTitle.toUpperCase()}
-                </p>
-                {year && <p className="text-white/70 text-[10px] font-sans">{year}</p>}
+              {/* Labels */}
+              <div className="flex text-[10px] text-ink-400 font-sans mt-1.5" style={{ width: "336px" }}>
+                <span className="text-center" style={{ width: "150px" }}>Back cover</span>
+                <span className="text-center" style={{ width: "36px" }}>Spine</span>
+                <span className="text-center" style={{ width: "150px" }}>Front cover ✦ drag</span>
               </div>
-              <p className="text-ink-400 text-[10px] font-sans mt-1">↑ Spine</p>
-              <p className="text-ink-400 text-[11px] font-sans mt-3 text-center max-w-[200px] leading-relaxed">
-                ✦ Drag the text and icon anywhere on the cover
-              </p>
             </motion.div>
 
             {/* ── Controls ───────────────────────────────────────────── */}
