@@ -142,7 +142,7 @@ export default function CustomizePage() {
                   className="relative flex-shrink-0"
                   style={{ width: "44px", height: "293px", backgroundColor: color, filter: "brightness(0.72)" }}
                 >
-                  {/* Country — centred */}
+                  {/* Country — centred, reads top to bottom */}
                   <div className="absolute left-0 right-0 flex justify-center"
                        style={{ top: "50%", transform: "translateY(-120%)" }}>
                     <p style={{
@@ -152,7 +152,6 @@ export default function CustomizePage() {
                       color: "white",
                       letterSpacing: "0.22em",
                       writingMode: "vertical-rl",
-                      transform: "rotate(180deg)",
                       whiteSpace: "nowrap",
                       WebkitFontSmoothing: "antialiased",
                       WebkitTextStroke: "0px",
