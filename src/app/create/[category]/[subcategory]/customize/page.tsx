@@ -141,7 +141,7 @@ export default function CustomizePage() {
                   style={{ left: `${textPos.x}%`, top: `${textPos.y}%`, transform: "translate(-50%,-50%)", cursor: "grab", zIndex: 10 }}
                   onMouseDown={startDrag("text")} onTouchStart={startDrag("text")}
                 >
-                  <p className="bobby-jones" style={{
+                  <p className="cover-font" style={{
                     fontSize:      `${textSize}px`,
                     color:         "white",
                     letterSpacing: "0.08em",
@@ -176,7 +176,7 @@ export default function CustomizePage() {
                 className="flex flex-row items-center gap-3 mt-3 rounded px-4 py-1.5"
                 style={{ backgroundColor: color }}
               >
-                <p className="bobby-jones" style={{ color: "white", fontSize: "13px", letterSpacing: "0.15em" }}>
+                <p className="cover-font" style={{ color: "white", fontSize: "13px", letterSpacing: "0.15em" }}>
                   {subTitle.toUpperCase()}
                 </p>
                 {year && <p className="text-white/70 text-[10px] font-sans">{year}</p>}
