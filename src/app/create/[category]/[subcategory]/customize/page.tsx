@@ -142,8 +142,8 @@ export default function CustomizePage() {
                   className="relative flex-shrink-0"
                   style={{ width: "44px", height: "293px", backgroundColor: color, filter: "brightness(0.72)" }}
                 >
-                  {/* Country + year vertical */}
-                  <div className="absolute inset-0 flex items-center justify-center">
+                  {/* Country name — upper portion */}
+                  <div className="absolute left-0 right-0 flex justify-center" style={{ top: "12%" }}>
                     <p className="cover-font text-white"
                        style={{
                          fontSize: "11px",
@@ -152,7 +152,20 @@ export default function CustomizePage() {
                          transform: "rotate(180deg)",
                          whiteSpace: "nowrap",
                        }}>
-                      {subTitle.toUpperCase()}{year ? `   ${year}` : "   YEAR"}
+                      {subTitle.toUpperCase()}
+                    </p>
+                  </div>
+                  {/* Year — lower portion */}
+                  <div className="absolute left-0 right-0 flex justify-center" style={{ bottom: "12%" }}>
+                    <p className="cover-font text-white"
+                       style={{
+                         fontSize: "11px",
+                         letterSpacing: "0.22em",
+                         writingMode: "vertical-rl",
+                         transform: "rotate(180deg)",
+                         whiteSpace: "nowrap",
+                       }}>
+                      {year || "YEAR"}
                     </p>
                   </div>
                 </div>
