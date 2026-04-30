@@ -62,26 +62,38 @@ export default function CustomizePage() {
   // Draggable positions (% of cover width/height)
   const [textPos, setTextPos] = useState({ x: 50, y: 18 });
   const [iconPos, setIconPos] = useState({ x: 50, y: 58 });
-  const [dragging, setDragging] = useState<"text" | "icon" | null>(null);
+  // Spine draggable positions (y % of spine height)
+  const [spineTextY, setSpineTextY] = useState(35);
+  const [spineYearY, setSpineYearY] = useState(62);
+  const [dragging, setDragging] = useState<"text" | "icon" | "spineText" | "spineYear" | null>(null);
   const coverRef = useRef<HTMLDivElement>(null);
+  const spineRef = useRef<HTMLDivElement>(null);
 
   const selectedSymbolObj = symbols.find((s) => s.id === selectedSymbol);
 
   // ── Drag logic ──────────────────────────────────────────────────────────────
   const applyMove = useCallback((clientX: number, clientY: number) => {
-    if (!dragging || !coverRef.current) return;
-    const rect = coverRef.current.getBoundingClientRect();
-    const x = Math.max(8, Math.min(92, ((clientX - rect.left) / rect.width)  * 100));
-    const y = Math.max(5, Math.min(95, ((clientY - rect.top)  / rect.height) * 100));
-    if (dragging === "text") setTextPos({ x, y });
-    if (dragging === "icon") setIconPos({ x, y });
+    if (!dragging) return;
+    if ((dragging === "text" || dragging === "icon") && coverRef.current) {
+      const rect = coverRef.current.getBoundingClientRect();
+      const x = Math.max(8, Math.min(92, ((clientX - rect.left) / rect.width)  * 100));
+      const y = Math.max(5, Math.min(95, ((clientY - rect.top)  / rect.height) * 100));
+      if (dragging === "text") setTextPos({ x, y });
+      if (dragging === "icon") setIconPos({ x, y });
+    }
+    if ((dragging === "spineText" || dragging === "spineYear") && spineRef.current) {
+      const rect = spineRef.current.getBoundingClientRect();
+      const y = Math.max(5, Math.min(95, ((clientY - rect.top) / rect.height) * 100));
+      if (dragging === "spineText") setSpineTextY(y);
+      if (dragging === "spineYear") setSpineYearY(y);
+    }
   }, [dragging]);
 
   const onMouseMove = (e: React.MouseEvent) => applyMove(e.clientX, e.clientY);
   const onTouchMove = (e: React.TouchEvent) => { if (e.touches[0]) applyMove(e.touches[0].clientX, e.touches[0].clientY); };
   const stopDrag    = () => setDragging(null);
 
-  function startDrag(el: "text" | "icon") {
+  function startDrag(el: "text" | "icon" | "spineText" | "spineYear") {
     return (e: React.MouseEvent | React.TouchEvent) => { e.preventDefault(); setDragging(el); };
   }
 
@@ -139,12 +151,22 @@ export default function CustomizePage() {
 
                 {/* Spine — hard cover, flat */}
                 <div
+                  ref={spineRef}
                   className="relative flex-shrink-0"
-                  style={{ width: "44px", height: "293px", backgroundColor: color, filter: "brightness(0.72)" }}
+                  style={{
+                    width: "44px", height: "293px",
+                    backgroundColor: color, filter: "brightness(0.72)",
+                    cursor: (dragging === "spineText" || dragging === "spineYear") ? "grabbing" : "default",
+                  }}
+                  onMouseMove={onMouseMove} onMouseUp={stopDrag} onMouseLeave={stopDrag}
+                  onTouchMove={onTouchMove} onTouchEnd={stopDrag}
                 >
-                  {/* Country — centred, reads top to bottom */}
-                  <div className="absolute left-0 right-0 flex justify-center"
-                       style={{ top: "50%", transform: "translateY(-120%)" }}>
+                  {/* Country — draggable, reads top to bottom */}
+                  <div
+                    className="absolute left-0 right-0 flex justify-center"
+                    style={{ top: `${spineTextY}%`, transform: "translateY(-50%)", cursor: "grab" }}
+                    onMouseDown={startDrag("spineText")} onTouchStart={startDrag("spineText")}
+                  >
                     <p style={{
                       fontFamily: "var(--font-inter), sans-serif",
                       fontWeight: 300,
@@ -159,9 +181,12 @@ export default function CustomizePage() {
                       {subTitle.toUpperCase()}
                     </p>
                   </div>
-                  {/* Year — horizontal, centred, below country name */}
-                  <div className="absolute left-0 right-0 flex justify-center"
-                       style={{ top: "50%", transform: "translateY(80%)" }}>
+                  {/* Year — draggable, horizontal, below country name */}
+                  <div
+                    className="absolute left-0 right-0 flex justify-center"
+                    style={{ top: `${spineYearY}%`, transform: "translateY(-50%)", cursor: "grab" }}
+                    onMouseDown={startDrag("spineYear")} onTouchStart={startDrag("spineYear")}
+                  >
                     <p style={{
                       fontFamily: "var(--font-inter), sans-serif",
                       fontWeight: 300,
