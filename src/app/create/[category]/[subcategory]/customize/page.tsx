@@ -167,16 +167,12 @@ export default function CustomizePage() {
                     style={{ top: `${spineTextY}%`, transform: "translateY(-50%)", cursor: "grab" }}
                     onMouseDown={startDrag("spineText")} onTouchStart={startDrag("spineText")}
                   >
-                    <p style={{
-                      fontFamily: "var(--font-inter), sans-serif",
-                      fontWeight: 300,
+                    <p className="cover-font" style={{
                       fontSize: "11px",
                       color: "white",
                       letterSpacing: "0.22em",
                       writingMode: "vertical-rl",
                       whiteSpace: "nowrap",
-                      WebkitFontSmoothing: "antialiased",
-                      WebkitTextStroke: "0px",
                     }}>
                       {subTitle.toUpperCase()}
                     </p>
@@ -187,15 +183,11 @@ export default function CustomizePage() {
                     style={{ top: `${spineYearY}%`, transform: "translateY(-50%)", cursor: "grab" }}
                     onMouseDown={startDrag("spineYear")} onTouchStart={startDrag("spineYear")}
                   >
-                    <p style={{
-                      fontFamily: "var(--font-inter), sans-serif",
-                      fontWeight: 300,
+                    <p className="cover-font" style={{
                       fontSize: "9px",
                       color: "white",
                       letterSpacing: "0.18em",
                       whiteSpace: "nowrap",
-                      WebkitFontSmoothing: "antialiased",
-                      WebkitTextStroke: "0px",
                       writingMode: "vertical-rl",
                     }}>
                       {year || "YEAR"}
