@@ -173,6 +173,7 @@ export default function CustomizePage() {
                       letterSpacing: "0.22em",
                       writingMode: "vertical-rl",
                       whiteSpace: "nowrap",
+                      WebkitTextStroke: "0px",
                     }}>
                       {subTitle.toUpperCase()}
                     </p>
@@ -189,6 +190,7 @@ export default function CustomizePage() {
                       letterSpacing: "0.18em",
                       whiteSpace: "nowrap",
                       writingMode: "vertical-rl",
+                      WebkitTextStroke: "0px",
                     }}>
                       {year || "YEAR"}
                     </p>
