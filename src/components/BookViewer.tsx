@@ -29,7 +29,7 @@ export default function BookViewer() {
       ref={ref}
       id="story"
       className="flex flex-col items-center justify-center bg-cream-50 px-6 pt-16 pb-8"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: "75vh" }}
     >
       {/* Soft warm glow */}
       <div

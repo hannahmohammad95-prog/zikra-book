@@ -196,6 +196,7 @@ export default function CustomizePage() {
                       whiteSpace: "nowrap",
                       WebkitFontSmoothing: "antialiased",
                       WebkitTextStroke: "0px",
+                      writingMode: "vertical-rl",
                     }}>
                       {year || "YEAR"}
                     </p>
