@@ -240,8 +240,8 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   "fathers-day": [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "dad_crown",    label: "DAD Crown",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573702/2_wfqt13.svg" },
+    { id: "dad_balloons", label: "DAD Balloons", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573697/1_harp41.svg" },
     // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
   ],
 
