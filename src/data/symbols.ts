@@ -82,9 +82,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   australia: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "koala",          label: "Koala",          url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570649/Cover_f8qebx.svg" },
+    { id: "kangaroo",       label: "Kangaroo",       url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570648/3_krfbqt.svg"    },
+    { id: "australia_flag", label: "Australia Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570648/2_stgxb9.svg"    },
   ],
 
   "new-zealand": [
