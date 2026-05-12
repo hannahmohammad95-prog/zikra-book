@@ -38,6 +38,7 @@ const SUB_OPTIONS: Record<string, SubOption[]> = {
     { slug: "puerto-rico",  emoji: "🇵🇷", title: "Puerto Rico"  },
     { slug: "greece",       emoji: "🇬🇷", title: "Greece"       },
     { slug: "sri-lanka",    emoji: "🇱🇰", title: "Sri Lanka"    },
+    { slug: "uk",           emoji: "🇬🇧", title: "UK"           },
   ],
   occasions: [
     { slug: "wedding",    emoji: "💍", title: "Wedding"           },

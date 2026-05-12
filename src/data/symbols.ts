@@ -177,6 +177,12 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
     // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
   ],
 
+  uk: [
+    { id: "england_flag",    label: "England Flag",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570760/2_web7uw.svg"  },
+    { id: "british_guard",   label: "British Guard",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570759/3_ohqnxb.svg" },
+    { id: "big_ben",         label: "Big Ben",         url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570758/1_b5kpze.svg" },
+  ],
+
   "sri-lanka": [
     // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
     // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
