@@ -166,8 +166,8 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   ecuador: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "galapagos_turtle", label: "Galápagos Turtle", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570657/Cover_ejcbec.svg" },
+    { id: "ecuador_flag",     label: "Ecuador Flag",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570656/2_xqesow.svg"     },
     // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
   ],
 
