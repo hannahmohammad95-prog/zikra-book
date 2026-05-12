@@ -142,9 +142,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   canada: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "maple_leaf",   label: "Maple Leaf",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570652/Cover_fdutjm.svg" },
+    { id: "canada_flag",  label: "Canadian Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570650/2_jbazld.svg"    },
+    { id: "moose",        label: "Moose",         url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570649/3_exlrie.svg"    },
   ],
 
   mexico: [
