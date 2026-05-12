@@ -356,7 +356,6 @@ export default function CustomizePage() {
                           className="w-16 h-16 object-contain"
                           style={{ mixBlendMode: "multiply" }}
                         />
-                        <p className="text-xs font-sans text-ink-700">{sym.label}</p>
                         {selectedSymbol === sym.id && (
                           <span className="text-[10px] tracking-widest text-gold-500 font-sans">✓ SELECTED</span>
                         )}
