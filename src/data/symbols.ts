@@ -172,9 +172,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   "puerto-rico": [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "tropical_beach", label: "Tropical Beach",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570689/Cover_jiw83n.svg" },
+    { id: "toucan",         label: "Toucan",           url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570688/2_ivwv9b.svg"     },
+    { id: "pr_flag",        label: "Puerto Rico Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570687/3_fwbn4i.svg"     },
   ],
 
   uk: [
