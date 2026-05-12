@@ -28,9 +28,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   "saudi-arabia": [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "palm_tree",   label: "Palm Tree",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572310/2_hzelnd.svg" },
+    { id: "kaaba",       label: "Kaaba",       url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572306/3_ipradt.svg" },
+    { id: "saudi_flag",  label: "Saudi Flag",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572301/1_yfoafn.svg" },
   ],
 
   jordan: [
