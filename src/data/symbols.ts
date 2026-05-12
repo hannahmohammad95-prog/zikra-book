@@ -58,9 +58,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   france: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "eiffel_tower", label: "Eiffel Tower", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570660/Cover_pvfzlw.svg" },
+    { id: "croissant",    label: "Croissant",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570659/2_tm85z9.svg"    },
+    { id: "france_flag",  label: "French Flag",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570657/3_bpogrz.svg"    },
   ],
 
   spain: [
