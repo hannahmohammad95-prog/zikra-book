@@ -100,8 +100,8 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   singapore: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "merlion",        label: "Merlion",          url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570693/Cover_mebdju.svg" },
+    { id: "singapore_flag", label: "Singapore Flag",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570692/2_pzq48g.svg"    },
     // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
   ],
 
