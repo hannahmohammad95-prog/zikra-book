@@ -189,6 +189,12 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
     { id: "srilanka_flag",  label: "Sri Lanka Flag",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570743/1_l3xtvt.svg"  },
   ],
 
+  palestine: [
+    { id: "palestine_flag",  label: "Palestine Flag",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570681/2_z56i3n.svg"  },
+    { id: "dome_of_rock",    label: "Dome of the Rock", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570680/3_ourvcj.svg"  },
+    { id: "olive_branch",    label: "Olive Branch",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570679/1_scg6mi.svg"  },
+  ],
+
   // ── OCCASIONS ─────────────────────────────────────────────────────────────
   wedding: [
     // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
