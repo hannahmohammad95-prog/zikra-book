@@ -62,10 +62,7 @@ export default function CustomizePage() {
   // Draggable positions (% of cover width/height)
   const [textPos, setTextPos] = useState({ x: 50, y: 18 });
   const [iconPos, setIconPos] = useState({ x: 50, y: 58 });
-  // Spine draggable positions (y % of spine height)
-  const [spineTextY, setSpineTextY] = useState(35);
-  const [spineYearY, setSpineYearY] = useState(62);
-  const [dragging, setDragging] = useState<"text" | "icon" | "spineText" | "spineYear" | null>(null);
+  const [dragging, setDragging] = useState<"text" | "icon" | null>(null);
   const coverRef = useRef<HTMLDivElement>(null);
   const spineRef = useRef<HTMLDivElement>(null);
 
@@ -80,12 +77,6 @@ export default function CustomizePage() {
       const y = Math.max(5, Math.min(95, ((clientY - rect.top)  / rect.height) * 100));
       if (dragging === "text") setTextPos({ x, y });
       if (dragging === "icon") setIconPos({ x, y });
-    }
-    if ((dragging === "spineText" || dragging === "spineYear") && spineRef.current) {
-      const rect = spineRef.current.getBoundingClientRect();
-      const y = Math.max(5, Math.min(95, ((clientY - rect.top) / rect.height) * 100));
-      if (dragging === "spineText") setSpineTextY(y);
-      if (dragging === "spineYear") setSpineYearY(y);
     }
   }, [dragging]);
 
@@ -152,49 +143,36 @@ export default function CustomizePage() {
                 {/* Spine — hard cover, flat */}
                 <div
                   ref={spineRef}
-                  className="relative flex-shrink-0"
+                  className="relative flex-shrink-0 flex flex-col items-center justify-between py-4"
                   style={{
                     width: "44px", height: "293px",
                     backgroundColor: color, filter: "brightness(0.72)",
-                    cursor: (dragging === "spineText" || dragging === "spineYear") ? "grabbing" : "default",
                   }}
-                  onMouseMove={onMouseMove} onMouseUp={stopDrag} onMouseLeave={stopDrag}
-                  onTouchMove={onTouchMove} onTouchEnd={stopDrag}
                 >
-                  {/* Country — draggable, reads top to bottom */}
-                  <div
-                    className="absolute left-0 right-0 flex justify-center"
-                    style={{ top: `${spineTextY}%`, transform: "translateY(-50%)", cursor: "grab" }}
-                    onMouseDown={startDrag("spineText")} onTouchStart={startDrag("spineText")}
-                  >
-                    <p className="cover-font" style={{
-                      fontSize: "11px",
-                      color: "white",
-                      letterSpacing: "0.22em",
-                      writingMode: "vertical-rl",
-                      whiteSpace: "nowrap",
-                      WebkitTextStroke: "0px",
-                    }}>
-                      {subTitle.toUpperCase()}
-                    </p>
-                  </div>
-                  {/* Year — draggable, horizontal, below country name */}
-                  <div
-                    className="absolute left-0 right-0 flex justify-center"
-                    style={{ top: `${spineYearY}%`, transform: "translateY(-50%)", cursor: "grab" }}
-                    onMouseDown={startDrag("spineYear")} onTouchStart={startDrag("spineYear")}
-                  >
-                    <p className="cover-font" style={{
-                      fontSize: "9px",
-                      color: "white",
-                      letterSpacing: "0.18em",
-                      whiteSpace: "nowrap",
-                      writingMode: "vertical-rl",
-                      WebkitTextStroke: "0px",
-                    }}>
-                      {year || "YEAR"}
-                    </p>
-                  </div>
+                  {/* Spacer to push country to centre */}
+                  <div />
+                  {/* Country — fixed centre */}
+                  <p className="cover-font" style={{
+                    fontSize: "11px",
+                    color: "white",
+                    letterSpacing: "0.22em",
+                    writingMode: "vertical-rl",
+                    whiteSpace: "nowrap",
+                    WebkitTextStroke: "0px",
+                  }}>
+                    {subTitle.toUpperCase()}
+                  </p>
+                  {/* Year — fixed at bottom */}
+                  <p className="cover-font" style={{
+                    fontSize: "9px",
+                    color: "white",
+                    letterSpacing: "0.18em",
+                    whiteSpace: "nowrap",
+                    writingMode: "vertical-rl",
+                    WebkitTextStroke: "0px",
+                  }}>
+                    {year || "YEAR"}
+                  </p>
                 </div>
 
                 {/* Front cover */}
