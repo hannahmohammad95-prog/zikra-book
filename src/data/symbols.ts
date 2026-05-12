@@ -221,9 +221,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   pregnancy: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "baby_footprints", label: "Baby Footprints", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573403/2_jlhpd3.svg" },
+    { id: "pregnant_mum",    label: "Pregnant Mum",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573397/3_qw4e5y.svg" },
+    { id: "baby_in_heart",   label: "Baby in Heart",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573392/1_hchdos.svg" },
   ],
 
   // ── FAMILY ────────────────────────────────────────────────────────────────
