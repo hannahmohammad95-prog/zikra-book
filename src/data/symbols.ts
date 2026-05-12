@@ -112,9 +112,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   thailand: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "tuk_tuk",     label: "Tuk Tuk",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570751/2_f5tq3f.svg"  },
+    { id: "sunrise",     label: "Sunrise",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570749/1_mnkmiz.svg"  },
+    { id: "thai_flag",   label: "Thai Flag",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570749/3_ttojyy.svg"  },
   ],
 
   indonesia: [
