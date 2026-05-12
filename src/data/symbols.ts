@@ -209,9 +209,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   birthday: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "candles",    label: "Candles",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573245/2_xf4cif.svg"  },
+    { id: "party_hat",  label: "Party Hat",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573209/3_uxrnbh.svg"  },
+    { id: "balloons",   label: "Balloons",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573206/1_aqevti.svg"  },
   ],
 
   graduation: [
