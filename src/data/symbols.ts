@@ -184,9 +184,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   "sri-lanka": [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "moorish_arch",   label: "Moorish Arch",      url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570747/2_imdlhk.svg"  },
+    { id: "lion_sword",     label: "Lion with Sword",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570744/3_dfblfw.svg"  },
+    { id: "srilanka_flag",  label: "Sri Lanka Flag",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570743/1_l3xtvt.svg"  },
   ],
 
   // ── OCCASIONS ─────────────────────────────────────────────────────────────
