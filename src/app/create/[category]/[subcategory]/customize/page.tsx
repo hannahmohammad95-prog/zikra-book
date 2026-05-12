@@ -88,7 +88,7 @@ export default function CustomizePage() {
   const onTouchMove = (e: React.TouchEvent) => { if (e.touches[0]) applyMove(e.touches[0].clientX, e.touches[0].clientY); };
   const stopDrag    = () => setDragging(null);
 
-  function startDrag(el: "text" | "icon" | "spineText" | "spineYear") {
+  function startDrag(el: "text" | "icon") {
     return (e: React.MouseEvent | React.TouchEvent) => { e.preventDefault(); setDragging(el); };
   }
 
