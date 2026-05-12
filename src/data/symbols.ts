@@ -22,9 +22,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   uae: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "burj_khalifa", label: "Burj Khalifa", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570757/Cover_aju52n.svg" },
+    { id: "uae_flag",     label: "UAE Flag",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570756/2_k21awc.svg"     },
+    { id: "desert",       label: "Desert",       url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570755/3_j1xrsp.svg"     },
   ],
 
   "saudi-arabia": [
