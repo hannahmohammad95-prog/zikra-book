@@ -46,9 +46,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   morocco: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "koutoubia",    label: "Koutoubia Mosque", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572295/2_ftqeid.svg"  },
+    { id: "teapot",       label: "Moroccan Teapot",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572291/3_llqqzf.svg"  },
+    { id: "morocco_flag", label: "Moroccan Flag",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572286/1_txgaeb.svg"  },
   ],
 
   turkey: [
