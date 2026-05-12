@@ -130,9 +130,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   "south-africa": [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "lion",        label: "Lion",             url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570743/Cover_yteutc.svg" },
+    { id: "sa_flag",     label: "South Africa Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570696/2_enxqe2.svg"   },
+    { id: "safari",      label: "Safari Giraffe",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570695/3_hrbqnj.svg"    },
   ],
 
   tanzania: [
