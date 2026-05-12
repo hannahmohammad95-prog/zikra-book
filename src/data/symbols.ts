@@ -76,9 +76,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   greece: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "evil_eye",      label: "Evil Eye",       url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570663/Cover_gyzoq3.svg" },
+    { id: "santorini",     label: "Santorini",      url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570662/2_o7cd9w.svg"    },
+    { id: "greece_flag",   label: "Greek Flag",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570661/3_rha6ch.svg"    },
   ],
 
   australia: [
