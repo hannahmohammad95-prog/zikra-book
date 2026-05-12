@@ -128,7 +128,7 @@ export default function CustomizePage() {
               initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
               className="w-full lg:w-auto flex-shrink-0 flex flex-col items-center lg:sticky lg:top-28"
             >
-              <p className="text-xs tracking-widest uppercase text-ink-700 font-sans mb-3">Preview — drag to reposition</p>
+              <p className="text-xs tracking-widest uppercase text-ink-700 font-sans mb-3">Preview — drag to reposition on cover</p>
 
               {/* 3-panel spread: Back | Spine | Front */}
               <div className="flex shadow-2xl select-none" style={{ borderRadius: "6px", overflow: "visible" }}>
@@ -151,6 +151,7 @@ export default function CustomizePage() {
                   style={{
                     width: "44px", height: "293px",
                     backgroundColor: color, filter: "brightness(0.72)",
+                    pointerEvents: "none",
                   }}
                 >
                   {/* Spacer to push country to centre */}
