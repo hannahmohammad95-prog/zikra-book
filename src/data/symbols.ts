@@ -136,9 +136,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   tanzania: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "palm_tree",      label: "Palm Tree",       url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570747/Cover_uiyppf.svg" },
+    { id: "african_drums",  label: "African Drums",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570746/2_axiaqh.svg"     },
+    { id: "tanzania_flag",  label: "Tanzania Flag",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570745/3_qgw08d.svg"     },
   ],
 
   canada: [
