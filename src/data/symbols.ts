@@ -215,9 +215,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   graduation: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "balloons",   label: "Balloons",       url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573387/2_agkq1h.svg" },
+    { id: "diploma",    label: "Diploma Scroll", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573382/3_vwytvd.svg" },
+    { id: "grad_cap",   label: "Graduation Cap", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573377/1_jfmbnj.svg" },
   ],
 
   pregnancy: [
