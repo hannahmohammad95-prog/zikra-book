@@ -70,8 +70,8 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   portugal: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "rooster",      label: "Rooster of Barcelos", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570686/Cover_zqffw0.svg" },
+    { id: "portugal_flag", label: "Portugal Flag",      url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570685/2_lj5lq2.svg"    },
     // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
   ],
 
