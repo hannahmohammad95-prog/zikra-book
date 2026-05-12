@@ -162,7 +162,7 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   argentina: [
     { id: "mate",          label: "Mate",          url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570646/Cover_zhdz7j.svg" },
     { id: "argentina_flag",label: "Argentina Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570646/2_cg63p0.svg"   },
-    // { id: "sun_of_may", label: "Sun of May", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "sun_of_may", label: "Sun of May", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570645/3_b0jh0n.svg" },
   ],
 
   ecuador: [
