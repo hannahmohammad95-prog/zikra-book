@@ -148,9 +148,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   mexico: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "taco",        label: "Taco",         url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570674/Cover_sbn0pn.svg" },
+    { id: "mexico_flag", label: "Mexican Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570673/2_yomv7q.svg"    },
+    { id: "sombrero",    label: "Sombrero",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570672/3_suprh0.svg"    },
   ],
 
   peru: [
