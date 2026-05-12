@@ -34,8 +34,8 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   jordan: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "jordan_flag", label: "Jordan Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570671/2_nb9cgh.svg" },
+    { id: "petra",       label: "Petra",       url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570670/1_qrfyx7.svg" },
     // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
   ],
 
