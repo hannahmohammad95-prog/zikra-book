@@ -124,9 +124,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   vietnam: [
-    { id: "conical_hat", label: "Conical Hat", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570763/Cover_iuq8sd.svg" },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "conical_hat",    label: "Conical Hat",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570763/Cover_iuq8sd.svg" },
+    { id: "vietnam_flag",   label: "Vietnam Flag",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570762/2_aoiiia.svg"     },
+    { id: "temple",         label: "Temple",         url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570761/3_w6jgvf.svg"     },
   ],
 
   "south-africa": [
