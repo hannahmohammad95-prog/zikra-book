@@ -234,9 +234,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   "mothers-day": [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "bouquet",      label: "Flower Bouquet",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573720/2_zppee5.svg" },
+    { id: "mum_baby",     label: "Mum and Baby",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573713/3_vyhltl.svg" },
+    { id: "mom_balloons", label: "MOM Balloons",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573708/1_ruqpwz.svg" },
   ],
 
   "fathers-day": [
