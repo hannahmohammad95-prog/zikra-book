@@ -6,8 +6,12 @@ import { motion } from "framer-motion";
 import Nav from "@/components/Nav";
 import { SYMBOLS } from "@/data/symbols";
 
+const CUSTOM_TITLES: Record<string, string> = {
+  wedding: "Mr. & Mrs.",
+};
+
 function toTitle(slug: string) {
-  return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+  return CUSTOM_TITLES[slug] ?? slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
 // ── Pastel colour palette ─────────────────────────────────────────────────────
