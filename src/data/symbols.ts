@@ -40,9 +40,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   egypt: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "egypt_flag", label: "Egyptian Flag", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572281/2_s2pdqc.svg" },
+    { id: "pyramids",   label: "Pyramids",      url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572276/3_w3fzvf.svg" },
+    { id: "sphinx",     label: "Sphinx",        url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778572273/1_svedxa.svg" },
   ],
 
   morocco: [
