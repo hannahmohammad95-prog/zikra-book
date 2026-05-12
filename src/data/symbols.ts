@@ -52,9 +52,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   turkey: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "galata_tower", label: "Galata Tower",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570755/Tower_uagjs1.svg"       },
+    { id: "turkish_tea",  label: "Turkish Tea",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570753/Tea_y7l4rg.svg"          },
+    { id: "turkey_flag",  label: "Turkish Flag",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570752/Turkey_Flag_io90ig.svg"   },
   ],
 
   france: [
