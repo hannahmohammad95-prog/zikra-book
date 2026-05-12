@@ -203,9 +203,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
 
   // ── OCCASIONS ─────────────────────────────────────────────────────────────
   wedding: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "just_married",   label: "Just Married Car", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573419/2_kr5p5s.svg" },
+    { id: "holding_hands",  label: "Holding Hands",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573414/3_zajuqs.svg" },
+    { id: "wedding_rings",  label: "Wedding Rings",    url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778573409/1_rerbrv.svg" },
   ],
 
   birthday: [
