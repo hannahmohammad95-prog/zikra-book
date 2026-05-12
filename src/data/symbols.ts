@@ -154,9 +154,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   peru: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "llamas",      label: "Llamas",      url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570684/Cover_yhebmf.svg" },
+    { id: "peru_flag",   label: "Peru Flag",   url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570683/2_vguufg.svg"    },
+    { id: "machu_picchu", label: "Machu Picchu", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570682/3_vwwd0m.svg"  },
   ],
 
   argentina: [
