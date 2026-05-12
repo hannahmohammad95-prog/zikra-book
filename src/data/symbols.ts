@@ -118,9 +118,9 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   ],
 
   indonesia: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "bali_temple",   label: "Balinese Temple", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570669/Cover_cwx9c2.svg" },
+    { id: "barong_mask",   label: "Barong Mask",     url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570668/2_a99ppx.svg"    },
+    { id: "indonesia_flag",label: "Indonesia Flag",  url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570667/3_rjcqfo.svg"    },
   ],
 
   vietnam: [
