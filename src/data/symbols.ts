@@ -16,8 +16,8 @@ export const SYMBOLS: Record<string, BookSymbol[]> = {
   // ── TO DO — upload 3 symbols each to Cloudinary, paste URLs below ─────────
 
   qatar: [
-    // { id: "symbol1", label: "Label 1", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
-    // { id: "symbol2", label: "Label 2", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
+    { id: "qatar_flag",  label: "Qatar Flag",         url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570691/Cover_iobw5z.svg" },
+    { id: "towers",      label: "Traditional Towers", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/v1778570690/2_roxs8d.svg"     },
     // { id: "symbol3", label: "Label 3", url: "https://res.cloudinary.com/dis5pqgzn/image/upload/..." },
   ],
 
