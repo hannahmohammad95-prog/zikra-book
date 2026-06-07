@@ -51,8 +51,7 @@ export default function BookEditor({ photos, pages, category, subcategory, color
   );
   const [currentPage, setCurrentPage] = useState(0);
   const [selectedSlot, setSelectedSlot] = useState(0);
-  const [spreadView, setSpreadView] = useState(false);
-  // In spread view: which of the two facing pages is the active editing target (0=left, 1=right)
+  // Which of the two facing pages is being edited (0=left, 1=right)
   const [spreadActiveSide, setSpreadActiveSide] = useState<0 | 1>(0);
   const [showContact, setShowContact] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -62,14 +61,45 @@ export default function BookEditor({ photos, pages, category, subcategory, color
   const [contact, setContact] = useState("");
   const [formError, setFormError] = useState("");
 
-  // In spread view, snap currentPage to an even index (left page of a spread)
-  const spreadLeftPage  = spreadView ? (currentPage % 2 === 0 ? currentPage : currentPage - 1) : currentPage;
+  // Always snap to even index so we show a proper left+right pair
+  const spreadLeftPage  = currentPage % 2 === 0 ? currentPage : currentPage - 1;
   const spreadRightPage = spreadLeftPage + 1;
-  // Which page are we actually editing? In single view = currentPage; in spread = the active side
-  const editingPage = spreadView ? (spreadActiveSide === 0 ? spreadLeftPage : spreadRightPage) : currentPage;
+  const editingPage     = spreadActiveSide === 0 ? spreadLeftPage : spreadRightPage;
 
   const page        = pageData[editingPage];
   const filledPages = pageData.filter((p) => p.photos[0] !== null).length;
+
+  // ── Spread preset: sets both pages' layouts at once ──────────────────────────
+  type SpreadPreset = "1|1" | "2|2" | "2|1" | "1|2";
+
+  function currentSpreadPreset(): SpreadPreset {
+    const l = pageData[spreadLeftPage].layout;
+    const r = spreadRightPage < totalSides ? pageData[spreadRightPage].layout : "full";
+    if (l === "two-vertical" && r === "two-vertical") return "2|2";
+    if (l === "two-vertical") return "2|1";
+    if (r === "two-vertical") return "1|2";
+    return "1|1";
+  }
+
+  function setSpreadPreset(preset: SpreadPreset) {
+    const map: Record<SpreadPreset, [Layout, Layout]> = {
+      "1|1": ["full",         "full"],
+      "2|2": ["two-vertical", "two-vertical"],
+      "2|1": ["two-vertical", "full"],
+      "1|2": ["full",         "two-vertical"],
+    };
+    const [leftLayout, rightLayout] = map[preset];
+    setPageData((prev) => {
+      const next = [...prev];
+      next[spreadLeftPage] = { layout: leftLayout,  photos: [null, null], borders: [0, 0] };
+      if (spreadRightPage < totalSides) {
+        next[spreadRightPage] = { layout: rightLayout, photos: [null, null], borders: [0, 0] };
+      }
+      return next;
+    });
+    setSelectedSlot(0);
+    setSpreadActiveSide(0);
+  }
 
   // Label each side: "Page 1 — Front", "Page 1 — Back", "Page 2 — Front" …
   function getSideLabel(index: number) {
@@ -270,190 +300,142 @@ export default function BookEditor({ photos, pages, category, subcategory, color
             {/* ── Centre: canvas ────────────────────────────────────────── */}
             <div className="flex-1 min-w-0">
 
-              {/* Layout picker + spread toggle */}
-              <div className="flex flex-wrap gap-1.5 mb-3 items-center">
-                {LAYOUTS.map((l) => (
-                  <button
-                    key={l.id}
-                    onClick={() => setLayout(l.id)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-sans border transition-all ${
-                      page.layout === l.id
-                        ? "bg-gold-gradient text-cream-50 border-transparent"
-                        : "border-gold-400/30 text-ink-700 hover:border-gold-400"
-                    }`}
-                  >
-                    {l.icon} {l.label}
-                  </button>
-                ))}
-                {/* Divider */}
-                <span className="text-gold-400/40 text-xs select-none">|</span>
-                {/* Spread view toggle */}
-                <button
-                  onClick={() => {
-                    setSpreadView((v) => !v);
-                    setSpreadActiveSide(0);
-                    setSelectedSlot(0);
-                  }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-sans border transition-all ${
-                    spreadView
-                      ? "bg-gold-gradient text-cream-50 border-transparent"
-                      : "border-gold-400/30 text-ink-700 hover:border-gold-400"
-                  }`}
-                >
-                  📖 Two-page spread
-                </button>
+              {/* ── Spread layout presets ────────────────────────────────── */}
+              <div className="mb-3">
+                <p className="text-[10px] tracking-widest uppercase text-ink-500 font-sans mb-2">Page layout</p>
+                <div className="grid grid-cols-4 gap-2">
+                  {(["1|1","2|2","2|1","1|2"] as const).map((preset) => (
+                    <button
+                      key={preset}
+                      onClick={() => setSpreadPreset(preset)}
+                      className={`flex flex-col items-center gap-1.5 p-2 rounded-xl border transition-all ${
+                        currentSpreadPreset() === preset
+                          ? "border-gold-400 bg-gold-400/10"
+                          : "border-gold-400/20 hover:border-gold-400/50 bg-white"
+                      }`}
+                    >
+                      <SpreadIcon preset={preset} active={currentSpreadPreset() === preset} />
+                      <span className="text-[9px] font-sans text-ink-600 leading-tight text-center">
+                        {preset === "1|1" && "1 per page"}
+                        {preset === "2|2" && "2 per page"}
+                        {preset === "2|1" && "2 left · 1 right"}
+                        {preset === "1|2" && "1 left · 2 right"}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              {spreadView ? (
-                /* ── Spread canvas ─────────────────────────────────────── */
-                <div>
-                  {/* Spread label */}
-                  <p className="text-center text-ink-500 text-xs font-sans mb-2">
-                    {getSideLabel(spreadLeftPage).full} &amp; {spreadRightPage < totalSides ? getSideLabel(spreadRightPage).full : "—"}
-                    <span className="ml-2 text-gold-500">
-                      · Editing {spreadActiveSide === 0 ? "left" : "right"} page
-                    </span>
-                  </p>
+              {/* ── Always-spread canvas ─────────────────────────────────── */}
+              <p className="text-center text-ink-500 text-xs font-sans mb-2">
+                {getSideLabel(spreadLeftPage).full}
+                {spreadRightPage < totalSides && <> &amp; {getSideLabel(spreadRightPage).full}</>}
+                <span className="ml-2 text-gold-500 font-medium">
+                  · Editing {spreadActiveSide === 0 ? "left" : "right"} page
+                </span>
+              </p>
 
-                  {/* Two pages side by side with spine shadow */}
-                  <div
-                    className="flex mx-auto shadow-xl overflow-hidden"
-                    style={{ maxWidth: "560px", borderRadius: "3px", aspectRatio: "3/2" }}
-                  >
-                    {/* Left page */}
-                    <div
-                      className={`relative flex-1 overflow-hidden cursor-pointer transition-all duration-150 ${
-                        spreadActiveSide === 0 ? "ring-2 ring-gold-400 ring-inset z-10" : "opacity-80"
-                      }`}
-                      onClick={() => { setSpreadActiveSide(0); setSelectedSlot(0); }}
-                    >
-                      <PagePreview
-                        layout={pageData[spreadLeftPage].layout}
-                        photos={pageData[spreadLeftPage].photos}
-                        borders={pageData[spreadLeftPage].borders}
-                        selectedSlot={spreadActiveSide === 0 ? selectedSlot : -1}
-                        onSelectSlot={(s) => { setSpreadActiveSide(0); setSelectedSlot(s); }}
-                        onClearSlot={(s) => {
-                          setSpreadActiveSide(0);
-                          setPageData((prev) => {
-                            const next  = [...prev];
-                            const slots = [...next[spreadLeftPage].photos];
-                            slots[s] = null;
-                            next[spreadLeftPage] = { ...next[spreadLeftPage], photos: slots };
-                            return next;
-                          });
-                        }}
-                      />
-                      {/* Left page label */}
-                      <div className="absolute bottom-1 left-0 right-0 text-center pointer-events-none">
-                        <span className="text-[8px] font-sans text-white/60 drop-shadow">LEFT</span>
-                      </div>
-                    </div>
-
-                    {/* Spine shadow */}
-                    <div
-                      className="flex-shrink-0 relative z-20 pointer-events-none"
-                      style={{
-                        width: "14px",
-                        background: "linear-gradient(to right, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.04) 40%, rgba(0,0,0,0.10) 60%, rgba(0,0,0,0.22) 100%)",
-                        boxShadow: "inset -2px 0 4px rgba(0,0,0,0.08), inset 2px 0 4px rgba(0,0,0,0.08)",
-                      }}
-                    />
-
-                    {/* Right page */}
-                    {spreadRightPage < totalSides ? (
-                      <div
-                        className={`relative flex-1 overflow-hidden cursor-pointer transition-all duration-150 ${
-                          spreadActiveSide === 1 ? "ring-2 ring-gold-400 ring-inset z-10" : "opacity-80"
-                        }`}
-                        onClick={() => { setSpreadActiveSide(1); setSelectedSlot(0); }}
-                      >
-                        <PagePreview
-                          layout={pageData[spreadRightPage].layout}
-                          photos={pageData[spreadRightPage].photos}
-                          borders={pageData[spreadRightPage].borders}
-                          selectedSlot={spreadActiveSide === 1 ? selectedSlot : -1}
-                          onSelectSlot={(s) => { setSpreadActiveSide(1); setSelectedSlot(s); }}
-                          onClearSlot={(s) => {
-                            setSpreadActiveSide(1);
-                            setPageData((prev) => {
-                              const next  = [...prev];
-                              const slots = [...next[spreadRightPage].photos];
-                              slots[s] = null;
-                              next[spreadRightPage] = { ...next[spreadRightPage], photos: slots };
-                              return next;
-                            });
-                          }}
-                        />
-                        <div className="absolute bottom-1 left-0 right-0 text-center pointer-events-none">
-                          <span className="text-[8px] font-sans text-white/60 drop-shadow">RIGHT</span>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex-1 bg-white flex items-center justify-center">
-                        <span className="text-ink-200 text-xs font-sans">back cover</span>
-                      </div>
-                    )}
+              <div
+                className="flex mx-auto shadow-xl overflow-hidden"
+                style={{ maxWidth: "580px", borderRadius: "3px", aspectRatio: "3/2" }}
+              >
+                {/* Left page */}
+                <div
+                  className={`relative flex-1 overflow-hidden cursor-pointer transition-all duration-150 ${
+                    spreadActiveSide === 0 ? "ring-2 ring-gold-400 ring-inset z-10" : "opacity-75"
+                  }`}
+                  onClick={() => { setSpreadActiveSide(0); setSelectedSlot(0); }}
+                >
+                  <PagePreview
+                    layout={pageData[spreadLeftPage].layout}
+                    photos={pageData[spreadLeftPage].photos}
+                    borders={pageData[spreadLeftPage].borders}
+                    selectedSlot={spreadActiveSide === 0 ? selectedSlot : -1}
+                    onSelectSlot={(s) => { setSpreadActiveSide(0); setSelectedSlot(s); }}
+                    onClearSlot={(s) => {
+                      setSpreadActiveSide(0);
+                      setPageData((prev) => {
+                        const next  = [...prev];
+                        const slots = [...next[spreadLeftPage].photos];
+                        slots[s]    = null;
+                        next[spreadLeftPage] = { ...next[spreadLeftPage], photos: slots };
+                        return next;
+                      });
+                    }}
+                  />
+                  <div className="absolute bottom-1 left-0 right-0 text-center pointer-events-none">
+                    <span className="text-[8px] font-sans text-white/50 drop-shadow">LEFT</span>
                   </div>
-
-                  <p className="text-center text-ink-400 text-xs font-sans mt-2">
-                    Click a page to select it, then click a photo from the left to place it
-                  </p>
                 </div>
-              ) : (
-                /* ── Single page canvas ────────────────────────────────── */
-                <div>
+
+                {/* Spine */}
+                <div
+                  className="flex-shrink-0 z-20 pointer-events-none"
+                  style={{
+                    width: "14px",
+                    background: "linear-gradient(to right, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.04) 40%, rgba(0,0,0,0.10) 60%, rgba(0,0,0,0.22) 100%)",
+                  }}
+                />
+
+                {/* Right page */}
+                {spreadRightPage < totalSides ? (
                   <div
-                    className="relative bg-cream-100 overflow-hidden mx-auto shadow-lg"
-                    style={{ aspectRatio: "3/4", maxWidth: "340px", borderRadius: "3px" }}
+                    className={`relative flex-1 overflow-hidden cursor-pointer transition-all duration-150 ${
+                      spreadActiveSide === 1 ? "ring-2 ring-gold-400 ring-inset z-10" : "opacity-75"
+                    }`}
+                    onClick={() => { setSpreadActiveSide(1); setSelectedSlot(0); }}
                   >
                     <PagePreview
-                      layout={page.layout}
-                      photos={page.photos}
-                      borders={page.borders}
-                      selectedSlot={selectedSlot}
-                      onSelectSlot={setSelectedSlot}
-                      onClearSlot={clearSlot}
+                      layout={pageData[spreadRightPage].layout}
+                      photos={pageData[spreadRightPage].photos}
+                      borders={pageData[spreadRightPage].borders}
+                      selectedSlot={spreadActiveSide === 1 ? selectedSlot : -1}
+                      onSelectSlot={(s) => { setSpreadActiveSide(1); setSelectedSlot(s); }}
+                      onClearSlot={(s) => {
+                        setSpreadActiveSide(1);
+                        setPageData((prev) => {
+                          const next  = [...prev];
+                          const slots = [...next[spreadRightPage].photos];
+                          slots[s]    = null;
+                          next[spreadRightPage] = { ...next[spreadRightPage], photos: slots };
+                          return next;
+                        });
+                      }}
                     />
+                    <div className="absolute bottom-1 left-0 right-0 text-center pointer-events-none">
+                      <span className="text-[8px] font-sans text-white/50 drop-shadow">RIGHT</span>
+                    </div>
                   </div>
-                  <p className="text-center text-ink-400 text-xs font-sans mt-3">
-                    {page.layout === "two"
-                      ? `Placing in ${selectedSlot === 0 ? "left" : "right"} slot — click the other side to switch`
-                      : page.layout === "two-vertical"
-                      ? `Placing in ${selectedSlot === 0 ? "top" : "bottom"} slot — click the other side to switch`
-                      : "Click a photo from the left to place it on this page"}
-                  </p>
-                </div>
-              )}
+                ) : (
+                  <div className="flex-1 bg-white flex items-center justify-center">
+                    <span className="text-ink-200 text-xs font-sans">back cover</span>
+                  </div>
+                )}
+              </div>
 
-              {/* ── Border control ──────────────────────────────────────── */}
+              <p className="text-center text-ink-400 text-[10px] font-sans mt-2">
+                Click a page to select it · Click a photo from the left panel to place it
+              </p>
+
+              {/* ── Frame control ────────────────────────────────────────── */}
               <div className="mt-4 bg-white border border-gold-400/20 rounded-xl p-4">
-                {/* Header row */}
                 <div className="flex items-center justify-between mb-3">
                   <p className="text-xs tracking-widest uppercase text-ink-700 font-sans">
                     Photo Frame
-                    {spreadView && (
-                      <span className="ml-1 normal-case tracking-normal text-gold-500">
-                        — {spreadActiveSide === 0 ? "Left" : "Right"} page
-                      </span>
-                    )}
-                    {(page.layout === "two" || page.layout === "two-vertical") && (
+                    <span className="ml-1 normal-case tracking-normal text-gold-500">
+                      — {spreadActiveSide === 0 ? "Left" : "Right"} page
+                    </span>
+                    {page.layout === "two-vertical" && (
                       <span className="ml-1 normal-case tracking-normal text-ink-400">
-                        · {selectedSlot === 0
-                          ? (page.layout === "two" ? "left photo" : "top photo")
-                          : (page.layout === "two" ? "right photo" : "bottom photo")}
+                        · {selectedSlot === 0 ? "top photo" : "bottom photo"}
                       </span>
                     )}
                   </p>
-
-                  {/* No frame / Frame toggle */}
                   <div className="flex rounded-lg overflow-hidden border border-gold-400/30 text-xs font-sans">
                     <button
                       onClick={() => setBorder(selectedSlot, 0)}
                       className={`px-3 py-1.5 transition-all ${
-                        page.borders[selectedSlot] === 0
-                          ? "bg-ink-900 text-white"
-                          : "text-ink-600 hover:bg-cream-100"
+                        page.borders[selectedSlot] === 0 ? "bg-ink-900 text-white" : "text-ink-600 hover:bg-cream-100"
                       }`}
                     >
                       No frame
@@ -461,22 +443,15 @@ export default function BookEditor({ photos, pages, category, subcategory, color
                     <button
                       onClick={() => { if (page.borders[selectedSlot] === 0) setBorder(selectedSlot, 8); }}
                       className={`px-3 py-1.5 transition-all border-l border-gold-400/30 ${
-                        page.borders[selectedSlot] > 0
-                          ? "bg-gold-gradient text-cream-50"
-                          : "text-ink-600 hover:bg-cream-100"
+                        page.borders[selectedSlot] > 0 ? "bg-gold-gradient text-cream-50" : "text-ink-600 hover:bg-cream-100"
                       }`}
                     >
                       Add frame
                     </button>
                   </div>
                 </div>
-
-                {/* Thickness controls — only visible when frame is on */}
                 {page.borders[selectedSlot] > 0 && (
                   <div className="pt-3 border-t border-cream-200">
-                    <p className="text-[10px] font-sans text-ink-500 mb-2">Frame thickness</p>
-
-                    {/* Quick presets */}
                     <div className="flex gap-2 mb-3">
                       {BORDER_PRESETS.filter((p) => p.value > 0).map((preset) => (
                         <button
@@ -492,8 +467,6 @@ export default function BookEditor({ photos, pages, category, subcategory, color
                         </button>
                       ))}
                     </div>
-
-                    {/* Fine slider */}
                     <div className="flex items-center gap-3">
                       <span className="text-ink-400 text-[10px] font-sans">Thin</span>
                       <input
@@ -599,21 +572,15 @@ export default function BookEditor({ photos, pages, category, subcategory, color
           <div className="flex items-center justify-between mt-5 flex-wrap gap-4">
             <div className="flex gap-3">
               <button
-                onClick={() => {
-                  setCurrentPage((p) => Math.max(0, spreadView ? p - 2 : p - 1));
-                  setSpreadActiveSide(0); setSelectedSlot(0);
-                }}
-                disabled={currentPage === 0}
+                onClick={() => { setCurrentPage((p) => Math.max(0, p - 2)); setSpreadActiveSide(0); setSelectedSlot(0); }}
+                disabled={spreadLeftPage === 0}
                 className="px-5 py-2.5 border border-gold-400/30 rounded-full text-sm font-sans text-ink-700 hover:border-gold-400 transition-colors disabled:opacity-30"
               >
                 ← Prev
               </button>
               <button
-                onClick={() => {
-                  setCurrentPage((p) => Math.min(totalSides - 1, spreadView ? p + 2 : p + 1));
-                  setSpreadActiveSide(0); setSelectedSlot(0);
-                }}
-                disabled={spreadView ? spreadLeftPage >= totalSides - 2 : currentPage === totalSides - 1}
+                onClick={() => { setCurrentPage((p) => Math.min(totalSides - 1, p + 2)); setSpreadActiveSide(0); setSelectedSlot(0); }}
+                disabled={spreadLeftPage >= totalSides - 2}
                 className="px-5 py-2.5 border border-gold-400/30 rounded-full text-sm font-sans text-ink-700 hover:border-gold-400 transition-colors disabled:opacity-30"
               >
                 Next →
@@ -708,6 +675,40 @@ export default function BookEditor({ photos, pages, category, subcategory, color
         </div>
       </main>
     </>
+  );
+}
+
+// ── Spread layout icon ────────────────────────────────────────────────────────
+function SpreadIcon({ preset, active }: { preset: "1|1"|"2|2"|"2|1"|"1|2"; active: boolean }) {
+  const c = active ? "#C49A5A" : "#d4c5a9";
+  const bg = "#f5f0e8";
+  const left  = preset === "2|2" || preset === "2|1";
+  const right = preset === "2|2" || preset === "1|2";
+  return (
+    <svg width="44" height="30" viewBox="0 0 44 30" fill="none">
+      {/* Left page */}
+      <rect x="1" y="1" width="19" height="28" rx="1" fill={bg} stroke={c} strokeWidth="1"/>
+      {left ? (
+        <>
+          <rect x="2" y="2" width="17" height="13" rx="0.5" fill={c} opacity="0.5"/>
+          <rect x="2" y="16" width="17" height="12" rx="0.5" fill={c} opacity="0.5"/>
+        </>
+      ) : (
+        <rect x="2" y="2" width="17" height="26" rx="0.5" fill={c} opacity="0.5"/>
+      )}
+      {/* Spine */}
+      <rect x="20.5" y="0" width="3" height="30" fill="#e8e0d0"/>
+      {/* Right page */}
+      <rect x="24" y="1" width="19" height="28" rx="1" fill={bg} stroke={c} strokeWidth="1"/>
+      {right ? (
+        <>
+          <rect x="25" y="2" width="17" height="13" rx="0.5" fill={c} opacity="0.5"/>
+          <rect x="25" y="16" width="17" height="12" rx="0.5" fill={c} opacity="0.5"/>
+        </>
+      ) : (
+        <rect x="25" y="2" width="17" height="26" rx="0.5" fill={c} opacity="0.5"/>
+      )}
+    </svg>
   );
 }
 
